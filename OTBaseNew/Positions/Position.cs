@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace OTBaseNew.Positions
 {
-    class Position
+    /// <summary>
+    /// Класс Должность
+    /// </summary>
+    public class Position
     {
         /// <summary>
         /// ID
@@ -50,7 +53,7 @@ namespace OTBaseNew.Positions
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Positions`(`name`, `created`) VALUES ('{0}','{1}'); SELECT * FROM `Positions` order by id desc;", Name,SQL.DataBase.ConvertDateToMySqlString(DateTime.Now));
+                query = string.Format("INSERT INTO `Positions`(`name`, `created`) VALUES ('{0}','{1}'); SELECT * FROM `Positions` order by id desc;", Name, SQL.DataBase.ConvertDateToMySqlString(DateTime.Now));
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id
@@ -71,6 +74,65 @@ namespace OTBaseNew.Positions
                 string query = string.Format("DELETE FROM  `Positions` WHERE  `id` = {0}", Id);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
+            }
+        }
+        /// <summary>
+        ///Пользователи-владельцы
+        /// </summary>
+        public List<Users.User> UsersOwners
+        {
+            private set { }
+            get
+            {
+                string query = string.Format(" select * from Users where Users.position_id = {0}", Id);
+                //База данных
+                SQL.DataBase db = new SQL.DataBase();
+                //Создает запрос и возвращает результат
+                var list = db.MakeRequest(query);
+                //Список, в который будут добавяться пользователи
+                List<Users.User> users = new List<Users.User>();
+                //Прогон по результату с запроса
+                foreach (var i in list)
+                {
+                    //Добавляем пользователя ищя его по ИД
+                    users.Add(Users.User.FindById(Convert.ToInt32(i["id"])));
+                }
+                //Возврат пользователей
+                return users;
+            }
+        }
+        /// <summary>
+        /// Ищет должность по ID и возвращает ее.Если ничего не нашло, то возвращает ноль
+        /// </summary>
+        /// <param name="id">ИД</param>
+        /// <returns>Должнсть</returns>
+        public static Position FindById(int id)
+        {
+            //Запрос
+            string query = string.Format("SELECT * FROM `Positions` WHERE id={0}", id);
+            //База данных
+            SQL.DataBase db = new SQL.DataBase();
+            //Создает запрос и возвращает результат
+            var list = db.MakeRequest(query);
+            //Если ничего не нашло, то возвращает ноль
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            //Если нашло, то создает объект должности
+            else
+            {
+                //создает объект должности
+                Position position = new Position();
+                //Присваивает ИД
+                position.Id = id;
+                //Присваивает имя с запроса
+                //Присваивает имя с запроса
+                position.Name = (list[0])["name"].ToString();
+                //Присваивает дату создания с запроса
+                position.Created = Convert.ToDateTime((list[0])["created"].ToString());
+                //Возвращает должность
+                return position;
             }
         }
     }

@@ -23,16 +23,6 @@ namespace OTBaseNew
         public MainWindow()
         {
             InitializeComponent();
-            Users.User u = new Users.User();
-            u.Id = 2;
-            u.FName = "Віталій";
-            u.LName = "Дідик";
-            u.MName = "Олегович";
-            u.Login = "tailer";
-            u.Password = "1234";
-            u.IsAdmin = true;
-            u.Bdate = Convert.ToDateTime("16.01.1996");
-            u.Save();
         }
     }
 }
