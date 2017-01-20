@@ -50,5 +50,30 @@ namespace OTBaseNew.SQL
             //Возврат данных
             return list_of_values;
         }
+        /// <summary>
+        /// Возвращает строку, конвертированную под строку даты для MySQL
+        /// </summary>
+        /// <param name="date">Дата</param>
+        /// <returns>Готовая строка</returns>
+        public static string ConvertDateToMySqlString(DateTime date)
+        {
+            return date.ToString("yyyy-MM-dd HH:mm:ss");
+        }
+        /// <summary>
+        /// Конвертирует булевскую переменную в инт. True = 1 False = 0
+        /// </summary>
+        /// <param name="param">Тру или фолс</param>
+        /// <returns>1 или 0</returns>
+        public static int ConvertBoolToInt(bool param)
+        {
+            if(param)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }
