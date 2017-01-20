@@ -1,1 +1,13 @@
 D:\OTBaseNew\OTBaseNew\OTBaseNew\bin\Debug\OTBaseNew.exe.config
+D:\OTBaseNew\OTBaseNew\OTBaseNew\bin\Debug\OTBaseNew.exe
+D:\OTBaseNew\OTBaseNew\OTBaseNew\bin\Debug\OTBaseNew.pdb
+D:\OTBaseNew\OTBaseNew\OTBaseNew\obj\Debug\OTBaseNew.csprojResolveAssemblyReference.cache
+D:\OTBaseNew\OTBaseNew\OTBaseNew\obj\Debug\MainWindow.baml
+D:\OTBaseNew\OTBaseNew\OTBaseNew\obj\Debug\MainWindow.g.cs
+D:\OTBaseNew\OTBaseNew\OTBaseNew\obj\Debug\App.g.cs
+D:\OTBaseNew\OTBaseNew\OTBaseNew\obj\Debug\OTBaseNew_MarkupCompile.cache
+D:\OTBaseNew\OTBaseNew\OTBaseNew\obj\Debug\OTBaseNew.g.resources
+D:\OTBaseNew\OTBaseNew\OTBaseNew\obj\Debug\OTBaseNew.Properties.Resources.resources
+D:\OTBaseNew\OTBaseNew\OTBaseNew\obj\Debug\OTBaseNew.csproj.GenerateResource.Cache
+D:\OTBaseNew\OTBaseNew\OTBaseNew\obj\Debug\OTBaseNew.exe
+D:\OTBaseNew\OTBaseNew\OTBaseNew\obj\Debug\OTBaseNew.pdb
