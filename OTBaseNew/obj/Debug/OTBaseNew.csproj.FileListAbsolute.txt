@@ -11,3 +11,16 @@ D:\OTBaseNew\OTBaseNew\OTBaseNew\obj\Debug\OTBaseNew.Properties.Resources.resour
 D:\OTBaseNew\OTBaseNew\OTBaseNew\obj\Debug\OTBaseNew.csproj.GenerateResource.Cache
 D:\OTBaseNew\OTBaseNew\OTBaseNew\obj\Debug\OTBaseNew.exe
 D:\OTBaseNew\OTBaseNew\OTBaseNew\obj\Debug\OTBaseNew.pdb
+D:\OTBase\OTBase\OTBaseNew\bin\Debug\OTBaseNew.exe.config
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew.exe
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew.pdb
+D:\OTBase\OTBase\OTBaseNew\bin\Debug\OTBaseNew.exe
+D:\OTBase\OTBase\OTBaseNew\bin\Debug\OTBaseNew.pdb
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew.csprojResolveAssemblyReference.cache
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\MainWindow.baml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\MainWindow.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\App.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew_MarkupCompile.cache
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew.g.resources
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew.Properties.Resources.resources
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew.csproj.GenerateResource.Cache
