@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace OTBaseNew.Users
 {
     /// <summary>
@@ -60,6 +59,10 @@ namespace OTBaseNew.Users
             get { return Positions.Position.FindById(Position_id); }
         }
         /// <summary>
+        /// Список ИД телефонов
+        /// </summary>
+        public List<int> Phones_Ides { set; get; }
+        /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
         public User()
@@ -68,6 +71,8 @@ namespace OTBaseNew.Users
             Created = DateTime.Now;
             //Не админ по умолчанию
             IsAdmin = false;
+            //Создает новый список
+            Phones_Ides = new List<int>();
         }
         /// <summary>
         /// Сохраняет клас в БД
@@ -77,26 +82,83 @@ namespace OTBaseNew.Users
             //Строка-запрос
             string query = string.Format("SELECT * FROM `Users` WHERE id={0}", Id);
             //База данных
-            SQL.DataBase db = new SQL.DataBase();
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
             //Создает запрос и возвращает результат
             var list = db.MakeRequest(query);
             //Если есть элементы в списке, то такая должность есть в базе
             if (list.Count != 0)
             {
                 //Строка-запрос
-                query = string.Format("UPDATE Users SET fname='{0}',lname='{1}',mname='{2}',password='{3}',IsAdmin='{4}',position_id='{5}',bday='{6}' WHERE id={7}", FName, LName, MName, Password, SQL.DataBase.ConvertBoolToInt(IsAdmin).ToString(), Position_id.ToString(), SQL.DataBase.ConvertDateToMySqlString(Bday), Id.ToString());
+                query = string.Format("UPDATE Users SET fname='{0}',lname='{1}',mname='{2}',password='{3}',IsAdmin='{4}',position_id='{5}',bday='{6}' WHERE id={7}", FName, LName, MName, Password, MySqlWorker.DataBase.ConvertBoolToInt(IsAdmin).ToString(), Position_id.ToString(), MySqlWorker.DataBase.ConvertDateToMySqlString(Bday), Id.ToString());
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
+                #region Работа с телефонами
+                //Прогон по идентификаторам пользователей
+                foreach (var i in Phones_Ides)
+                {
+                    //Строка-запрос
+                    query = string.Format("SELECT * FROM `PhonesAndUsers` WHERE Phone_Id={0} && User_Id={1}", i.ToString(), Id.ToString());
+                    //Ответ или есть уже такая запись
+                    var answer = db.MakeRequest(query);
+                    //Если такой записи нету, то дабавляет
+                    if (answer.Count == 0)
+                    {
+                        //Строка-запрос
+                        query = string.Format("INSERT INTO `PhonesAndUsers`(`Phone_id`, `User_id`) VALUES ({0},{1})", i.ToString(), Id.ToString());
+                        //Запуск запроса
+                        db.MakeRequest(query);
+                    }
+                }
+                //Строка-запрос
+                query = string.Format("Select * from `PhonesAndUsers` where User_id={0}", Id);
+                //Ищет всех пользователей которые имеют это номер
+                var asnwer1 = db.MakeRequest(query);
+                //Прогон по пользователях
+                foreach (var i in asnwer1)
+                {
+                    //Есть ли телефон в списке
+                    bool exist = false;
+                    //Прогон по айди
+                    foreach (var j in Phones_Ides)
+                    {
+                        //Если телефон сущесвтует, то его удалять не надо
+                        if (Convert.ToInt32(i["Phone_id"]) == j)
+                        {
+                            //Телефон существует
+                            exist = true;
+                            break;
+                        }
+                    }
+                    //Если не сущесвует
+                    if (!exist)
+                    {
+                        //Срока-запрос
+                        query = string.Format("Delete from `PhonesAndUsers` where Id={0}", Convert.ToInt32(i["Id"]));
+                        //Удаляем ее из базы
+                        db.MakeRequest(query);
+                    }
+                }
+                #endregion
             }
             //В другом случае создать новую запись, и присвоить должности ID
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Users` (`fname`, `lname`, `mname`, `password`, `isadmin`,  `position_id`, `bday`, `created`,`login`) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'); SELECT * FROM `Users` order by id desc;", FName, LName, MName, Password, SQL.DataBase.ConvertBoolToInt(IsAdmin).ToString(), Position_id.ToString(), SQL.DataBase.ConvertDateToMySqlString(Bday), SQL.DataBase.ConvertDateToMySqlString(DateTime.Now), Login);
+                query = string.Format("INSERT INTO `Users` (`fname`, `lname`, `mname`, `password`, `isadmin`,  `position_id`, `bday`, `created`,`login`) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'); SELECT * FROM `Users` order by id desc;", FName, LName, MName, Password, MySqlWorker.DataBase.ConvertBoolToInt(IsAdmin).ToString(), Position_id.ToString(), MySqlWorker.DataBase.ConvertDateToMySqlString(Bday), MySqlWorker.DataBase.ConvertDateToMySqlString(DateTime.Now), Login);
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id
                 Id = (int)(list[0])["id"];
+                #region Работа с телефонами
+                //Прогон по идентификаторам пользователей
+                foreach (var i in Phones_Ides)
+                {
+                    //Строка-запрос
+                    query = string.Format("INSERT INTO `PhonesAndUsers`(`Phone_id`, `User_id`) VALUES ({0},{1})", i.ToString(), Id.ToString());
+                    //Запуск запроса
+                    db.MakeRequest(query);
+                }
+                #endregion
             }
             //Операция закончена, возвращает тру
         }
@@ -108,9 +170,13 @@ namespace OTBaseNew.Users
             if (Id != 0)
             {
                 //База данных
-                SQL.DataBase db = new SQL.DataBase();
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                //Строка-запрос для удаления из таблицы Телефон-Пользователь
+                string query = string.Format("DELETE FROM  `PhonesAndUsers` WHERE  `User_id` = {0}", Id);
+                //Создает запрос и возвращает результат
+                db.MakeRequest(query);
                 //Строка-запрос
-                string query = string.Format("DELETE FROM  `Users` WHERE  `id` = {0}", Id);
+                query = string.Format("DELETE FROM  `Users` WHERE  `id` = {0}", Id);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
             }
@@ -125,7 +191,7 @@ namespace OTBaseNew.Users
             //Запрос
             string query = string.Format("SELECT * FROM `Users` WHERE id={0}", id);
             //База данных
-            SQL.DataBase db = new SQL.DataBase();
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
             //Создает запрос и возвращает результат
             var list = db.MakeRequest(query);
             //Если ничего не нашло, то возвращает ноль
@@ -136,8 +202,20 @@ namespace OTBaseNew.Users
             //Если нашло, то создает объект должности
             else
             {
+                //Создаю пользователя
+                User us = MakeUserFromReaderList(list);
+                //Строка-запрос на получение телефонов
+                query = string.Format("SELECT * FROM `PhonesAndUsers` WHERE User_id={0}", id);
+                //Выполнение запроса
+                var answer = db.MakeRequest(query);
+                //Прогон по телефонах
+                foreach(var i in answer)
+                {
+                    //Добавление телефонов в список
+                    us.Phones_Ides.Add(Convert.ToInt32(i["Phone_id"]));
+                }
                 //Возвращает пользователя
-                return MakeUserFromReaderList(list);
+                return us;
             }
         }
         /// <summary>
@@ -150,7 +228,7 @@ namespace OTBaseNew.Users
             //Запрос
             string query = string.Format("SELECT * FROM `Users` WHERE login='{0}'", Login);
             //База данных
-            SQL.DataBase db = new SQL.DataBase();
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
             //Создает запрос и возвращает результат
             var list = db.MakeRequest(query);
             //Если ничего не нашло, то возвращает ноль
@@ -161,8 +239,20 @@ namespace OTBaseNew.Users
             //Если нашло, то создает объект должности
             else
             {
+                //Создаю пользователя
+                User us = MakeUserFromReaderList(list);
+                //Строка-запрос на получение телефонов
+                query = string.Format("SELECT * FROM `PhonesAndUsers` WHERE User_id={0}", us.Id.ToString());
+                //Выполнение запроса
+                var answer = db.MakeRequest(query);
+                //Прогон по телефонах
+                foreach (var i in answer)
+                {
+                    //Добавление телефонов в список
+                    us.Phones_Ides.Add(Convert.ToInt32(i["Phone_id"]));
+                }
                 //Возвращает пользователя
-                return MakeUserFromReaderList(list);
+                return us;
             }
         }
         /// <summary>
@@ -195,6 +285,29 @@ namespace OTBaseNew.Users
             //Присваивает дату рождения с запроса
             user.Bday= Convert.ToDateTime((list[0])["bday"].ToString());
             return user;
+        }
+        /// <summary>
+        /// Телефоны пользователя
+        /// </summary>
+        public List<Phones.Phone> GetPhones 
+        {
+            set 
+            {
+                Phones_Ides.Clear();
+                foreach(var i in value)
+                {
+                    Phones_Ides.Add(i.Id);
+                }
+            }
+            get
+            {
+                List<Phones.Phone> phones = new List<Phones.Phone>();
+                foreach(var i in Phones_Ides)
+                {
+                    phones.Add(Phones.Phone.FindById(i));
+                }
+                return phones;
+            }
         }
     }
 }

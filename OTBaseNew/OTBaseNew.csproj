@@ -38,6 +38,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="MySqlWorker">
+      <HintPath>..\MySqlWorker\bin\Debug\MySqlWorker.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -57,8 +60,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Phones\Phone.cs" />
     <Compile Include="Positions\Position.cs" />
-    <Compile Include="SQL\DataBase.cs" />
+    <Compile Include="SQL\SqlConnect.cs" />
     <Compile Include="Users\User.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

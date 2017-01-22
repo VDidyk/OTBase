@@ -5,18 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Reflection;
-namespace OTBaseNew.SQL
+namespace MySqlWorker
 {
-    class DataBase
+    public class DataBase
     {
         /// <summary>
         /// Конект к БД
         /// </summary>
         private MySqlConnection connect = new MySqlConnection();
-        public DataBase()
+        /// <summary>
+        /// Конструктор, который инициализирует подключение к базе данных
+        /// </summary>
+        /// <param name="connectionstring">Строка подключения</param>
+        public DataBase(string connectionstring)
         {
             //Строка конект к БД
-            string myConnectionString = "server=zlkmagaz.mysql.ukraine.com.ua;uid=zlkmagaz_otbase;pwd=5l6v6wba;database=zlkmagaz_otbase;Allow Zero Datetime=true;";
+            string myConnectionString = connectionstring;
             connect.ConnectionString = myConnectionString;
         }
         /// <summary>

@@ -24,3 +24,5 @@ D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew_MarkupCompile.cache
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew.g.resources
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew.Properties.Resources.resources
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew.csproj.GenerateResource.Cache
+D:\OTBase\OTBase\OTBaseNew\bin\Debug\MySqlWorker.dll
+D:\OTBase\OTBase\OTBaseNew\bin\Debug\MySqlWorker.pdb

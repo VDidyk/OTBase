@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using MySqlWorker;
 namespace OTBaseNew.Positions
 {
     /// <summary>
@@ -38,7 +38,7 @@ namespace OTBaseNew.Positions
             //Строка-запрос
             string query = string.Format("SELECT * FROM `Positions` WHERE id={0}", Id);
             //База данных
-            SQL.DataBase db = new SQL.DataBase();
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
             //Создает запрос и возвращает результат
             var list = db.MakeRequest(query);
             //Если есть элементы в списке, то такая должность есть в базе
@@ -53,7 +53,7 @@ namespace OTBaseNew.Positions
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Positions`(`name`, `created`) VALUES ('{0}','{1}'); SELECT * FROM `Positions` order by id desc;", Name, SQL.DataBase.ConvertDateToMySqlString(DateTime.Now));
+                query = string.Format("INSERT INTO `Positions`(`name`, `created`) VALUES ('{0}','{1}'); SELECT * FROM `Positions` order by id desc;", Name, MySqlWorker.DataBase.ConvertDateToMySqlString(DateTime.Now));
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id
@@ -69,7 +69,15 @@ namespace OTBaseNew.Positions
             if (Id != 0)
             {
                 //База данных
-                SQL.DataBase db = new SQL.DataBase();
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                //Прогон по работникам должности
+                foreach(var i in UsersOwners)
+                {
+                    //Обнуляет должность
+                    i.Position_id = 0;
+                    //Дохраняет пользователя
+                    i.Save();
+                }
                 //Строка-запрос
                 string query = string.Format("DELETE FROM  `Positions` WHERE  `id` = {0}", Id);
                 //Создает запрос и возвращает результат
@@ -86,7 +94,7 @@ namespace OTBaseNew.Positions
             {
                 string query = string.Format(" select * from Users where Users.position_id = {0}", Id);
                 //База данных
-                SQL.DataBase db = new SQL.DataBase();
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
                 //Создает запрос и возвращает результат
                 var list = db.MakeRequest(query);
                 //Список, в который будут добавяться пользователи
@@ -111,7 +119,7 @@ namespace OTBaseNew.Positions
             //Запрос
             string query = string.Format("SELECT * FROM `Positions` WHERE id={0}", id);
             //База данных
-            SQL.DataBase db = new SQL.DataBase();
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
             //Создает запрос и возвращает результат
             var list = db.MakeRequest(query);
             //Если ничего не нашло, то возвращает ноль
