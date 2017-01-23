@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OTBaseNew.Phones
+namespace OTBaseNew.Emails
 {
-    public class Phone
+    public class Email
     {
         /// <summary>
         /// ID
@@ -15,32 +15,32 @@ namespace OTBaseNew.Phones
         /// <summary>
         /// Номер телефона
         /// </summary>
-        public string number { set; get; }      
+        public string name { set; get; }      
         /// <summary>
         /// Список владельцев
         /// </summary>
         public List<int> Users_Ides { set; get; }
-        public Phone()
+        public Email()
         {
             //Новый список
             Users_Ides = new List<int>();
         }
         /// <summary>
-        /// Сохраняет телефон в базу
+        /// Сохраняет mail в базу
         /// </summary>
         public void Save()
         {
             //Строка-запрос
-            string query = string.Format("SELECT * FROM `Phones` WHERE id={0}", Id);
+            string query = string.Format("SELECT * FROM `Emails` WHERE id={0}", Id);
             //База данных
             MySqlWorker.DataBase db = SQL.SqlConnect.db;
             //Создает запрос и возвращает результат
-            var list = db.MakeRequest<Phone>(query);
+            var list = db.MakeRequest<Email>(query);
             //Если есть элементы в списке, то такая должность есть в базе
             if (list.Count != 0)
             {
                 //Строка-запрос
-                query = string.Format("UPDATE Phones SET `number`='{0}' WHERE id={1}", number, Id);
+                query = string.Format("UPDATE Emails SET `name`='{0}' WHERE id={1}", name, Id);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
                 #region Работа с пользователями
@@ -48,20 +48,20 @@ namespace OTBaseNew.Phones
                 foreach (var i in Users_Ides)
                 {
                     //Строка-запрос
-                    query = string.Format("SELECT * FROM `PhonesAndUsers` WHERE Phone_Id={0} && User_Id={1}", Id.ToString(), i.ToString());
+                    query = string.Format("SELECT * FROM `EmailsAndUsers` WHERE Email_Id={0} && User_Id={1}", Id.ToString(), i.ToString());
                     //Ответ или есть уже такая запись
                     var answer = db.MakeRequest(query);
                     //Если такой записи нету, то дабавляет
                     if (answer.Count == 0)
                     {
                         //Строка-запрос
-                        query = string.Format("INSERT INTO `PhonesAndUsers`(`Phone_id`, `User_id`) VALUES ({0},{1})", Id.ToString(), i.ToString());
+                        query = string.Format("INSERT INTO `EmailsAndUsers`(`Email_Id`, `User_id`) VALUES ({0},{1})", Id.ToString(), i.ToString());
                         //Запуск запроса
                         db.MakeRequest(query);
                     }
                 }
                 //Строка-запрос
-                query = string.Format("Select * from `PhonesAndUsers` where Phone_id={0}", Id);
+                query = string.Format("Select * from `EmailsAndUsers` where Email_id={0}", Id);
                 //Ищет всех пользователей которые имеют это номер
                 var asnwer1 = db.MakeRequest(query);
                 //Прогон по пользователях
@@ -84,7 +84,7 @@ namespace OTBaseNew.Phones
                     if (!exist)
                     {
                         //Срока-запрос
-                        query = string.Format("Delete from `PhonesAndUsers` where Id={0}", Convert.ToInt32(i["Id"]));
+                        query = string.Format("Delete from `EmailsAndUsers` where Id={0}", Convert.ToInt32(i["Id"]));
                         //Удаляем ее из базы
                         db.MakeRequest(query);
                     }
@@ -95,7 +95,7 @@ namespace OTBaseNew.Phones
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Phones`(`Number`) VALUES ('{0}'); SELECT * FROM `Phones` order by id desc;", number);
+                query = string.Format("INSERT INTO `Emails`(`Name`) VALUES ('{0}'); SELECT * FROM `Emails` order by id desc;", name);
                 //Создает запрос и возвращает результат
                 var answer = db.MakeRequest(query);
                 //Присвоить id
@@ -106,7 +106,7 @@ namespace OTBaseNew.Phones
                 foreach (var i in Users_Ides)
                 {
                     //Строка-запрос
-                    query = string.Format("INSERT INTO `PhonesAndUsers`(`Phone_id`, `User_id`) VALUES ({0},{1})", Id.ToString(), i.ToString());
+                    query = string.Format("INSERT INTO `EmailsAndUsers`(`Email_id`, `User_id`) VALUES ({0},{1})", Id.ToString(), i.ToString());
                     //Запуск запроса
                     db.MakeRequest(query);
                 }
@@ -114,7 +114,7 @@ namespace OTBaseNew.Phones
             }
         }
         /// <summary>
-        /// Удаляет телефон из базы
+        /// Удаляет mail из базы
         /// </summary>
         public void Delete()
         {
@@ -122,29 +122,29 @@ namespace OTBaseNew.Phones
             {
                 //База данных
                 MySqlWorker.DataBase db = SQL.SqlConnect.db;
-                //Строка-запрос для удаления из таблицы Телефон-Пользователь
-                string query = string.Format("DELETE FROM  `PhonesAndUsers` WHERE  `Phone_id` = {0}", Id);
+                //Строка-запрос для удаления из таблицы Мейл-Пользователь
+                string query = string.Format("DELETE FROM  `EmailsAndUsers` WHERE  `Email_id` = {0}", Id);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
                 //Строка-запрос
-                 query = string.Format("DELETE FROM  `Phones` WHERE  `id` = {0}", Id);
+                 query = string.Format("DELETE FROM  `Emails` WHERE  `id` = {0}", Id);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
             }
         }
         /// <summary>
-        /// Ищет телефон по ИД
+        /// Ищет Email по ИД
         /// </summary>
         /// <param name="id">ИД</param>
-        /// <returns>Телефон</returns>
-        public static Phone FindById(int id)
+        /// <returns>Email</returns>
+        public static Email FindById(int id)
         {
             //Запрос
-            string query = string.Format("SELECT * FROM `Phones` WHERE id={0}", id);
+            string query = string.Format("SELECT * FROM `Emails` WHERE id={0}", id);
             //База данных
             MySqlWorker.DataBase db = SQL.SqlConnect.db;
             //Создает запрос и возвращает результат
-            var list = db.MakeRequest<Phone>(query);
+            var list = db.MakeRequest<Email>(query);
             //Если ничего не нашло, то возвращает ноль
             if (list.Count == 0)
             {
@@ -153,10 +153,10 @@ namespace OTBaseNew.Phones
             //Если нашло, то создает объект должности
             else
             {
-                //Создаю телефон
-                Phone us = list[0];
+                //Создаю мейл
+                Email us = list[0];
                 //Строка-запрос на получение пользователя
-                query = string.Format("SELECT * FROM `PhonesAndUsers` WHERE Phone_id={0}", id);
+                query = string.Format("SELECT * FROM `EmailsAndUsers` WHERE Email_id={0}", id);
                 //Выполнение запроса
                 var answer = db.MakeRequest(query);
                 //Прогон по пользователях
@@ -165,44 +165,49 @@ namespace OTBaseNew.Phones
                     //Добавление пользователя в список
                     us.Users_Ides.Add(Convert.ToInt32(i["User_id"]));
                 }
-                //Возвращает телефон
-                return us;
-            }
-        }
-        public static Phone FindByNumber(string number)
-        {
-            //Запрос
-            string query = string.Format("SELECT * FROM `Phones` WHERE number='{0}'", number);
-            //База данных
-            MySqlWorker.DataBase db = SQL.SqlConnect.db;
-            //Создает запрос и возвращает результат
-            var list = db.MakeRequest<Phone>(query);
-            //Если ничего не нашло, то возвращает ноль
-            if (list.Count == 0)
-            {
-                return null;
-            }
-            //Если нашло, то создает объект должности
-            else
-            {
-                //Создаю телефон
-                Phone us = list[0];
-                //Строка-запрос на получение пользователя
-                query = string.Format("SELECT * FROM `PhonesAndUsers` WHERE Phone_id={0}", us.Id.ToString());
-                //Выполнение запроса
-                var answer = db.MakeRequest(query);
-                //Прогон по пользователях
-                foreach (var i in answer)
-                {
-                    //Добавление пользователя в список
-                    us.Users_Ides.Add(Convert.ToInt32(i["User_id"]));
-                }
-                //Возвращает телефон
+                //Возвращает мейл
                 return us;
             }
         }
         /// <summary>
-        /// Владельцы телефона
+        /// Ищет мейл по имени
+        /// </summary>
+        /// <param name="name">имя</param>
+        /// <returns>Мейл</returns>
+        public static Email FindByName(string name)
+        {
+            //Запрос
+            string query = string.Format("SELECT * FROM `Emails` WHERE name='{0}'", name);
+            //База данных
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
+            //Создает запрос и возвращает результат
+            var list = db.MakeRequest<Email>(query);
+            //Если ничего не нашло, то возвращает ноль
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            //Если нашло, то создает объект должности
+            else
+            {
+                //Создаю мейл
+                Email us = list[0];
+                //Строка-запрос на получение пользователя
+                query = string.Format("SELECT * FROM `EmailsAndUsers` WHERE Email_id={0}", us.Id.ToString());
+                //Выполнение запроса
+                var answer = db.MakeRequest(query);
+                //Прогон по пользователях
+                foreach (var i in answer)
+                {
+                    //Добавление пользователя в список
+                    us.Users_Ides.Add(Convert.ToInt32(i["User_id"]));
+                }
+                //Возвращает мейл
+                return us;
+            }
+        }
+        /// <summary>
+        /// Владельцы мейла
         /// </summary>
         public List<Users.User> GetUsers
         {
@@ -224,6 +229,5 @@ namespace OTBaseNew.Phones
                 return users;
             }
         }
-  
     }
 }

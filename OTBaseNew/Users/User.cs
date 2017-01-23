@@ -63,6 +63,11 @@ namespace OTBaseNew.Users
         /// </summary>
         public List<int> Phones_Ides { set; get; }
         /// <summary>
+        /// Айди мейлов
+        /// </summary>
+        public List<int> Emails_Ides { set; get; }
+
+        /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
         public User()
@@ -73,6 +78,7 @@ namespace OTBaseNew.Users
             IsAdmin = false;
             //Создает новый список
             Phones_Ides = new List<int>();
+            Emails_Ides = new List<int>();
         }
         /// <summary>
         /// Сохраняет клас в БД
@@ -139,6 +145,53 @@ namespace OTBaseNew.Users
                     }
                 }
                 #endregion
+                #region Работа с мейлами
+                //Прогон по идентификаторам пользователей
+                foreach (var i in Phones_Ides)
+                {
+                    //Строка-запрос
+                    query = string.Format("SELECT * FROM `EmailsAndUsers` WHERE Email_Id={0} && User_Id={1}", i.ToString(), Id.ToString());
+                    //Ответ или есть уже такая запись
+                    var answer = db.MakeRequest(query);
+                    //Если такой записи нету, то дабавляет
+                    if (answer.Count == 0)
+                    {
+                        //Строка-запрос
+                        query = string.Format("INSERT INTO `EmailsAndUsers`(`Email_id`, `User_id`) VALUES ({0},{1})", i.ToString(), Id.ToString());
+                        //Запуск запроса
+                        db.MakeRequest(query);
+                    }
+                }
+                //Строка-запрос
+                query = string.Format("Select * from `EmailsAndUsers` where User_id={0}", Id);
+                //Ищет всех пользователей которые имеют это мейл
+                asnwer1 = db.MakeRequest(query);
+                //Прогон по пользователях
+                foreach (var i in asnwer1)
+                {
+                    //Есть ли мейл в списке
+                    bool exist = false;
+                    //Прогон по айди
+                    foreach (var j in Phones_Ides)
+                    {
+                        //Если мейл сущесвтует, то его удалять не надо
+                        if (Convert.ToInt32(i["Email_id"]) == j)
+                        {
+                            //Мейл существует
+                            exist = true;
+                            break;
+                        }
+                    }
+                    //Если не сущесвует
+                    if (!exist)
+                    {
+                        //Срока-запрос
+                        query = string.Format("Delete from `EmailsAndUsers` where Id={0}", Convert.ToInt32(i["Id"]));
+                        //Удаляем ее из базы
+                        db.MakeRequest(query);
+                    }
+                }
+                #endregion
             }
             //В другом случае создать новую запись, и присвоить должности ID
             else
@@ -159,6 +212,16 @@ namespace OTBaseNew.Users
                     db.MakeRequest(query);
                 }
                 #endregion
+                #region Работа с мейлами
+                //Прогон по идентификаторам пользователей
+                foreach (var i in Phones_Ides)
+                {
+                    //Строка-запрос
+                    query = string.Format("INSERT INTO `EmailsAndUsers`(`Email_id`, `User_id`) VALUES ({0},{1})", i.ToString(), Id.ToString());
+                    //Запуск запроса
+                    db.MakeRequest(query);
+                }
+                #endregion
             }
             //Операция закончена, возвращает тру
         }
@@ -173,6 +236,10 @@ namespace OTBaseNew.Users
                 MySqlWorker.DataBase db = SQL.SqlConnect.db;
                 //Строка-запрос для удаления из таблицы Телефон-Пользователь
                 string query = string.Format("DELETE FROM  `PhonesAndUsers` WHERE  `User_id` = {0}", Id);
+                //Создает запрос и возвращает результат
+                db.MakeRequest(query);
+                //Строка-запрос для удаления из таблицы Мейлы-Пользователь
+                query = string.Format("DELETE FROM  `EmailsAndUsers` WHERE  `User_id` = {0}", Id);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
                 //Строка-запрос
@@ -214,6 +281,17 @@ namespace OTBaseNew.Users
                     //Добавление телефонов в список
                     us.Phones_Ides.Add(Convert.ToInt32(i["Phone_id"]));
                 }
+
+                query = string.Format("SELECT * FROM `EmailsAndUsers` WHERE User_id={0}", id);
+                //Выполнение запроса
+                answer = db.MakeRequest(query);
+                //Прогон по мейлах
+                foreach (var i in answer)
+                {
+                    //Добавление мейл в список
+                    us.Emails_Ides.Add(Convert.ToInt32(i["Email_id"]));
+                }
+
                 //Возвращает пользователя
                 return us;
             }
@@ -251,8 +329,20 @@ namespace OTBaseNew.Users
                     //Добавление телефонов в список
                     us.Phones_Ides.Add(Convert.ToInt32(i["Phone_id"]));
                 }
+
+                query = string.Format("SELECT * FROM `EmailsAndUsers` WHERE User_id={0}", us.Id.ToString());
+                //Выполнение запроса
+                answer = db.MakeRequest(query);
+                //Прогон по мейлах
+                foreach (var i in answer)
+                {
+                    //Добавление мейл в список
+                    us.Emails_Ides.Add(Convert.ToInt32(i["Email_id"]));
+                }
+
                 //Возвращает пользователя
                 return us;
+
             }
         }
         /// <summary>
@@ -309,5 +399,29 @@ namespace OTBaseNew.Users
                 return phones;
             }
         }
+        /// <summary>
+        /// Емейлы
+        /// </summary>
+        public List<Emails.Email> GetEmails
+        {
+            set
+            {
+                Emails_Ides.Clear();
+                foreach (var i in value)
+                {
+                    Emails_Ides.Add(i.Id);
+                }
+            }
+            get
+            {
+                List<Emails.Email> emails = new List<Emails.Email>();
+                foreach (var i in Phones_Ides)
+                {
+                    emails.Add(Emails.Email.FindById(i));
+                }
+                return emails;
+            }
+        }
+
     }
 }
