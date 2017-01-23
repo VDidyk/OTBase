@@ -23,6 +23,7 @@ namespace OTBaseNew
         public MainWindow()
         {
             InitializeComponent();
+            
         }
     }
 }

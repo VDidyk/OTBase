@@ -61,6 +61,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Emails\Email.cs" />
+    <Compile Include="Passports\Passport.cs" />
     <Compile Include="Phones\Phone.cs" />
     <Compile Include="Positions\Position.cs" />
     <Compile Include="SQL\SqlConnect.cs" />
