@@ -22,6 +22,7 @@ namespace MySqlWorker
             //Строка конект к БД
             string myConnectionString = connectionstring;
             connect.ConnectionString = myConnectionString;
+            connect.Close();
         }
         /// <summary>
         /// Создание запроса к БД. Возвращает список, который содержит в себе словари, которые в свою очередь содержат ключи и значения запроса
@@ -63,6 +64,8 @@ namespace MySqlWorker
         /// <returns>Список объектов</returns>
         public List<T> MakeRequest<T>(string request) where T : new()
         {
+            //На всякий случай закрывает конект
+            connect.Close();
             //Открыть конект
             connect.Open();
             List<Dictionary<string, object>> list_of_values = new List<Dictionary<string, object>>();
