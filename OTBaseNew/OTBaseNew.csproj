@@ -67,6 +67,7 @@
     <Compile Include="Phones\Phone.cs" />
     <Compile Include="Positions\Position.cs" />
     <Compile Include="Regions\Region.cs" />
+    <Compile Include="Resourses\Resourse.cs" />
     <Compile Include="SQL\SqlConnect.cs" />
     <Compile Include="Users\User.cs" />
     <Page Include="MainWindow.xaml">

@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MySqlWorker;
-namespace OTBaseNew.Positions
+
+namespace OTBaseNew.Resourses
 {
-    /// <summary>
-    /// Класс Должность
-    /// </summary>
-    public class Position
+    public class Resourse
     {
         /// <summary>
         /// ID
@@ -22,21 +19,21 @@ namespace OTBaseNew.Positions
         /// <summary>
         /// Дата создания
         /// </summary>
-        public DateTime Created {private set; get; }
+        public DateTime Created { set; get; }
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
-        public Position()
+        public Resourse()
         {
             Created = DateTime.Now;
         }
         /// <summary>
-        /// Сохраняет клас в БД
+        /// Сохраняет ресурс в базе данных
         /// </summary>
         public void Save()
         {
             //Строка-запрос
-            string query = string.Format("SELECT * FROM `Positions` WHERE id={0}", Id);
+            string query = string.Format("SELECT * FROM `Resourses` WHERE id={0}", Id);
             //База данных
             MySqlWorker.DataBase db = SQL.SqlConnect.db;
             //Создает запрос и возвращает результат
@@ -45,7 +42,7 @@ namespace OTBaseNew.Positions
             if (list.Count != 0)
             {
                 //Строка-запрос
-                query = string.Format("UPDATE Positions SET name='{0}' WHERE id={1}", Name, Id);
+                query = string.Format("UPDATE Resourses SET name='{0}' WHERE id={1}", Name, Id);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
             }
@@ -53,7 +50,7 @@ namespace OTBaseNew.Positions
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Positions`(`name`, `created`) VALUES ('{0}','{1}'); SELECT * FROM `Positions` order by id desc;", Name, MySqlWorker.DataBase.ConvertDateToMySqlString(DateTime.Now));
+                query = string.Format("INSERT INTO `Resourses`(`name`, `created`) VALUES ('{0}','{1}'); SELECT * FROM `Positions` order by id desc;", Name, MySqlWorker.DataBase.ConvertDateToMySqlString(DateTime.Now));
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id
@@ -62,7 +59,7 @@ namespace OTBaseNew.Positions
             //Операция закончена, возвращает тру
         }
         /// <summary>
-        /// Удаляет должность с базы данных
+        /// Удаляет ресурс с базы данных
         /// </summary>
         public void Delete()
         {
@@ -70,43 +67,10 @@ namespace OTBaseNew.Positions
             {
                 //База данных
                 MySqlWorker.DataBase db = SQL.SqlConnect.db;
-                //Прогон по работникам должности
-                foreach(var i in UsersOwners)
-                {
-                    //Обнуляет должность
-                    i.Position_id = 0;
-                    //Дохраняет пользователя
-                    i.Save();
-                }
                 //Строка-запрос
-                string query = string.Format("DELETE FROM  `Positions` WHERE  `id` = {0}", Id);
+                string query = string.Format("DELETE FROM  `Resourses` WHERE  `id` = {0}", Id);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
-            }
-        }
-        /// <summary>
-        ///Пользователи-владельцы
-        /// </summary>
-        public List<Users.User> UsersOwners
-        {
-            private set { }
-            get
-            {
-                string query = string.Format(" select * from Users where Users.position_id = {0}", Id);
-                //База данных
-                MySqlWorker.DataBase db = SQL.SqlConnect.db;
-                //Создает запрос и возвращает результат
-                var list = db.MakeRequest(query);
-                //Список, в который будут добавяться пользователи
-                List<Users.User> users = new List<Users.User>();
-                //Прогон по результату с запроса
-                foreach (var i in list)
-                {
-                    //Добавляем пользователя ищя его по ИД
-                    users.Add(Users.User.FindById(Convert.ToInt32(i["id"])));
-                }
-                //Возврат пользователей
-                return users;
             }
         }
         /// <summary>
@@ -114,14 +78,14 @@ namespace OTBaseNew.Positions
         /// </summary>
         /// <param name="id">ИД</param>
         /// <returns>Должнсть</returns>
-        public static Position FindById(int id)
+        public static Resourse FindById(int id)
         {
             //Запрос
-            string query = string.Format("SELECT * FROM `Positions` WHERE id={0}", id);
+            string query = string.Format("SELECT * FROM `Resourses` WHERE id={0}", id);
             //База данных
             MySqlWorker.DataBase db = SQL.SqlConnect.db;
             //Создает запрос и возвращает результат
-            var list = db.MakeRequest(query);
+            var list = db.MakeRequest<Resourse>(query);
             //Если ничего не нашло, то возвращает ноль
             if (list.Count == 0)
             {
@@ -131,15 +95,7 @@ namespace OTBaseNew.Positions
             else
             {
                 //создает объект должности
-                Position position = new Position();
-                //Присваивает ИД
-                position.Id = id;
-                //Присваивает имя с запроса
-                //Присваивает имя с запроса
-                position.Name = (list[0])["name"].ToString();
-                //Присваивает дату создания с запроса
-                position.Created = Convert.ToDateTime((list[0])["created"].ToString());
-                //Возвращает должность
+                Resourse position = list[0];
                 return position;
             }
         }
