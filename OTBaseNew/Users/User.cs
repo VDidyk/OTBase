@@ -66,7 +66,6 @@ namespace OTBaseNew.Users
         /// Айди мейлов
         /// </summary>
         public List<int> Emails_Ides { set; get; }
-
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>

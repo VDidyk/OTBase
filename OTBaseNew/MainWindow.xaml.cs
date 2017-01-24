@@ -23,10 +23,7 @@ namespace OTBaseNew
         public MainWindow()
         {
             InitializeComponent();
-            OTBaseNew.Resourses.Resourse r = new Resourses.Resourse();
-            r.Id = 1;
-            r.Name = "otitour.com";
-            r.Save();
+            Clients.Client c = Clients.Client.FindById(1);
         }
     }
 }
