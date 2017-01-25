@@ -23,7 +23,6 @@ namespace OTBaseNew
         public MainWindow()
         {
             InitializeComponent();
-            Clients.Client c = Clients.Client.FindById(1);
         }
     }
 }

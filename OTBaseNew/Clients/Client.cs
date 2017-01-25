@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OTBaseNew.Clients
 {
-    class Client
+    public class Client
     {
         /// <summary>
         /// ИД
@@ -74,6 +74,9 @@ namespace OTBaseNew.Clients
             Phones_Ides = new List<int>();
             Emails_Ides = new List<int>();
         }
+        /// <summary>
+        /// Сохраняет клиента в БД
+        /// </summary>
         public void Save()
         {
             //Строка-запрос
@@ -86,7 +89,7 @@ namespace OTBaseNew.Clients
             if (list.Count != 0)
             {
                 //Строка-запрос
-                query = string.Format("UPDATE Clients SET fname='{0}',lname='{1}',mname='{2}',notice='{3}',Address_id='{4}',Passport_id='{5}',bday='{6}',Resourse_id={8},created_user_id={9}, Last_edit_user_id={10},Working_user_id={11},created='{12}' WHERE id={7}", FName, LName, MName, Notice, Address_id.ToString(), Passport_id.ToString(), MySqlWorker.DataBase.ConvertDateToMySqlString(Bday), Id.ToString(), Resourse_id.ToString(),Created_user_id.ToString(), Last_edit_user_id.ToString(), Working_user_id.ToString(), MySqlWorker.DataBase.ConvertDateToMySqlString(Created));
+                query = string.Format("UPDATE Clients SET fname='{0}',lname='{1}',mname='{2}',notice='{3}',Address_id='{4}',Passport_id='{5}',bday='{6}',Resourse_id={8},created_user_id={9}, Last_edit_user_id={10},Working_user_id={11},created='{12}' WHERE id={7}", FName, LName, MName, Notice, Address_id.ToString(), Passport_id.ToString(), MySqlWorker.DataBase.ConvertDateToMySqlString(Bday), Id.ToString(), Resourse_id.ToString(), Created_user_id.ToString(), Last_edit_user_id.ToString(), Working_user_id.ToString(), MySqlWorker.DataBase.ConvertDateToMySqlString(Created));
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
                 #region Работа с телефонами
@@ -259,7 +262,160 @@ namespace OTBaseNew.Clients
                 return us;
             }
         }
-        
-        
+        /// <summary>
+        /// Удаляет клиента с базы данных
+        /// </summary>
+        public void Delete()
+        {
+            if (Id != 0)
+            {
+                //База данных
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                //Строка-запрос для удаления из таблицы Телефон-Пользователь
+                string query = string.Format("DELETE FROM  `PhonesAndClients` WHERE  `Client_id` = {0}", Id);
+                //Создает запрос и возвращает результат
+                db.MakeRequest(query);
+                //Строка-запрос для удаления из таблицы Мейлы-Пользователь
+                query = string.Format("DELETE FROM  `EmailsAndClients` WHERE  `Client_id` = {0}", Id);
+                //Создает запрос и возвращает результат
+                db.MakeRequest(query);
+                //Строка-запрос
+                query = string.Format("DELETE FROM  `Clients` WHERE  `id` = {0}", Id);
+                //Создает запрос и возвращает результат
+                db.MakeRequest(query);
+                //Удаляет адрес с базы данных
+                GetAddress.Delete();
+                //Удаляет аддресс
+                GetPassport.Delete();
+            }
+        }
+        /// <summary>
+        /// Адресс
+        /// </summary>
+        public Addresses.Address GetAddress
+        {
+            set
+            {
+                Address_id = value.id;
+            }
+            get
+            {
+                return Addresses.Address.FindById(Address_id);
+            }
+        }
+        /// <summary>
+        /// Паспорт
+        /// </summary>
+        public Passports.Passport GetPassport
+        {
+            set
+            {
+                Passport_id = value.id;
+            }
+            get
+            {
+                return Passports.Passport.FindById(Passport_id);
+            }
+        }
+        /// <summary>
+        /// Ресурс
+        /// </summary>
+        public Resourses.Resourse GetResourse
+        {
+            set
+            {
+                Resourse_id = value.Id;
+            }
+            get
+            {
+                return Resourses.Resourse.FindById(Resourse_id);
+            }
+        }
+        /// <summary>
+        /// Пользователь создавший клиента
+        /// </summary>
+        public Users.User GetCreatedUser
+        {
+            set
+            {
+                Created_user_id = value.Id;
+            }
+            get
+            {
+                return Users.User.FindById(Created_user_id);
+            }
+        }
+        /// <summary>
+        /// Пользователь последний редактирующий клиента
+        /// </summary>
+        public Users.User GetEditdUser
+        {
+            set
+            {
+                Last_edit_user_id = value.Id;
+            }
+            get
+            {
+                return Users.User.FindById(Last_edit_user_id);
+            }
+        }
+        /// <summary>
+        /// Пользователь работающий с клиентом
+        /// </summary>
+        public Users.User GetWorkingdUser
+        {
+            set
+            {
+                Working_user_id = value.Id;
+            }
+            get
+            {
+                return Users.User.FindById(Working_user_id);
+            }
+        }
+
+        public List<Phones.Phone> GetPhones
+        {
+            set
+            {
+                Phones_Ides.Clear();
+                foreach (var i in value)
+                {
+                    Phones_Ides.Add(i.Id);
+                }
+            }
+            get
+            {
+                List<Phones.Phone> phones = new List<Phones.Phone>();
+                foreach (var i in Phones_Ides)
+                {
+                    phones.Add(Phones.Phone.FindById(i));
+                }
+                return phones;
+            }
+        }
+        /// <summary>
+        /// Емейлы
+        /// </summary>
+        public List<Emails.Email> GetEmails
+        {
+            set
+            {
+                Emails_Ides.Clear();
+                foreach (var i in value)
+                {
+                    Emails_Ides.Add(i.Id);
+                }
+            }
+            get
+            {
+                List<Emails.Email> emails = new List<Emails.Email>();
+                foreach (var i in Phones_Ides)
+                {
+                    emails.Add(Emails.Email.FindById(i));
+                }
+                return emails;
+            }
+        }
     }
 }
