@@ -24,6 +24,10 @@ namespace OTBaseNew.Discounts
         /// </summary>
         public int Client_id { set; get; }
         /// <summary>
+        /// ID оператора
+        /// </summary>
+        public int Operator_id { set; get; }
+        /// <summary>
         /// Поиск по ИД
         /// </summary>
         /// <param name="Id">ИД</param>
@@ -54,7 +58,7 @@ namespace OTBaseNew.Discounts
             if (list.Count != 0)
             {
                 //Строка-запрос
-                query = string.Format("UPDATE Discounts SET Tour='{0}',Discount='{1}' Client_id='{2}' WHERE id={3}",Tour,discount,Client_id.ToString(), Id);
+                query = string.Format("UPDATE Discounts SET Tour='{0}',Discount='{1}' Client_id='{2}', Operator_id WHERE id={4}",Tour,discount,Client_id.ToString(),Operator_id, Id);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
             }
@@ -62,7 +66,7 @@ namespace OTBaseNew.Discounts
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Discounts`(`tour`, `discount`, `client_id`) VALUES ('{0}','{1}','{2}')", Tour, discount, Client_id.ToString());
+                query = string.Format("INSERT INTO `Discounts`(`tour`, `discount`, `client_id`) VALUES ('{0}','{1}','{2}','{3}')", Tour, discount, Client_id.ToString(),Operator_id.ToString());
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id

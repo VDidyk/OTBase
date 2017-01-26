@@ -1,0 +1,129 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OTBaseNew.Operators
+{
+    public class Operator
+    {
+        /// <summary>
+        /// ИД
+        /// </summary>
+        public int Id { set; get; }
+        /// <summary>
+        /// Имя
+        /// </summary>
+        public string Name { set; get; }
+        /// <summary>
+        /// Сайт
+        /// </summary>
+        public string Site { set; get; }
+        /// <summary>
+        /// Документы
+        /// </summary>
+        public List<int> Documents_Ides { set; get; }
+        /// <summary>
+        /// Скидки
+        /// </summary>
+        public List<int> Discount_Ides { set; get; }
+        public Operator()
+        {
+            Documents_Ides = new List<int>();
+            Discount_Ides = new List<int>();
+        }
+        public void Save()
+        {
+            //Строка-запрос
+            string query = string.Format("SELECT * FROM `Operators` WHERE id={0}", Id);
+            //База данных
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
+            //Создает запрос и возвращает результат
+            var list = db.MakeRequest(query);
+            //Если есть элементы в списке, то такая должность есть в базе
+            if (list.Count != 0)
+            {
+                //Строка-запрос
+                query = string.Format("UPDATE Positions SET name='{0}',Site='{1}' WHERE id={2}", Name,Site, Id);
+                //Создает запрос и возвращает результат
+                db.MakeRequest(query);
+                #region Работа с документами
+                //Строка-запрос
+                query = string.Format("SELECT * FROM `Documents` WHERE Operator_id='{0}'", Id.ToString());
+                var answer1 = db.MakeRequest<Discounts.Discount>(query);
+                bool exist1 = false;
+                foreach (var j in answer1)
+                {
+                    foreach (var i in Documents_Ides)
+                    {
+                        if (i == j.Id)
+                        {
+                            exist1 = true;
+                            break;
+                        }
+                    }
+                    if (!exist1)
+                    {
+                        j.Delete();
+                    }
+                }
+                #endregion
+                #region Работа с документами
+                //Строка-запрос
+                query = string.Format("SELECT * FROM `Discounts` WHERE Operator_id='{0}'", Id.ToString());
+                 answer1 = db.MakeRequest<Discounts.Discount>(query);
+                 exist1 = false;
+                foreach (var j in answer1)
+                {
+                    foreach (var i in Discount_Ides)
+                    {
+                        if (i == j.Id || j.Client_id!=0)
+                        {
+                            exist1 = true;
+                            break;
+                        }
+                    }
+                    if (!exist1)
+                    {
+                        j.Delete();
+                    }
+                }
+                #endregion
+            }
+            //В другом случае создать новую запись, и присвоить должности ID
+            else
+            {
+                //Строка-запрос
+                query = string.Format("INSERT INTO `Positions`(`name`, `created`) VALUES ('{0}','{1}'); SELECT * FROM `Positions` order by id desc;", Name, MySqlWorker.DataBase.ConvertDateToMySqlString(DateTime.Now));
+                //Создает запрос и возвращает результат
+                list = db.MakeRequest(query);
+                //Присвоить id
+                Id = (int)(list[0])["id"];
+            }
+            //Операция закончена, возвращает тру
+        }
+        public static Operator FindById(int id)
+        {
+            //Запрос
+            string query = string.Format("SELECT * FROM `Operators` WHERE id={0}", id);
+            //База данных
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
+            //Создает запрос и возвращает результат
+            var list = db.MakeRequest<Operator>(query);
+            //Если ничего не нашло, то возвращает ноль
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            //Если нашло, то создает объект должности
+            else
+            {
+                //создает объект должности
+                Operator position = list[0];
+                return position;
+            }
+        }
+
+    }
+}

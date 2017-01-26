@@ -200,7 +200,7 @@ namespace OTBaseNew.Clients
                 {
                     foreach (var i in Discounts_Ides)
                     {
-                        if (i == j.Id)
+                        if (i == j.Id || j.Operator_id!=0)
                         {
                             exist1 = true;
                             break;

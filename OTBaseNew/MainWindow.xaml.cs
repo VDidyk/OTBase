@@ -22,9 +22,6 @@ namespace OTBaseNew
         public MainWindow()
         {
             InitializeComponent();
-            string path = @"\\dc\zlk\profiles\v.didyk\Desktop\Scan10011.JPG";
-            Documents.Document d = Documents.Document.FindById(6);
-            d.WriteDocument(@"\\dc\zlk\profiles\v.didyk\Desktop");
         }
     }
 }
