@@ -32,6 +32,14 @@ namespace OTBaseNew.Passports
         /// </summary>
         public string given_by { set; get; }
         /// <summary>
+        /// Имя
+        /// </summary>
+        public string Fname { set; get; }
+        /// <summary>
+        /// Фамилия
+        /// </summary>
+        public string Lname { set; get; }
+        /// <summary>
         /// Сохранить объект
         /// </summary>
         public void Save()
@@ -50,7 +58,7 @@ namespace OTBaseNew.Passports
             if (list.Count != 0)
             {
                 //Строка-запрос
-                query = string.Format("UPDATE Passports SET series='{0}', given_when='{1}', given_the_time='{2}',given_by='{3}' WHERE id={4}", series,MySqlWorker.DataBase.ConvertDateToMySqlString(given_when),MySqlWorker.DataBase.ConvertDateToMySqlString(given_the_time),given_by, id);
+                query = string.Format("UPDATE Passports SET series='{0}', given_when='{1}', given_the_time='{2}',given_by='{3}',Fname='{5}',Lname='{6}', WHERE id={4}", series, MySqlWorker.DataBase.ConvertDateToMySqlString(given_when), MySqlWorker.DataBase.ConvertDateToMySqlString(given_the_time), given_by, id,Fname,Lname);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
             }
@@ -58,7 +66,7 @@ namespace OTBaseNew.Passports
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Passports`(`series`, `given_when`, `given_the_time`, `given_by`) VALUES ('{0}','{1}','{2}','{3}'); SELECT * FROM `Positions` order by id desc;", series, MySqlWorker.DataBase.ConvertDateToMySqlString(given_when), MySqlWorker.DataBase.ConvertDateToMySqlString(given_the_time), given_by);
+                query = string.Format("INSERT INTO `Passports`(`series`, `given_when`, `given_the_time`, `given_by`,`Fname`,`Lname`) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}'); SELECT * FROM `Positions` order by id desc;", series, MySqlWorker.DataBase.ConvertDateToMySqlString(given_when), MySqlWorker.DataBase.ConvertDateToMySqlString(given_the_time), given_by,Fname,Lname);
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id
