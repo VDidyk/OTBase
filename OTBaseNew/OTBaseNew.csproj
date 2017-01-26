@@ -66,10 +66,12 @@
     <Compile Include="Documents\Document.cs" />
     <Compile Include="Emails\Email.cs" />
     <Compile Include="Addresses\Address.cs" />
+    <Compile Include="Operators\Operator.cs" />
     <Compile Include="Passports\Passport.cs" />
     <Compile Include="Phones\Phone.cs" />
     <Compile Include="Positions\Position.cs" />
     <Compile Include="Regions\Region.cs" />
+    <Compile Include="Requests\Request.cs" />
     <Compile Include="Resourses\Resourse.cs" />
     <Compile Include="SQL\SqlConnect.cs" />
     <Compile Include="Users\User.cs" />
@@ -113,9 +115,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Operators\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

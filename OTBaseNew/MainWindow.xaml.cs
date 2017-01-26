@@ -22,6 +22,7 @@ namespace OTBaseNew
         public MainWindow()
         {
             InitializeComponent();
+            Requests.Request r = Requests.Request.FindById(1);
         }
     }
 }
