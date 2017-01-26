@@ -477,7 +477,7 @@ namespace OTBaseNew.Users
         /// <summary>
         /// Клиенты,с которыми работает пользователь
         /// </summary>
-        public List<Clients.Client> GetClientsEdited
+        public List<Clients.Client> GetClientsWorking
         {
             private set { }
             get

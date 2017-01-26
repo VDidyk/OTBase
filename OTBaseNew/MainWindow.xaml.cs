@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 namespace OTBaseNew
 {
     /// <summary>
@@ -23,6 +22,9 @@ namespace OTBaseNew
         public MainWindow()
         {
             InitializeComponent();
+            string path = @"\\dc\zlk\profiles\v.didyk\Desktop\Scan10011.JPG";
+            Documents.Document d = Documents.Document.FindById(6);
+            d.WriteDocument(@"\\dc\zlk\profiles\v.didyk\Desktop");
         }
     }
 }

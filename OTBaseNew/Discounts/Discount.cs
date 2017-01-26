@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace OTBaseNew.Discounts
 {
-    class Discount
+    public class Discount
     {
         /// <summary>
         /// ИД
@@ -19,7 +18,7 @@ namespace OTBaseNew.Discounts
         /// <summary>
         /// Скидка
         /// </summary>
-        public string Discount { set; get; }
+        public string discount { set; get; }
         /// <summary>
         /// Клиента ИД
         /// </summary>
@@ -55,7 +54,7 @@ namespace OTBaseNew.Discounts
             if (list.Count != 0)
             {
                 //Строка-запрос
-                query = string.Format("UPDATE Discounts SET Tour='{0}',Discount='{1}' Client_id='{2}' WHERE id={3}",Tour,Discount,Client_id.ToString(), Id);
+                query = string.Format("UPDATE Discounts SET Tour='{0}',Discount='{1}' Client_id='{2}' WHERE id={3}",Tour,discount,Client_id.ToString(), Id);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
             }
@@ -63,7 +62,7 @@ namespace OTBaseNew.Discounts
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Discounts`(`tour`, `discount`, `client_id`) VALUES ('{0}','{1}','{2}')", Tour, Discount, Client_id.ToString());
+                query = string.Format("INSERT INTO `Discounts`(`tour`, `discount`, `client_id`) VALUES ('{0}','{1}','{2}')", Tour, discount, Client_id.ToString());
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id
