@@ -99,5 +99,31 @@ namespace OTBaseNew.Resourses
                 return position;
             }
         }
+
+        /// <summary>
+        /// Клиенты
+        /// </summary>
+        public List<Clients.Client> GetClients
+        {
+            private set { }
+            get
+            {
+                string query = string.Format(" select * from Clients where Clients.resourse_id = {0}", Id);
+                //База данных
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                //Создает запрос и возвращает результат
+                var list = db.MakeRequest(query);
+                //Список, в который будут добавяться пользователи
+                List<Clients.Client> clients = new List<Clients.Client>();
+                //Прогон по результату с запроса
+                foreach (var i in list)
+                {
+                    //Добавляем пользователя ищя его по ИД
+                    clients.Add(Clients.Client.FindById(Convert.ToInt32(i["id"])));
+                }
+                //Возврат пользователей
+                return clients;
+            }
+        }
     }
 }

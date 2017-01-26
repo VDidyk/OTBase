@@ -422,5 +422,82 @@ namespace OTBaseNew.Users
             }
         }
 
+        /// <summary>
+        /// Клиенты, которые были созданы пользователем
+        /// </summary>
+        public List<Clients.Client> GetClientsCreated
+        {
+            private set { }
+            get
+            {
+                string query = string.Format(" select * from Clients where Clients.Created_user_id = {0}", Id);
+                //База данных
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                //Создает запрос и возвращает результат
+                var list = db.MakeRequest(query);
+                //Список, в который будут добавяться пользователи
+                List<Clients.Client> clients = new List<Clients.Client>();
+                //Прогон по результату с запроса
+                foreach (var i in list)
+                {
+                    //Добавляем пользователя ищя его по ИД
+                    clients.Add(Clients.Client.FindById(Convert.ToInt32(i["id"])));
+                }
+                //Возврат пользователей
+                return clients;
+            }
+        }
+
+        /// <summary>
+        /// Клиенты, которые были изменены пользователем
+        /// </summary>
+        public List<Clients.Client> GetClientsEdited
+        {
+            private set { }
+            get
+            {
+                string query = string.Format(" select * from Clients where Clients.Last_edit_user_id = {0}", Id);
+                //База данных
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                //Создает запрос и возвращает результат
+                var list = db.MakeRequest(query);
+                //Список, в который будут добавяться пользователи
+                List<Clients.Client> clients = new List<Clients.Client>();
+                //Прогон по результату с запроса
+                foreach (var i in list)
+                {
+                    //Добавляем пользователя ищя его по ИД
+                    clients.Add(Clients.Client.FindById(Convert.ToInt32(i["id"])));
+                }
+                //Возврат пользователей
+                return clients;
+            }
+        }
+
+        /// <summary>
+        /// Клиенты,с которыми работает пользователь
+        /// </summary>
+        public List<Clients.Client> GetClientsEdited
+        {
+            private set { }
+            get
+            {
+                string query = string.Format(" select * from Clients where Clients.Working_user_id = {0}", Id);
+                //База данных
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                //Создает запрос и возвращает результат
+                var list = db.MakeRequest(query);
+                //Список, в который будут добавяться пользователи
+                List<Clients.Client> clients = new List<Clients.Client>();
+                //Прогон по результату с запроса
+                foreach (var i in list)
+                {
+                    //Добавляем пользователя ищя его по ИД
+                    clients.Add(Clients.Client.FindById(Convert.ToInt32(i["id"])));
+                }
+                //Возврат пользователей
+                return clients;
+            }
+        }
     }
 }

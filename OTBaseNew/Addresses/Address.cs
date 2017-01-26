@@ -107,7 +107,31 @@ namespace OTBaseNew.Addresses
                 return Cities.City.FindById(city_id);
             }
         }
-
+        /// <summary>
+        /// Владельцы аддресса
+        /// </summary>
+        public List<Clients.Client> ClientOwners
+        {
+            private set { }
+            get
+            {
+                string query = string.Format(" select * from Clients where Clients.address_id = {0}", id);
+                //База данных
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                //Создает запрос и возвращает результат
+                var list = db.MakeRequest(query);
+                //Список, в который будут добавяться пользователи
+                List<Clients.Client> clients = new List<Clients.Client>();
+                //Прогон по результату с запроса
+                foreach (var i in list)
+                {
+                    //Добавляем пользователя ищя его по ИД
+                    clients.Add(Clients.Client.FindById(Convert.ToInt32(i["id"])));
+                }
+                //Возврат пользователей
+                return clients;
+            }
+        }
     }
     
 }

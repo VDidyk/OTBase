@@ -68,11 +68,16 @@ namespace OTBaseNew.Clients
         /// Мейлы
         /// </summary>
         public List<int> Emails_Ides;
+        /// <summary>
+        /// Скидки
+        /// </summary>
+        public List<int> Discounts_Ides;
         public Client()
         {
             Created = DateTime.Now;
             Phones_Ides = new List<int>();
             Emails_Ides = new List<int>();
+            Discounts_Ides = new List<int>();
         }
         /// <summary>
         /// Сохраняет клиента в БД
@@ -186,6 +191,27 @@ namespace OTBaseNew.Clients
                     }
                 }
                 #endregion
+                #region Работа со скидками
+                //Строка-запрос
+                query = string.Format("SELECT * FROM `Discounts` WHERE Client_id='{0}'", Id.ToString());
+                var answer1 = db.MakeRequest<Discounts.Discount>(query);
+                bool exist1 = false;
+                foreach (var j in answer1)
+                {
+                    foreach (var i in Discounts_Ides)
+                    {
+                        if (i == j.Id)
+                        {
+                            exist1 = true;
+                            break;
+                        }
+                    }
+                    if (!exist1)
+                    {
+                        j.Delete();
+                    }
+                }
+                #endregion
             }
             //В другом случае создать новую запись, и присвоить должности ID
             else
@@ -287,6 +313,11 @@ namespace OTBaseNew.Clients
                 GetAddress.Delete();
                 //Удаляет аддресс
                 GetPassport.Delete();
+                //Удаляет скидки
+                foreach(var i in GetDiscounts)
+                {
+                    i.Delete();
+                }
             }
         }
         /// <summary>
@@ -417,5 +448,29 @@ namespace OTBaseNew.Clients
                 return emails;
             }
         }
+        /// <summary>
+        /// Скидки
+        /// </summary>
+        public List<Discounts.Discount> GetDiscounts
+        {
+            set
+            {
+                Discounts_Ides.Clear();
+                foreach (var i in value)
+                {
+                    Discounts_Ides.Add(i.Id);
+                }
+            }
+            get
+            {
+                List<Discounts.Discount> discounts = new List<Discounts.Discount>();
+                foreach (var i in Discounts_Ides)
+                {
+                    discounts.Add(Discounts.Discount.FindById(i));
+                }
+                return discounts;
+            }
+        }
+
     }
 }
