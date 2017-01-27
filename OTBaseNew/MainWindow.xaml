@@ -56,39 +56,39 @@
                 </Grid.ColumnDefinitions>
                 <Border BorderBrush="Red" BorderThickness="0 0 1 0" Grid.Column="0">
                     <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                    <StackPanel>
-                        <Border Style="{DynamicResource MenuBorderStyle}" Name="ClientsButton" >
-                            <Grid>
-                                <StackPanel>
-                                    <Image Name="ClientsMenuImages"  Margin="10,0" Height="188"/>
-                                    <Label Style="{DynamicResource LabelStyle}" Content="Клієнти" FontSize="20" HorizontalContentAlignment="Center"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                        <Border Style="{DynamicResource MenuBorderStyle}" Name="RequestsButton" >
-                            <Grid>
-                                <StackPanel>
-                                    <Image Name="RequestsMenuImages"  Margin="10,0" Height="188"/>
-                                    <Label Style="{DynamicResource LabelStyle}" Content="Запити" FontSize="20" HorizontalContentAlignment="Center"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                        <Border Style="{DynamicResource MenuBorderStyle}" Name="UsersButton" >
-                            <Grid>
-                                <StackPanel>
-                                    <Image Name="UsersMenuImages"  Margin="10,0" Height="188"/>
-                                    <Label Style="{DynamicResource LabelStyle}" Content="Користувачі" FontSize="20" HorizontalContentAlignment="Center"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                        <Border Style="{DynamicResource MenuBorderStyle}" Name="OperatorsButton" >
-                            <Grid>
-                                <StackPanel>
-                                    <Image Name="OperatorsMenuImages"  Margin="10,0" Height="188"/>
-                                    <Label Style="{DynamicResource LabelStyle}" Content="Оператори" FontSize="20" HorizontalContentAlignment="Center"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
+                        <StackPanel>
+                            <Border Style="{DynamicResource MenuBorderStyle}" Name="ClientsButton" >
+                                <Grid>
+                                    <StackPanel>
+                                        <Image Name="ClientsMenuImages"  Margin="10,0" Height="188"/>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Клієнти" FontSize="20" HorizontalContentAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <Border Style="{DynamicResource MenuBorderStyle}" Name="RequestsButton" >
+                                <Grid>
+                                    <StackPanel>
+                                        <Image Name="RequestsMenuImages"  Margin="10,0" Height="188"/>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Запити" FontSize="20" HorizontalContentAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <Border Style="{DynamicResource MenuBorderStyle}" Name="UsersButton" >
+                                <Grid>
+                                    <StackPanel>
+                                        <Image Name="UsersMenuImages"  Margin="10,0" Height="188"/>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Користувачі" FontSize="20" HorizontalContentAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <Border Style="{DynamicResource MenuBorderStyle}" Name="OperatorsButton" >
+                                <Grid>
+                                    <StackPanel>
+                                        <Image Name="OperatorsMenuImages"  Margin="10,0" Height="188"/>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Оператори" FontSize="20" HorizontalContentAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
                             <Border Style="{DynamicResource MenuBorderStyle}" Name="ConfigButton" >
                                 <Grid>
                                     <StackPanel>
@@ -101,7 +101,45 @@
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
-                <Border BorderBrush="White" BorderThickness="0 1 1 1" Grid.Column="1" />
+                <Border BorderBrush="White" BorderThickness="0 1 1 1" Grid.Column="1">
+                    <Grid>
+                        <StackPanel>
+                            <Label Style="{DynamicResource LabelStyle}" Background="#FFF4FFFE" Content="Клієнти" FontSize="50" HorizontalContentAlignment="Center"></Label>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="738*"/>
+                                    <ColumnDefinition Width="737*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border BorderBrush="Black" BorderThickness="0 1 1 1" Grid.Column="0"/>
+
+                                <Border Background="#FFF4FFFF" BorderThickness="1" BorderBrush="Azure" Grid.Column="1">
+                                    <StackPanel>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Додати клієнта" FontSize="30" HorizontalContentAlignment="Center"></Label>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Ім'я" FontSize="25" HorizontalContentAlignment="Center" FontWeight="Medium"></Label>
+                                        <TextBox Name="Fname" Style="{DynamicResource TexBoxStyle}" Height="30" Margin="10 0 10 0"/>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Прізвище" FontSize="25" HorizontalContentAlignment="Center" FontWeight="Medium"></Label>
+                                        <TextBox Name="Lname" Style="{DynamicResource TexBoxStyle}" Height="30" Margin="10 0 10 0"/>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="По-Батькові" FontSize="25" HorizontalContentAlignment="Center" FontWeight="Medium"></Label>
+                                        <TextBox Name="Mname" Style="{DynamicResource TexBoxStyle}" Height="30" Margin="10 0 10 0"/>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Дата народження" FontSize="25" HorizontalContentAlignment="Center" FontWeight="Medium"></Label>
+                                        <DatePicker Name="Bday" Style="{DynamicResource DatePickerStyle}"  Height="30" Margin="10 0 10 10" Background="White">
+                                        </DatePicker>
+                                        <Button Name="AddAddressBtn" Style="{DynamicResource ButtonStyle}" Content="Додати адресу" Height="30" Margin="10 0 10 10" FontSize="18" Background="LightBlue" Foreground="Black"/>
+                                        <Button Name="AddPassportBtn" Style="{DynamicResource ButtonStyle}" Content="Додати паспортні дані" Height="30" Margin="10 0 10 10" FontSize="18" Background="LightCoral" Foreground="Black"/>
+                                        <Button Name="AddPonestBtn" Style="{DynamicResource ButtonStyle}" Content="Додати телефонні дані" Height="30" Margin="10 0 10 10" FontSize="18" Background="LightGoldenrodYellow" Foreground="Black"/>
+                                        <Button Name="AddEmailstBtn" Style="{DynamicResource ButtonStyle}" Content="Додати E-Mail дані" Height="30" Margin="10 0 10 10" FontSize="18" Background="LightGray" Foreground="Black"/>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Ресурс" FontSize="25" HorizontalContentAlignment="Center" FontWeight="Medium"></Label>
+                                        <ComboBox Style="{DynamicResource ComboBoxStyle}" Name="Resourseslist" Height="30" Margin="10 0 10 10"/>
+                                        <Button Name="AddClientBtn" Style="{DynamicResource ButtonStyle}" Content="Додати" Height="30" Margin="10 0 10 10" FontSize="18" Background="#FF1BC31B" Foreground="White"/>
+                                        <Button Name="ClearClientsFieldsBtn" Style="{DynamicResource ButtonStyle}" Content="Почистити" Height="30" Margin="10 0 10 10" FontSize="18" Background="#FFEA1C1C" Foreground="White"/>
+
+                                    </StackPanel>
+
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Border>
             </Grid>
         </Grid>
 
