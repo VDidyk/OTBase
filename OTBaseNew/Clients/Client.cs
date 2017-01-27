@@ -72,12 +72,14 @@ namespace OTBaseNew.Clients
         /// Скидки
         /// </summary>
         public List<int> Discounts_Ides;
+        public List<int> Requests_Ides;
         public Client()
         {
             Created = DateTime.Now;
             Phones_Ides = new List<int>();
             Emails_Ides = new List<int>();
             Discounts_Ides = new List<int>();
+            Requests_Ides = new List<int>();
         }
         /// <summary>
         /// Сохраняет клиента в БД
@@ -200,7 +202,7 @@ namespace OTBaseNew.Clients
                 {
                     foreach (var i in Discounts_Ides)
                     {
-                        if (i == j.Id || j.Operator_id!=0)
+                        if (i == j.Id || j.Operator_id != 0)
                         {
                             exist1 = true;
                             break;
@@ -212,6 +214,54 @@ namespace OTBaseNew.Clients
                     }
                 }
                 #endregion
+                #region Работа с запросами
+                //Прогон по идентификаторам пользователей
+                foreach (var i in Requests_Ides)
+                {
+                    //Строка-запрос
+                    query = string.Format("SELECT * FROM `ClientsAndRequests` WHERE Request_id={0} && Client_id={1}", i.ToString(), Id.ToString());
+                    //Ответ или есть уже такая запись
+                    var answer = db.MakeRequest(query);
+                    //Если такой записи нету, то дабавляет
+                    if (answer.Count == 0)
+                    {
+                        //Строка-запрос
+                        query = string.Format("INSERT INTO `ClientsAndRequests`(`Request_id`, `Client_id`) VALUES ({0},{1})", i.ToString(), Id.ToString());
+                        //Запуск запроса
+                        db.MakeRequest(query);
+                    }
+                }
+                //Строка-запрос
+                query = string.Format("Select * from `ClientsAndRequests` where Client_id={0}", Id);
+                //Ищет всех пользователей которые имеют это номер
+                asnwer1 = db.MakeRequest(query);
+                //Прогон по пользователях
+                foreach (var i in asnwer1)
+                {
+                    //Есть ли телефон в списке
+                    bool exist = false;
+                    //Прогон по айди
+                    foreach (var j in Requests_Ides)
+                    {
+                        //Если телефон сущесвтует, то его удалять не надо
+                        if (Convert.ToInt32(i["Request_id"]) == j)
+                        {
+                            //Телефон существует
+                            exist = true;
+                            break;
+                        }
+                    }
+                    //Если не сущесвует
+                    if (!exist)
+                    {
+                        //Срока-запрос
+                        query = string.Format("Delete from `ClientsAndRequests` where Id={0}", Convert.ToInt32(i["Id"]));
+                        //Удаляем ее из базы
+                        db.MakeRequest(query);
+                    }
+                }
+                #endregion
+
             }
             //В другом случае создать новую запись, и присвоить должности ID
             else
@@ -242,6 +292,17 @@ namespace OTBaseNew.Clients
                     db.MakeRequest(query);
                 }
                 #endregion
+                #region Работа с запросами
+                //Прогон по идентификаторам пользователей
+                foreach (var i in Requests_Ides)
+                {
+                    //Строка-запрос
+                    query = string.Format("INSERT INTO `ClientsAndRequests`(`Request_id`, `Client_id`) VALUES ({0},{1})", i.ToString(), Id.ToString());
+                    //Запуск запроса
+                    db.MakeRequest(query);
+                }
+                #endregion
+
             }
             //Операция закончена, возвращает тру
         }
@@ -297,11 +358,15 @@ namespace OTBaseNew.Clients
             {
                 //База данных
                 MySqlWorker.DataBase db = SQL.SqlConnect.db;
-                //Строка-запрос для удаления из таблицы Телефон-Пользователь
-                string query = string.Format("DELETE FROM  `PhonesAndClients` WHERE  `Client_id` = {0}", Id);
+                //Строка-запрос для удаления из таблицы Заявка-Клиент
+                string query = string.Format("DELETE FROM  `ClientsAndRequests` WHERE  `Client_id` = {0}", Id);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
-                //Строка-запрос для удаления из таблицы Мейлы-Пользователь
+                //Строка-запрос для удаления из таблицы Телефон-Клиент
+                 query = string.Format("DELETE FROM  `PhonesAndClients` WHERE  `Client_id` = {0}", Id);
+                //Создает запрос и возвращает результат
+                db.MakeRequest(query);
+                //Строка-запрос для удаления из таблицы Мейлы-Клиент
                 query = string.Format("DELETE FROM  `EmailsAndClients` WHERE  `Client_id` = {0}", Id);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
@@ -314,7 +379,7 @@ namespace OTBaseNew.Clients
                 //Удаляет аддресс
                 GetPassport.Delete();
                 //Удаляет скидки
-                foreach(var i in GetDiscounts)
+                foreach (var i in GetDiscounts)
                 {
                     i.Delete();
                 }
@@ -404,7 +469,6 @@ namespace OTBaseNew.Clients
                 return Users.User.FindById(Working_user_id);
             }
         }
-
         public List<Phones.Phone> GetPhones
         {
             set
@@ -469,6 +533,26 @@ namespace OTBaseNew.Clients
                     discounts.Add(Discounts.Discount.FindById(i));
                 }
                 return discounts;
+            }
+        }
+        public List<Requests.Request> GetRequests
+        {
+            set
+            {
+                Requests_Ides.Clear();
+                foreach (var i in value)
+                {
+                    Requests_Ides.Add(i.Id);
+                }
+            }
+            get
+            {
+                List<Requests.Request> requests = new List<Requests.Request>();
+                foreach (var i in Requests_Ides)
+                {
+                    requests.Add(Requests.Request.FindById(i));
+                }
+                return requests;
             }
         }
 

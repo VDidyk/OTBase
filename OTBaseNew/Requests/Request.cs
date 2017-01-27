@@ -66,14 +66,6 @@ namespace OTBaseNew.Requests
         /// </summary>
         public int Created_user_id { set; get; }
         /// <summary>
-        /// Пользователь, который последний редактировал заявку
-        /// </summary>
-        public int Last_edit_user_id { set; get; }
-        /// <summary>
-        /// Когда заявка была изменена последний раз
-        /// </summary>
-        public DateTime When_was_edited { set; get; }
-        /// <summary>
         /// Смотриться ли заявка
         /// </summary>
         public bool Look { set; get; }
@@ -106,10 +98,10 @@ namespace OTBaseNew.Requests
             if (list.Count != 0)
             {
                 //Строка-запрос
-                query = string.Format("UPDATE Request SET Get_passport='{0}',Visa_is_important='{1}',Get_visa='{2}',Price_of_tour='{3}',Price_of_client='{4}',Paid_sum='{5}',Where_to_fly='{6}',From_where_to_fly='{7}',Date_to_go='{8}',Date_to_arrive='{9}',Hotel='{10}',Created='{11}',Operator_id='{12}',Created_user_id='{13}',Last_edit_user_id='{14}',When_was_edited='{15}',Look='{16}',Status_id='{17}',Serial_number='{18}' WHERE id={19}",
-                    MySqlWorker.DataBase.ConvertBoolToInt(Get_passport) , MySqlWorker.DataBase.ConvertBoolToInt(Visa_is_important) , MySqlWorker.DataBase.ConvertBoolToInt(Get_visa) , Price_of_tour.ToString() , Price_of_client.ToString() , Paid_sum.ToString() ,  Where_to_fly , From_where_to_fly , MySqlWorker.DataBase.ConvertDateToMySqlString(Date_to_go) , MySqlWorker.DataBase.ConvertDateToMySqlString(Date_to_arrive) ,
-                    Hotel , MySqlWorker.DataBase.ConvertDateToMySqlString(Created) ,
-                    Operator_id.ToString() , Created_user_id.ToString() , Last_edit_user_id.ToString() , MySqlWorker.DataBase.ConvertDateToMySqlString(When_was_edited) , MySqlWorker.DataBase.ConvertBoolToInt(Look) , Status_id.ToString() , Serial_number , Id);
+                query = string.Format("UPDATE Request SET Get_passport='{0}',Visa_is_important='{1}',Get_visa='{2}',Price_of_tour='{3}',Price_of_client='{4}',Paid_sum='{5}',Where_to_fly='{6}',From_where_to_fly='{7}',Date_to_go='{8}',Date_to_arrive='{9}',Hotel='{10}',Created='{11}',Operator_id='{12}',Created_user_id='{13}',Look='{14}',Status_id='{15}',Serial_number='{16}' WHERE id={17}",
+                    MySqlWorker.DataBase.ConvertBoolToInt(Get_passport), MySqlWorker.DataBase.ConvertBoolToInt(Visa_is_important), MySqlWorker.DataBase.ConvertBoolToInt(Get_visa), Price_of_tour.ToString(), Price_of_client.ToString(), Paid_sum.ToString(), Where_to_fly, From_where_to_fly, MySqlWorker.DataBase.ConvertDateToMySqlString(Date_to_go), MySqlWorker.DataBase.ConvertDateToMySqlString(Date_to_arrive),
+                    Hotel, MySqlWorker.DataBase.ConvertDateToMySqlString(Created),
+                    Operator_id.ToString(), Created_user_id.ToString(), MySqlWorker.DataBase.ConvertBoolToInt(Look), Status_id.ToString(), Serial_number, Id);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
                 #region Работа с клиентами
@@ -165,7 +157,7 @@ namespace OTBaseNew.Requests
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Request`(`get_passport`, `get_visa`, `visa_is_important`, `price_of_tour`, `price_of_client`, `paid_sum`, `where_to_fly`, `from_where_to_fly`, `date_to_go`, `date_to_arrive`, `hotel`, `created`, `operator_id`, `created_user_id`, `Last_edit_user_id`, `when_was_edited`, `look`, `Status_id`, `serial_number`) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}','{16}','{17}','{18}'); SELECT * FROM `Request` order by id desc;",MySqlWorker.DataBase.ConvertBoolToInt(Get_passport),MySqlWorker.DataBase.ConvertBoolToInt(Get_visa),MySqlWorker.DataBase.ConvertBoolToInt(Visa_is_important),Price_of_tour.ToString(),Price_of_client.ToString(),Paid_sum.ToString(),Where_to_fly,From_where_to_fly,MySqlWorker.DataBase.ConvertDateToMySqlString(Date_to_go),MySqlWorker.DataBase.ConvertDateToMySqlString(Date_to_arrive),Hotel,MySqlWorker.DataBase.ConvertDateToMySqlString(Created),Operator_id.ToString(),Created_user_id.ToString(),Last_edit_user_id.ToString(),MySqlWorker.DataBase.ConvertDateToMySqlString(When_was_edited),MySqlWorker.DataBase.ConvertBoolToInt(Look),Status_id.ToString(),Serial_number);
+                query = string.Format("INSERT INTO `Request`(`get_passport`, `get_visa`, `visa_is_important`, `price_of_tour`, `price_of_client`, `paid_sum`, `where_to_fly`, `from_where_to_fly`, `date_to_go`, `date_to_arrive`, `hotel`, `created`, `operator_id`, `created_user_id`, `look`, `Status_id`, `serial_number`) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}','{16}'); SELECT * FROM `Request` order by id desc;", MySqlWorker.DataBase.ConvertBoolToInt(Get_passport), MySqlWorker.DataBase.ConvertBoolToInt(Get_visa), MySqlWorker.DataBase.ConvertBoolToInt(Visa_is_important), Price_of_tour.ToString(), Price_of_client.ToString(), Paid_sum.ToString(), Where_to_fly, From_where_to_fly, MySqlWorker.DataBase.ConvertDateToMySqlString(Date_to_go), MySqlWorker.DataBase.ConvertDateToMySqlString(Date_to_arrive), Hotel, MySqlWorker.DataBase.ConvertDateToMySqlString(Created), Operator_id.ToString(), Created_user_id.ToString(), MySqlWorker.DataBase.ConvertBoolToInt(Look), Status_id.ToString(), Serial_number);
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id
@@ -212,7 +204,7 @@ namespace OTBaseNew.Requests
                     //Добавление телефонов в список
                     us.Clients_Ides.Add(Convert.ToInt32(i["Client_id"]));
                 }
-             
+
 
                 //Возвращает пользователя
                 return us;
@@ -226,6 +218,12 @@ namespace OTBaseNew.Requests
                 MySqlWorker.DataBase db = SQL.SqlConnect.db;
                 //Строка-запрос для удаления из таблицы Телефон-Пользователь
                 string query = string.Format("DELETE FROM  `ClientsAndRequests` WHERE  `Request_id` = {0}", Id);
+
+                foreach(var i in GetActions)
+                {
+                    i.Delete();
+                }
+
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
                 //Строка-запрос для удаления из таблицы Пользователь-Запрос
@@ -237,7 +235,84 @@ namespace OTBaseNew.Requests
                 //Удаляет адрес с базы данных
             }
         }
-
+        /// <summary>
+        /// Клиенты
+        /// </summary>
+        public List<Clients.Client> GetClients
+        {
+            set
+            {
+                Clients_Ides.Clear();
+                foreach (var i in value)
+                {
+                    Clients_Ides.Add(i.Id);
+                }
+            }
+            get
+            {
+                List<Clients.Client> clients = new List<Clients.Client>();
+                foreach (var i in Clients_Ides)
+                {
+                    clients.Add(Clients.Client.FindById(i));
+                }
+                return clients;
+            }
+        }
+        /// <summary>
+        /// Статус
+        /// </summary>
+        public Statuses.Status GetStatus
+        {
+            set
+            {
+                Status_id = value.Id;
+            }
+            get
+            {
+                return Statuses.Status.FindById(Status_id);
+            }
+        }
+        /// <summary>
+        /// Оператор
+        /// </summary>
+        public Operators.Operator GetOperator
+        {
+            set
+            {
+                Operator_id = value.Id;
+            }
+            get
+            {
+                return Operators.Operator.FindById(Operator_id);
+            }
+        }
+        /// <summary>
+        /// Пользователь который создал заявку
+        /// </summary>
+        public Users.User GetCreated_user
+        {
+            set
+            {
+                Created_user_id = value.Id;
+            }
+            get
+            {
+                return Users.User.FindById(Created_user_id);
+            }
+        }
+        public List<Actions.Action> GetActions
+        {
+            private set { ;}
+            get
+            {
+                List<Requests.Request> requests = new List<Requests.Request>();
+                string query = string.Format("SELECT * FROM `Action` WHERE Requst_id={0}", Id);
+                //База данных
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                var list = db.MakeRequest<Actions.Action>(query);
+                return list;
+            }
+        }
 
     }
 }

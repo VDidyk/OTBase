@@ -45,7 +45,7 @@ namespace OTBaseNew.Operators
             if (list.Count != 0)
             {
                 //Строка-запрос
-                query = string.Format("UPDATE Positions SET name='{0}',Site='{1}' WHERE id={2}", Name,Site, Id);
+                query = string.Format("UPDATE Positions SET name='{0}',Site='{1}' WHERE id={2}", Name, Site, Id);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
                 #region Работа с документами
@@ -72,13 +72,13 @@ namespace OTBaseNew.Operators
                 #region Работа с документами
                 //Строка-запрос
                 query = string.Format("SELECT * FROM `Discounts` WHERE Operator_id='{0}'", Id.ToString());
-                 answer1 = db.MakeRequest<Discounts.Discount>(query);
-                 exist1 = false;
+                answer1 = db.MakeRequest<Discounts.Discount>(query);
+                exist1 = false;
                 foreach (var j in answer1)
                 {
                     foreach (var i in Discount_Ides)
                     {
-                        if (i == j.Id || j.Client_id!=0)
+                        if (i == j.Id || j.Client_id != 0)
                         {
                             exist1 = true;
                             break;
@@ -124,6 +124,22 @@ namespace OTBaseNew.Operators
                 return position;
             }
         }
+        /// <summary>
+        /// Заявки по операторах
+        /// </summary>
+        public List<Requests.Request> GetRequests
+        {
 
+            private set { ;}
+            get
+            {
+                List<Requests.Request> requests = new List<Requests.Request>();
+                string query = string.Format("SELECT * FROM `Request` WHERE Operator_id={0}", Id);
+                //База данных
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                var list = db.MakeRequest<Requests.Request>(query);
+                return list;
+            }
+        }
     }
 }

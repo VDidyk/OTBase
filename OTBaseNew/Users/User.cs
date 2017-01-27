@@ -499,5 +499,30 @@ namespace OTBaseNew.Users
                 return clients;
             }
         }
+        /// <summary>
+        /// Заявки, которые пользователь создал
+        /// </summary>
+        public List<Clients.Client> GetRequestsCreated
+        {
+            private set { }
+            get
+            {
+                string query = string.Format(" select * from Request where Clients.Created_user_id = {0}", Id);
+                //База данных
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                //Создает запрос и возвращает результат
+                var list = db.MakeRequest(query);
+                //Список, в который будут добавяться пользователи
+                List<Clients.Client> clients = new List<Clients.Client>();
+                //Прогон по результату с запроса
+                foreach (var i in list)
+                {
+                    //Добавляем пользователя ищя его по ИД
+                    clients.Add(Clients.Client.FindById(Convert.ToInt32(i["id"])));
+                }
+                //Возврат пользователей
+                return clients;
+            }
+        }
     }
 }

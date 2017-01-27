@@ -60,6 +60,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Actions\Action.cs" />
     <Compile Include="Cities\City.cs" />
     <Compile Include="Clients\Client.cs" />
     <Compile Include="Discounts\Discount.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Requests\Request.cs" />
     <Compile Include="Resourses\Resourse.cs" />
     <Compile Include="SQL\SqlConnect.cs" />
+    <Compile Include="Statuses\Status.cs" />
     <Compile Include="Users\User.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
