@@ -68,6 +68,9 @@
     <Compile Include="Emails\Email.cs" />
     <Compile Include="Addresses\Address.cs" />
     <Compile Include="Operators\Operator.cs" />
+    <Compile Include="Other\Alarm.xaml.cs">
+      <DependentUpon>Alarm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Passports\Passport.cs" />
     <Compile Include="Phones\Phone.cs" />
     <Compile Include="Positions\Position.cs" />
@@ -76,7 +79,14 @@
     <Compile Include="Resourses\Resourse.cs" />
     <Compile Include="SQL\SqlConnect.cs" />
     <Compile Include="Statuses\Status.cs" />
+    <Compile Include="Users\AutorizationWindow.xaml.cs">
+      <DependentUpon>AutorizationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Users\User.cs" />
+    <Page Include="MainDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -89,6 +99,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Other\Alarm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Users\AutorizationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
