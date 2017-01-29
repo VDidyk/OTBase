@@ -31,30 +31,43 @@ namespace MySqlWorker
         /// <returns>Значения, возвращаемые запросом</returns>
         public List<Dictionary<string, object>> MakeRequest(string request)
         {
-            //Открыть конект
-            connect.Open();
+            bool yes=false;
             List<Dictionary<string, object>> list_of_values = new List<Dictionary<string, object>>();
-            //Команда для создания запроса
-            MySqlCommand command = connect.CreateCommand();
-            //Присвоение запроса к команде
-            command.CommandText = request;
-            //Выполнение запроса
-            MySqlDataReader reader = command.ExecuteReader();
-            //Словарь, в котором сохраняются значения
-            //Считывание
-            while (reader.Read())
+            while (!yes)
             {
-                Dictionary<string, object> values = new Dictionary<string, object>();
-                //Добавление значений и ключей в словарь
-                values = Enumerable.Range(0, reader.FieldCount)
-                   .ToDictionary(reader.GetName, reader.GetValue);
-                //Добавление словаря в список
-                list_of_values.Add(values);
+                try
+                {
+                    //Открыть конект
+                    connect.Open();
+                    yes = true;
+                    //Команда для создания запроса
+                    MySqlCommand command = connect.CreateCommand();
+                    //Присвоение запроса к команде
+                    command.CommandText = request;
+                    //Выполнение запроса
+                    MySqlDataReader reader = command.ExecuteReader();
+                    //Словарь, в котором сохраняются значения
+                    //Считывание
+                    while (reader.Read())
+                    {
+                        Dictionary<string, object> values = new Dictionary<string, object>();
+                        //Добавление значений и ключей в словарь
+                        values = Enumerable.Range(0, reader.FieldCount)
+                           .ToDictionary(reader.GetName, reader.GetValue);
+                        //Добавление словаря в список
+                        list_of_values.Add(values);
+                    }
+                    //Закрыть конект
+                    connect.Close();
+                    //Возврат данных
+                }
+                catch
+                {
+                    continue;
+                }
             }
-            //Закрыть конект
-            connect.Close();
-            //Возврат данных
             return list_of_values;
+
         }
 
         /// <summary>

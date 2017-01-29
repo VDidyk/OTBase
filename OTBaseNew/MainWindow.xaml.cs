@@ -36,6 +36,7 @@ namespace OTBaseNew
                 //MainWindow.Message(string.Format("Привіт, {0}", Logined.FName));
                 NameLable.Content = Logined.FName;
                 LoadImages();
+                LoadClientsImages();
             }
         }
         public static void Message(string text)
@@ -51,6 +52,14 @@ namespace OTBaseNew
             UsersMenuImages.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Menu\Users.png"));
             OperatorsMenuImages.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Menu\Operators.png"));
             ConfigMenuImages.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Menu\Config.png"));
+        }
+        void LoadClientsImages()
+        {
+            
+            AddClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\AddBtn.png"));
+            ShowClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\ShowBtn.png"));
+            SearchClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\SearchBtn.png"));
+
         }
     }
 }

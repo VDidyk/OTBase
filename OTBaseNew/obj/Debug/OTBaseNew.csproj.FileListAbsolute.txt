@@ -31,3 +31,4 @@ D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew.csprojResolveAssemblyReference.ca
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\MainDictionary.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\Alarm.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\Alarm.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\ScrollBar.baml
