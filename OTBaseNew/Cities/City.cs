@@ -154,6 +154,21 @@ namespace OTBaseNew.Cities
                 return list;
             }
         }
+        /// <summary>
+        /// Возвращает все города
+        /// </summary>
+        static public List<City> GetAllCities
+        {
+            private set { }
+            get
+            {
+                string query = string.Format(" select * from Cities");
+                //База данных
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                //Создает запрос и возвращает результат
+                return db.MakeRequest<City>(query);
 
+            }
+        }
     }
 }

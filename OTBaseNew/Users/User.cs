@@ -275,7 +275,7 @@ namespace OTBaseNew.Users
                 //Выполнение запроса
                 var answer = db.MakeRequest(query);
                 //Прогон по телефонах
-                foreach(var i in answer)
+                foreach (var i in answer)
                 {
                     //Добавление телефонов в список
                     us.Phones_Ides.Add(Convert.ToInt32(i["Phone_id"]));
@@ -372,18 +372,18 @@ namespace OTBaseNew.Users
             //Присваивает дату создания с запроса
             user.Created = Convert.ToDateTime((list[0])["created"].ToString());
             //Присваивает дату рождения с запроса
-            user.Bday= Convert.ToDateTime((list[0])["bday"].ToString());
+            user.Bday = Convert.ToDateTime((list[0])["bday"].ToString());
             return user;
         }
         /// <summary>
         /// Телефоны пользователя
         /// </summary>
-        public List<Phones.Phone> GetPhones 
+        public List<Phones.Phone> GetPhones
         {
-            set 
+            set
             {
                 Phones_Ides.Clear();
-                foreach(var i in value)
+                foreach (var i in value)
                 {
                     Phones_Ides.Add(i.Id);
                 }
@@ -391,7 +391,7 @@ namespace OTBaseNew.Users
             get
             {
                 List<Phones.Phone> phones = new List<Phones.Phone>();
-                foreach(var i in Phones_Ides)
+                foreach (var i in Phones_Ides)
                 {
                     phones.Add(Phones.Phone.FindById(i));
                 }
@@ -524,5 +524,24 @@ namespace OTBaseNew.Users
                 return clients;
             }
         }
+        /// <summary>
+        /// Выдает всех пользователей
+        /// </summary>
+        static public List<User> GetAllUsers
+        {
+            private set { }
+            get
+            {
+                string query = string.Format(" select * from Users");
+                //База данных
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                //Создает запрос и возвращает результат
+                List<User> users= db.MakeRequest<User>(query);
+                if (users.Count != 0)
+                users.RemoveAt(0);
+                return users;
+            }
+        }
+
     }
 }

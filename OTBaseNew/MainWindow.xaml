@@ -10,100 +10,99 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-
-    <Grid>
-        <Grid >
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="8*"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.RowSpan="1">
-                <Border Background="Red" BorderBrush="Black" BorderThickness="0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="711*"/>
-                            <ColumnDefinition Width="73*"/>
-                            <ColumnDefinition Width="73*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.ColumnSpan="2">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                        </Grid>
-                        <Grid Grid.Column="2">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Label Content="Label" Name="NameLable" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="16" FontFamily="Georgia" Cursor="Hand"/>
-                            <Label Content="Вихід" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="16" FontFamily="Georgia" Grid.Row="1" Cursor="Hand"/>
-                        </Grid>
-                        <Border Name="ImageBorder" BorderBrush="#FF660606" BorderThickness="1" Grid.Column="1" CornerRadius="20" Margin="27,5,0,5">
-                            <Border.Background>
-                                <ImageBrush x:Name="imageBrush" Stretch="UniformToFill"/>
-                            </Border.Background>
-                            <Border.Effect>
-                                <DropShadowEffect Opacity="0.5"/>
-                            </Border.Effect>
-                        </Border>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.RowSpan="1">
+            <Border Background="Red" BorderBrush="Black" BorderThickness="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="711*"/>
+                        <ColumnDefinition Width="73*"/>
+                        <ColumnDefinition Width="73*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
                     </Grid>
-                </Border>
-            </Grid>
-            <Grid Grid.Row="2" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="119*"/>
-                    <ColumnDefinition Width="738*"/>
-                </Grid.ColumnDefinitions>
-                <Border BorderBrush="Red" BorderThickness="0 0 1 0" Grid.Column="0">
-                    <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                        <StackPanel>
-                            <Border Style="{DynamicResource MenuBorderStyle}" Name="ClientsButton" >
-                                <Grid>
-                                    <StackPanel>
-                                        <Image Name="ClientsMenuImages"  Margin="10,0" Height="188"/>
-                                        <Label Style="{DynamicResource LabelStyle}" Content="Клієнти" FontSize="20" HorizontalContentAlignment="Center"/>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
-                            <Border Style="{DynamicResource MenuBorderStyle}" Name="RequestsButton" >
-                                <Grid>
-                                    <StackPanel>
-                                        <Image Name="RequestsMenuImages"  Margin="10,0" Height="188"/>
-                                        <Label Style="{DynamicResource LabelStyle}" Content="Заявки" FontSize="20" HorizontalContentAlignment="Center"/>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
-                            <Border Style="{DynamicResource MenuBorderStyle}" Name="UsersButton" >
-                                <Grid>
-                                    <StackPanel>
-                                        <Image Name="UsersMenuImages"  Margin="10,0" Height="188"/>
-                                        <Label Style="{DynamicResource LabelStyle}" Content="Користувачі" FontSize="20" HorizontalContentAlignment="Center"/>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
-                            <Border Style="{DynamicResource MenuBorderStyle}" Name="OperatorsButton" >
-                                <Grid>
-                                    <StackPanel>
-                                        <Image Name="OperatorsMenuImages"  Margin="10,0" Height="188"/>
-                                        <Label Style="{DynamicResource LabelStyle}" Content="Оператори" FontSize="20" HorizontalContentAlignment="Center"/>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
-                            <Border Style="{DynamicResource MenuBorderStyle}" Name="ConfigButton" >
-                                <Grid>
-                                    <StackPanel>
-                                        <Image Name="ConfigMenuImages"  Margin="10,0" Height="188"/>
-                                        <Label Style="{DynamicResource LabelStyle}" Content="Налаштування" FontSize="20" HorizontalContentAlignment="Center"/>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
+                    <Grid Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Label" Name="NameLable" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="16" FontFamily="Georgia" Cursor="Hand"/>
+                        <Label Content="Вихід" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="16" FontFamily="Georgia" Grid.Row="1" Cursor="Hand"/>
+                    </Grid>
+                    <Border Name="ImageBorder" BorderBrush="#FF660606" BorderThickness="1" Grid.Column="1" CornerRadius="20" Margin="27,5,0,5">
+                        <Border.Background>
+                            <ImageBrush x:Name="imageBrush" Stretch="UniformToFill"/>
+                        </Border.Background>
+                        <Border.Effect>
+                            <DropShadowEffect Opacity="0.5"/>
+                        </Border.Effect>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="119*"/>
+                <ColumnDefinition Width="738*"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="Red" BorderThickness="0 0 1 0" Grid.Column="0">
+                <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                    <StackPanel>
+                        <Border Style="{DynamicResource MenuBorderStyle}" Name="ClientsButton" >
+                            <Grid>
+                                <StackPanel>
+                                    <Image Name="ClientsMenuImages"  Margin="10,0" Height="188"/>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Клієнти" FontSize="20" HorizontalContentAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                        <Border Style="{DynamicResource MenuBorderStyle}" Name="RequestsButton" >
+                            <Grid>
+                                <StackPanel>
+                                    <Image Name="RequestsMenuImages"  Margin="10,0" Height="188"/>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Заявки" FontSize="20" HorizontalContentAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                        <Border Style="{DynamicResource MenuBorderStyle}" Name="UsersButton" >
+                            <Grid>
+                                <StackPanel>
+                                    <Image Name="UsersMenuImages"  Margin="10,0" Height="188"/>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Користувачі" FontSize="20" HorizontalContentAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                        <Border Style="{DynamicResource MenuBorderStyle}" Name="OperatorsButton" >
+                            <Grid>
+                                <StackPanel>
+                                    <Image Name="OperatorsMenuImages"  Margin="10,0" Height="188"/>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Оператори" FontSize="20" HorizontalContentAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                        <Border Style="{DynamicResource MenuBorderStyle}" Name="ConfigButton" >
+                            <Grid>
+                                <StackPanel>
+                                    <Image Name="ConfigMenuImages"  Margin="10,0" Height="188"/>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Налаштування" FontSize="20" HorizontalContentAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
 
-                        </StackPanel>
-                    </ScrollViewer>
-                </Border>
-                <Border BorderBrush="White" BorderThickness="0 1 1 1" Grid.Column="1">
-                    <Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+            <Border BorderBrush="White" BorderThickness="0 1 1 1" Grid.Column="1">
+                <Grid>
+                    <Grid Name="ClientsGrid" Visibility="Hidden">
                         <ScrollViewer>
                             <StackPanel>
                                 <Label Style="{DynamicResource LabelStyle}" Background="#FFF4FFFE" Content="Клієнти" FontSize="50" HorizontalContentAlignment="Center"></Label>
@@ -218,9 +217,151 @@
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>
-                </Border>
-            </Grid>
-        </Grid>
+                    <Grid Name="ClientAddGrid" >
+                        <Label Style="{DynamicResource LabelStyle}" Content="Створити клієнта" FontSize="30" HorizontalContentAlignment="Center" ></Label>
+                        <TabControl  FontSize="30" TabStripPlacement="Bottom" Margin="0,48,0,0" >
+                            <TabItem Style="{DynamicResource TabItemStyle}" FontFamily="Italic" FontWeight="Bold" Header="Основна інформація">
+                                <Grid>
+                                    <StackPanel>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Основна інформація" FontSize="20"  Margin="10,10,10,0" HorizontalContentAlignment="Center" ></Label>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Ім'я" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,10,10,0" FontWeight="Medium" ></Label>
+                                        <TextBox Name="FnameAddClient" Style="{DynamicResource TexBoxStyle}" Height="30"  Margin="10,10,10,0"/>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Прізвище" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,10,10,0" FontWeight="Medium" Height="42" VerticalAlignment="Top"></Label>
+                                        <TextBox Name="LnameAddClient" Style="{DynamicResource TexBoxStyle}" Height="30" Margin="10,10,10,0"/>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="По-Батькові" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,10,10,0" FontWeight="Medium"></Label>
+                                        <TextBox Name="MnameAddClient" Style="{DynamicResource TexBoxStyle}" Height="30" Margin="10,10,10,0"/>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Дата народження" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,10,10,0" FontWeight="Medium"></Label>
+                                        <TextBox Name="BDayAddClient" Style="{DynamicResource TexBoxStyle}" Height="30" Margin="10,10,10,0"/>
+                                    </StackPanel>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Style="{DynamicResource TabItemStyle}" FontFamily="Italic" FontWeight="Bold" Header="Контактна інформація">
+                                <Grid>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Контактна інформація" FontSize="20"  Margin="10,10,10,0" HorizontalContentAlignment="Center" ></Label>
+                                    <Grid Margin="0,52,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" BorderThickness="0 1 1 1" BorderBrush="Red">
+                                            <Grid>
+                                                <ScrollViewer Name="AddPhonesAddClientScroll">
+                                                    <StackPanel  Margin="0,39,0,0">
+                                                        <Label Margin="0 -25 0 0" Style="{DynamicResource LabelStyle}" Content="Телефони" HorizontalContentAlignment="Center"/>
+                                                        <Grid  Margin="10">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="367*"/>
+                                                                <ColumnDefinition Width="26*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <StackPanel Name="AddClientTelephonsTextboxStack" Grid.Column="0" >
+                                                                <TextBox Style="{DynamicResource TexBoxStyle}" Margin="0 10 0 10" />
+                                                            </StackPanel>
+                                                            <StackPanel Name="AddClientTelephonsBtnStack" Grid.Column="1" >
 
+                                                                <Button Style="{DynamicResource ButtonStyle}"  Content="+"  FontWeight="Bold" FontSize="30" Grid.Column="1" Margin="5 10 5 10" Click="AddPhoneFieldAddClients_Click"></Button>
+                                                            </StackPanel >
+
+                                                        </Grid>
+                                                    </StackPanel>
+                                                </ScrollViewer>
+                                            </Grid>
+                                        </Border>
+                                        <Border Grid.Column="1" BorderThickness="0 1 0 1" BorderBrush="Red">
+                                            <Grid>
+                                                <ScrollViewer Name="AddEmailAddClientScroll">
+                                                    <StackPanel  Margin="0,39,0,0">
+                                                        <Label Margin="0 -25 0 0" Style="{DynamicResource LabelStyle}" Content="Пошта" HorizontalContentAlignment="Center"/>
+                                                        <Grid  Margin="10">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="367*"/>
+                                                                <ColumnDefinition Width="26*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <StackPanel Name="AddClientEmailTextboxStack" Grid.Column="0" >
+                                                                <TextBox  Margin="0 10 0 10"  Style="{DynamicResource TexBoxStyle}" />
+                                                            </StackPanel>
+                                                            <StackPanel Name="AddClientEmailBtnStack" Grid.Column="1" >
+
+                                                                <Button Style="{DynamicResource ButtonStyle}" Content="+"  FontWeight="Bold" FontSize="30" Grid.Column="1" Margin="5 10 5 10" Click="AddEmailFieldAddClients_Click"></Button>
+                                                            </StackPanel >
+
+                                                        </Grid>
+                                                    </StackPanel>
+                                                </ScrollViewer>
+                                            </Grid>
+                                        </Border>
+
+                                    </Grid>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Style="{DynamicResource TabItemStyle}" FontFamily="Italic" FontWeight="Bold" Header="Адреса">
+                                <Grid >
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Адреса" FontSize="20"  Margin="0,10,0,0" HorizontalContentAlignment="Center" VerticalAlignment="Top"></Label>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Область" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,49,10,0" FontWeight="Medium" VerticalAlignment="Top"></Label>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Оберіть вже існуючу область, або створіть нову." FontSize="20" HorizontalContentAlignment="Center" VerticalAlignment="Top" Margin="10,81,10,0" FontWeight="Medium" ></Label>
+                                    <Grid Margin="0,121,0,0" Height="50" VerticalAlignment="Top">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="281*"/>
+                                            <ColumnDefinition Width="112*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ComboBox  Name="ChooseRegionComboboxAddClient" Style="{DynamicResource ComboBoxStyle}" Grid.Column="0" Margin="10 0 10 0" Background="White" SelectionChanged="ChooseRegionComboboxAddClient_SelectionChanged"/>
+                                        <Button Name="AddNewRegionBtnAddClient" Grid.Column="1" Style="{DynamicResource ButtonStyle}" Margin="10 0 10 0" Content="Створити нову область" Click="AddNewRegionBtnAddClient_Click"/>
+                                        <TextBox Name="AddNewRegionTextBoxAddClient" Grid.Column="1" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="10 3 10 0" Visibility="Hidden" LostFocus="AddNewRegionTextBoxAddClient_LostFocus"/>
+                                    </Grid>
+                                    <Label VerticalAlignment="Top" Style="{DynamicResource LabelStyle}" Content="Місто" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,176,10,0" FontWeight="Medium" ></Label>
+                                    <Label VerticalAlignment="Top" Style="{DynamicResource LabelStyle}" Content="Оберіть вже існуюче місто, або створіть нове." FontSize="20" HorizontalContentAlignment="Center"  Margin="10,220,10,0" FontWeight="Medium" ></Label>
+                                    <Grid VerticalAlignment="Top" Margin="0,264,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="375*"/>
+                                            <ColumnDefinition Width="149*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Name="AddNewCityBtnAddClient" Grid.Column="1" Style="{DynamicResource ButtonStyle}" Margin="10 0 10 0" Content="Створити нове місто" Click="AddNewCityBtnAddClient_Click"/>
+                                        <TextBox Name="AddNewCityTextBoxAddClient" Grid.Column="1" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="10 3 10 0" Visibility="Hidden" LostFocus="AddNewCityTextBoxAddClient_LostFocus"/>
+                                        <ComboBox Name="ChooseCityComboboxAddClient" Style="{DynamicResource ComboBoxStyle}" Grid.Column="0" Margin="10 0 10 0" Background="White"/>
+                                    </Grid>
+                                    <Label VerticalAlignment="Top" Style="{DynamicResource LabelStyle}" Content="Адреса" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,334,10,0" FontWeight="Medium" ></Label>
+                                    <TextBox VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Height="30" Margin="10,379,10,0" />
+                                </Grid>
+                            </TabItem>
+                            <TabItem Style="{DynamicResource TabItemStyle}" FontFamily="Italic" FontWeight="Bold" Header="Паспортні дані">
+                                <Grid>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Паспортні дані" FontSize="20" Height="40" VerticalAlignment="Top" Margin="10,14,10,0" HorizontalContentAlignment="Center" ></Label>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Ім'я в паспорті" Height="40" FontSize="25" VerticalAlignment="Top" HorizontalContentAlignment="Center"  Margin="10,59,10,0" FontWeight="Medium" ></Label>
+                                    <TextBox Name="FnamePassportAddClient" Style="{DynamicResource TexBoxStyle}" Height="30" VerticalAlignment="Top"  Margin="10,104,10,0"/>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Прізвище в паспорті" Height="40" VerticalAlignment="Top" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,154,10,0" FontWeight="Medium" ></Label>
+                                    <TextBox Name="LnamePassportAddClient" Style="{DynamicResource TexBoxStyle}" VerticalAlignment="Top" Height="30"  Margin="10,199,10,0"/>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Серія паспорта" Height="40" VerticalAlignment="Top" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,239,10,0" FontWeight="Medium" ></Label>
+                                    <TextBox Name="SerialPassportAddClient" Style="{DynamicResource TexBoxStyle}" VerticalAlignment="Top" Height="30"  Margin="10,284,10,0"/>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Ким виданий" Height="40" VerticalAlignment="Top" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,332,10,0" FontWeight="Medium" ></Label>
+                                    <TextBox Name="GivenByPassportAddClient" Style="{DynamicResource TexBoxStyle}" VerticalAlignment="Top" Height="30"  Margin="10,379,10,0"/>
+                                    <Grid Height="80" VerticalAlignment="Top" Margin="10,428,10,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Style="{DynamicResource LabelStyle}" Grid.Column="0" Content="Коли виданий" Height="40" VerticalAlignment="Top" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,0,10,0" FontWeight="Medium" ></Label>
+                                        <TextBox Name="GivenWhenPassportAddClient" Grid.Column="0" Style="{DynamicResource TexBoxStyle}" VerticalAlignment="Top" Height="30"  Margin="0,40,10,0"/>
+                                        <Label Style="{DynamicResource LabelStyle}" Grid.Column="1" Content="До коли виданий" Height="40" VerticalAlignment="Top" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,0,10,0" FontWeight="Medium" ></Label>
+                                        <TextBox Name="GivenTheTimePassportAddClient" Grid.Column="1" Style="{DynamicResource TexBoxStyle}" VerticalAlignment="Top" Height="30"  Margin="10,40,0,0"/>
+                                    </Grid>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Style="{DynamicResource TabItemStyle}" FontFamily="Italic" FontWeight="Bold" Header="Інше">
+                                <Grid>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Інше" FontSize="20" Height="40" VerticalAlignment="Top" Margin="10,14,10,0" HorizontalContentAlignment="Center" ></Label>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Обереть менеджера, який відповідальний за клієнта" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,49,10,0" FontWeight="Medium" VerticalAlignment="Top"></Label>
+                                    <ScrollViewer CanContentScroll="True" Margin="0,94,0,0" Height="270" VerticalAlignment="Top">
+                                        <WrapPanel Name="ManagersWrapPenelInAddClients" HorizontalAlignment="Center" VerticalAlignment="Top"  Margin="0,0,0,0">
+                                           
+                                        </WrapPanel>
+                                    </ScrollViewer>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Примітка" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,382,10,0" FontWeight="Medium" VerticalAlignment="Top"></Label>
+                                    <TextBox Name="NoticeAddClient" Style="{DynamicResource TexBoxStyle}" TextWrapping="Wrap" AcceptsReturn="True" VerticalAlignment="Top"  Margin="10,427,10,0" Height="259"/>
+                                </Grid>
+                            </TabItem>
+                        </TabControl>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </Window>

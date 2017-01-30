@@ -138,5 +138,20 @@ namespace OTBaseNew.Regions
                 return list;
             }
         }
+        /// <summary>
+        /// Возвращает все области
+        /// </summary>
+        static public List<Region> GetAllRegions
+        {
+            private set { }
+            get
+            {
+                string query = string.Format(" select * from Region");
+                //База данных
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                //Создает запрос и возвращает результат
+                return db.MakeRequest<Region>(query);                
+            }
+        }
     }
 }
