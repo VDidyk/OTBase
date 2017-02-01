@@ -218,20 +218,34 @@
                         </ScrollViewer>
                     </Grid>
                     <Grid Name="ClientAddGrid" >
-                        <Label Style="{DynamicResource LabelStyle}" Content="Створити клієнта" FontSize="30" HorizontalContentAlignment="Center" ></Label>
-                        <TabControl  FontSize="30" TabStripPlacement="Bottom" Margin="0,48,0,0" >
+                        <Grid Margin="0,0,0,0" VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="724*"/>
+                                <ColumnDefinition Width="67*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Style="{DynamicResource LabelStyle}" VerticalAlignment="Top" Content="Створити клієнта" FontSize="30" HorizontalContentAlignment="Center" Grid.ColumnSpan="2" ></Label>
+                            <Grid Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Button ToolTip="Зберегти" Name="SaveAddClient" Grid.Column="0"  Style="{DynamicResource ButtonStyle}" FontSize="30" Background="#FF0EBF0E" Content="✓" Margin="10 4 10 0" Click="SaveAddClient_Click"/>
+                                <Button ToolTip="Відмінити" Name="CancelAddClient" Grid.Column="1"  Style="{DynamicResource ButtonStyle}" FontSize="30" Background="#FFD63C34" Content="X" Margin="10 4 10 0"/>
+                            </Grid>
+                        </Grid>
+                        <TabControl  FontSize="30" TabStripPlacement="Bottom" Margin="0,86,0,0" >
                             <TabItem Style="{DynamicResource TabItemStyle}" FontFamily="Italic" FontWeight="Bold" Header="Основна інформація">
                                 <Grid>
                                     <StackPanel>
                                         <Label Style="{DynamicResource LabelStyle}" Content="Основна інформація" FontSize="20"  Margin="10,10,10,0" HorizontalContentAlignment="Center" ></Label>
                                         <Label Style="{DynamicResource LabelStyle}" Content="Ім'я" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,10,10,0" FontWeight="Medium" ></Label>
-                                        <TextBox Name="FnameAddClient" Style="{DynamicResource TexBoxStyle}" Height="30"  Margin="10,10,10,0"/>
+                                        <TextBox Name="FnameAddClient" Style="{DynamicResource TexBoxStyle}" Height="42"  Margin="10,10,10,0"/>
                                         <Label Style="{DynamicResource LabelStyle}" Content="Прізвище" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,10,10,0" FontWeight="Medium" Height="42" VerticalAlignment="Top"></Label>
-                                        <TextBox Name="LnameAddClient" Style="{DynamicResource TexBoxStyle}" Height="30" Margin="10,10,10,0"/>
+                                        <TextBox Name="LnameAddClient" Style="{DynamicResource TexBoxStyle}" Height="45" Margin="10,10,10,0"/>
                                         <Label Style="{DynamicResource LabelStyle}" Content="По-Батькові" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,10,10,0" FontWeight="Medium"></Label>
-                                        <TextBox Name="MnameAddClient" Style="{DynamicResource TexBoxStyle}" Height="30" Margin="10,10,10,0"/>
+                                        <TextBox Name="MnameAddClient" Style="{DynamicResource TexBoxStyle}" Height="45" Margin="10,10,10,0"/>
                                         <Label Style="{DynamicResource LabelStyle}" Content="Дата народження" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,10,10,0" FontWeight="Medium"></Label>
-                                        <TextBox Name="BDayAddClient" Style="{DynamicResource TexBoxStyle}" Height="30" Margin="10,10,10,0"/>
+                                        <TextBox Name="BDayAddClient" Style="{DynamicResource TexBoxStyle}" Height="45" Margin="10,10,10,0"/>
                                     </StackPanel>
                                 </Grid>
                             </TabItem>
@@ -246,9 +260,9 @@
                                         <Border Grid.Column="0" BorderThickness="0 1 1 1" BorderBrush="Red">
                                             <Grid>
                                                 <ScrollViewer Name="AddPhonesAddClientScroll">
-                                                    <StackPanel  Margin="0,39,0,0">
+                                                    <StackPanel Name="StackPanelWhithPhonesAddClients"  Margin="0,39,0,0">
                                                         <Label Margin="0 -25 0 0" Style="{DynamicResource LabelStyle}" Content="Телефони" HorizontalContentAlignment="Center"/>
-                                                        <Grid  Margin="10">
+                                                        <Grid Name="GridWhithNewPhonesNumbersAddClient" Margin="10">
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="367*"/>
                                                                 <ColumnDefinition Width="26*"/>
@@ -319,7 +333,7 @@
                                         <ComboBox Name="ChooseCityComboboxAddClient" Style="{DynamicResource ComboBoxStyle}" Grid.Column="0" Margin="10 0 10 0" Background="White"/>
                                     </Grid>
                                     <Label VerticalAlignment="Top" Style="{DynamicResource LabelStyle}" Content="Адреса" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,334,10,0" FontWeight="Medium" ></Label>
-                                    <TextBox VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Height="30" Margin="10,379,10,0" />
+                                    <TextBox Name="AddressAddClient" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Height="30" Margin="10,379,10,0" />
                                 </Grid>
                             </TabItem>
                             <TabItem Style="{DynamicResource TabItemStyle}" FontFamily="Italic" FontWeight="Bold" Header="Паспортні дані">
@@ -351,7 +365,7 @@
                                     <Label Style="{DynamicResource LabelStyle}" Content="Обереть менеджера, який відповідальний за клієнта" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,49,10,0" FontWeight="Medium" VerticalAlignment="Top"></Label>
                                     <ScrollViewer CanContentScroll="True" Margin="0,94,0,0" Height="270" VerticalAlignment="Top">
                                         <WrapPanel Name="ManagersWrapPenelInAddClients" HorizontalAlignment="Center" VerticalAlignment="Top"  Margin="0,0,0,0">
-                                           
+
                                         </WrapPanel>
                                     </ScrollViewer>
                                     <Label Style="{DynamicResource LabelStyle}" Content="Примітка" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,382,10,0" FontWeight="Medium" VerticalAlignment="Top"></Label>

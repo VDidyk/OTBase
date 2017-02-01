@@ -197,16 +197,201 @@ namespace OTBaseNew
         }
         private void ChooseRegionComboboxAddClient_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-                AddNewCityTextBoxAddClient.Visibility = System.Windows.Visibility.Hidden;
-                AddNewCityTextBoxAddClient.Text = "";
-                AddNewCityBtnAddClient.Visibility = System.Windows.Visibility.Visible;
-                ChooseCityComboboxAddClient.IsEnabled = true;
+            AddNewCityTextBoxAddClient.Visibility = System.Windows.Visibility.Hidden;
+            AddNewCityTextBoxAddClient.Text = "";
+            AddNewCityBtnAddClient.Visibility = System.Windows.Visibility.Visible;
+            ChooseCityComboboxAddClient.IsEnabled = true;
             foreach (var i in Regions.Region.FindByName(ChooseRegionComboboxAddClient.Items[ChooseRegionComboboxAddClient.SelectedIndex].ToString()).GetCities)
             {
                 ChooseCityComboboxAddClient.Items.Add(i.Name);
             }
         }
+        private void SaveAddClient_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                List<Phones.Phone> phones = new List<Phones.Phone>();
+                List<Emails.Email> emails = new List<Emails.Email>();
+                Clients.Client c = new Clients.Client();
+                c.FName = FnameAddClient.Text;
+                c.LName = LnameAddClient.Text;
+                c.MName = MnameAddClient.Text;
+                if (BDayAddClient.Text != "")
+                {
+                    DateTime? d = Other.Utility.ConvertStringToDateTime(BDayAddClient.Text);
+                    if (d == null)
+                    {
+                        MainWindow.Message("Дата народження заповнена не вірно. Формат: дд.мм.рррр");
+                        return;
+                    }
+                    c.Bday = Convert.ToDateTime(d.Value.ToString());
+                }
+
+                //Добавляет телефоны вытаскивая со списка
+                foreach (var i in AddClientTelephonsTextboxStack.Children)
+                {
+                    try
+                    {
+                        Phones.Phone phone = new Phones.Phone();
+                        string tmp = ((TextBox)i).Text;
+                        string number = Other.Utility.ConvertStringToPhoneString(tmp);
+                        phone.number = number;
+                        phones.Add(phone);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                //Добавляет телефоны вытаскивая со списка
+                foreach (var i in AddClientEmailTextboxStack.Children)
+                {
+                    try
+                    {
+                        Emails.Email mail = new Emails.Email();
+                        string tmp = ((TextBox)i).Text;
+                        mail.name = tmp;
+                        emails.Add(mail);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                #region Создает адресс
+                Addresses.Address a = new Addresses.Address();
+                if (ChooseCityComboboxAddClient.SelectedIndex != -1)
+                {
+                    a.city_id = Cities.City.FindByName(ChooseCityComboboxAddClient.SelectedItem.ToString()).Id;
+                }
+                else
+                {
+                    if (AddNewCityTextBoxAddClient.Text != "")
+                    {
+                        Cities.City city = new Cities.City();
+                        city.Name = AddNewCityTextBoxAddClient.Text;
+                        if (ChooseRegionComboboxAddClient.SelectedIndex != -1 || AddNewRegionTextBoxAddClient.Text != "")
+                        {
+                            MainWindow.Message("Оберіть або створіть нову область!");
+                            return;
+                        }
+                        else
+                        {
+                            if (ChooseRegionComboboxAddClient.SelectedIndex != -1)
+                            {
+                                try
+                                {
+                                    Regions.Region r = Regions.Region.FindByName(ChooseRegionComboboxAddClient.SelectedItem.ToString());
+                                    city.Region_id = r.Id;
+                                    city.Save();
+                                }
+                                catch
+                                {
+                                    Cities.City ci = Cities.City.FindByName(city.Name);
+                                    a.city_id = ci.Id;
+                                }
+                            }
+                            else
+                            {
+                                Regions.Region r = new Regions.Region();
+                                try
+                                {
+                                    r.Name = AddNewRegionTextBoxAddClient.Text;
+                                    r.Save();
+                                }
+                                catch
+                                {
+                                    r = Regions.Region.FindByName(r.Name);
+                                }
+                                try
+                                {
+                                    city.Region_id = r.Id;
+                                    city.Save();
+                                }
+                                catch
+                                {
+                                    Cities.City ci = Cities.City.FindByName(city.Name);
+                                    a.city_id = ci.Id;
+                                }
+                            }
+                        }
+                    }
+                }
+                a.address = AddressAddClient.Text;
+                a.Save();
+                c.Address_id = a.id;
+                #endregion
+                #region Создает пасспорт
+                Passports.Passport p = new Passports.Passport();
+                p.Fname = FnamePassportAddClient.Text;
+                p.Lname = LnamePassportAddClient.Text;
+                p.series = SerialPassportAddClient.Text;
+                p.given_by = GivenByPassportAddClient.Text;
+                if (GivenWhenPassportAddClient.Text != "")
+                {
+                    DateTime? tmpdate = Other.Utility.ConvertStringToDateTime(GivenWhenPassportAddClient.Text);
+                    if (tmpdate == null)
+                    {
+                        MainWindow.Message("Дата видачі паспорту заповнена не вірно. Формат: дд.мм.рррр");
+                        return;
+                    }
+                    else
+                    {
+                        p.given_when = Convert.ToDateTime(tmpdate.Value.ToString());
+                    }
+                }
+                if (GivenTheTimePassportAddClient.Text != "")
+                {
+                    DateTime? tmpdate1 = Other.Utility.ConvertStringToDateTime(GivenTheTimePassportAddClient.Text);
+                    if (tmpdate1 == null)
+                    {
+                        MainWindow.Message("Термін дії паспорту заповнений не вірно. Формат: дд.мм.рррр");
+                        return;
+                    }
+                    else
+                    {
+                        p.given_the_time = Convert.ToDateTime(tmpdate1.Value.ToString());
+                    }
+                }
+                #endregion
+                if(selected_manager_for_client_in_add_client==null)
+                {
+                    c.Working_user_id = Logined.Id;
+                }
+                else
+                {
+                    StackPanel sp = selected_manager_for_client_in_add_client.Child as StackPanel;
+                    Label lab = sp.Children[0] as Label;
+                    c.Working_user_id = Convert.ToInt32(lab.Content);
+                }
+                c.Notice = NoticeAddClient.Text;
+                c.Created_user_id = Logined.Id;
+                foreach(var i in phones)
+                {
+                    if (Phones.Phone.FindByNumber(i.number) == null)
+                    {
+                        i.Save();
+                    }
+                    c.Phones_Ides.Add(i.Id);
+                }
+                foreach(var i in emails)
+                {
+                    if(Emails.Email.FindByName(i.name)==null)
+                    {
+                        i.Save();
+                    }
+                    c.Emails_Ides.Add(i.Id);
+                }
+
+            }
+            catch (Exception error)
+            {
+                MainWindow.Message(error.Message);
+            }
+        }
         #endregion
+
+
 
 
 

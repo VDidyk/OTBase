@@ -1,4 +1,3 @@
-D:\OTBase\OTBase\MySqlWorker\obj\Debug\MySqlWorker.csprojResolveAssemblyReference.cache
 D:\OTBase\OTBase\MySqlWorker\bin\Debug\MySqlWorker.dll
 D:\OTBase\OTBase\MySqlWorker\bin\Debug\MySqlWorker.pdb
 D:\OTBase\OTBase\MySqlWorker\obj\Debug\MySqlWorker.dll

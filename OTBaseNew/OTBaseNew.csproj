@@ -71,6 +71,7 @@
     <Compile Include="Other\Alarm.xaml.cs">
       <DependentUpon>Alarm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Other\Utility.cs" />
     <Compile Include="Passports\Passport.cs" />
     <Compile Include="Phones\Phone.cs" />
     <Compile Include="Positions\Position.cs" />
