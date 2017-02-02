@@ -99,6 +99,27 @@ namespace OTBaseNew.Resourses
                 return position;
             }
         }
+        public static Resourse FindByName(string name)
+        {
+            //Запрос
+            string query = string.Format("SELECT * FROM `Resourses` WHERE name='{0}'", name);
+            //База данных
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
+            //Создает запрос и возвращает результат
+            var list = db.MakeRequest<Resourse>(query);
+            //Если ничего не нашло, то возвращает ноль
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            //Если нашло, то создает объект должности
+            else
+            {
+                //создает объект должности
+                Resourse position = list[0];
+                return position;
+            }
+        }
 
         /// <summary>
         /// Клиенты
@@ -123,6 +144,18 @@ namespace OTBaseNew.Resourses
                 }
                 //Возврат пользователей
                 return clients;
+            }
+        }
+        static public List<Resourses.Resourse> GetAllResourses
+        {
+            private set { }
+            get
+            {
+                string query = string.Format(" select * from Resourses");
+                //База данных
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                //Создает запрос и возвращает результат
+                return db.MakeRequest<Resourses.Resourse>(query);
             }
         }
     }

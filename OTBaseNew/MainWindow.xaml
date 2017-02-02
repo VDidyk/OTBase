@@ -368,8 +368,10 @@
 
                                         </WrapPanel>
                                     </ScrollViewer>
-                                    <Label Style="{DynamicResource LabelStyle}" Content="Примітка" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,382,10,0" FontWeight="Medium" VerticalAlignment="Top"></Label>
-                                    <TextBox Name="NoticeAddClient" Style="{DynamicResource TexBoxStyle}" TextWrapping="Wrap" AcceptsReturn="True" VerticalAlignment="Top"  Margin="10,427,10,0" Height="259"/>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Ресурс" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,364,10,0" FontWeight="Medium" VerticalAlignment="Top"></Label>
+                                    <ComboBox Name="ChooseResourseComboboxAddClient" Style="{DynamicResource ComboBoxStyle}" VerticalAlignment="Top" Grid.Column="0" Margin="10,414,10,0" Background="White"/>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Примітка" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,482,10,0" FontWeight="Medium" VerticalAlignment="Top"></Label>
+                                    <TextBox Name="NoticeAddClient" Style="{DynamicResource TexBoxStyle}" TextWrapping="Wrap" AcceptsReturn="True" VerticalAlignment="Top"  Margin="10,527,10,0" Height="121"/>
                                 </Grid>
                             </TabItem>
                         </TabControl>

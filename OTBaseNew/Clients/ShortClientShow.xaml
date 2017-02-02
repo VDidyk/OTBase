@@ -1,0 +1,57 @@
+﻿<Window x:Class="OTBaseNew.Clients.ShortClientShow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ShortClientShow" Height="460" Width="1276">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..//MainDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <GroupBox Header="Основна інформація" Margin="0,10,871,262" BorderBrush="Red">
+            <Grid>
+                <TextBlock Style="{DynamicResource TextBlockStyle}" VerticalAlignment="Top" TextAlignment="Center" Text="ФІО:"  Margin="0,0,0,0"/>
+                <TextBox Name="MainInfo" IsReadOnly="True" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="0,29,0,0"/>
+                <TextBlock Style="{DynamicResource TextBlockStyle}" VerticalAlignment="Top" TextAlignment="Center" Text="Дата народження:"  Margin="0,63,0,0"/>
+                <TextBox Name="BDay" IsReadOnly="True" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="0,92,0,0"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Телефони" HorizontalAlignment="Left" Margin="402,10,0,0" BorderBrush="Red" VerticalAlignment="Top" Height="410" Width="255">
+            <ListBox Name="Phones"/>
+        </GroupBox>
+        <GroupBox Header="Пошта" HorizontalAlignment="Left" Margin="662,10,0,0" BorderBrush="Red" VerticalAlignment="Top" Height="410" Width="255">
+            <ListBox Name="Emails"/>
+        </GroupBox>
+        <GroupBox Header="Адреса" Margin="0,173,871,152" BorderBrush="Red">
+            <Grid>
+                <TextBox x:Name="Regionandcity" IsReadOnly="True" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="0,10,0,0"/>
+                <TextBox x:Name="Address" IsReadOnly="True" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="0,50,0,0"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Інше" Margin="0,283,871,10" BorderBrush="Red">
+            <Grid>
+                <TextBox x:Name="Resourse" IsReadOnly="True" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="0,28,0,0"/>
+                <TextBox x:Name="Manager" IsReadOnly="True" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="0,76,0,0"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Паспортні дані" Margin="922,10,10,10" BorderBrush="Red">
+            <Grid>
+                <TextBlock Style="{DynamicResource TextBlockStyle}" VerticalAlignment="Top" TextAlignment="Center" Text="ФІ:"  Margin="0,0,0,0"/>
+                <TextBox x:Name="FIP" IsReadOnly="True" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="0,29,0,0"/>
+                <TextBlock Style="{DynamicResource TextBlockStyle}" VerticalAlignment="Top" TextAlignment="Center" Text="Серія:"  Margin="0,63,0,0"/>
+                <TextBox x:Name="Series" IsReadOnly="True" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="0,92,0,0"/>
+                <TextBlock Style="{DynamicResource TextBlockStyle}" VerticalAlignment="Top" TextAlignment="Center" Text="Ким видано:"  Margin="0,119,0,0"/>
+                <TextBox x:Name="GivenBy" IsReadOnly="True" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="0,148,0,0"/>
+                <TextBlock Style="{DynamicResource TextBlockStyle}" VerticalAlignment="Top" TextAlignment="Center" Text="Коли видано:"  Margin="0,175,0,0"/>
+                <TextBox x:Name="GivenWhen" IsReadOnly="True" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="0,204,0,0"/>
+                <TextBlock Style="{DynamicResource TextBlockStyle}" VerticalAlignment="Top" TextAlignment="Center" Text="До коли видано:"  Margin="0,231,0,0"/>
+                <TextBox x:Name="GivenWhen_Copy" IsReadOnly="True" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="0,260,0,0"/>
+                <TextBlock Style="{DynamicResource TextBlockStyle}" VerticalAlignment="Top" TextAlignment="Center" Text="Все вірно?"  Margin="0,287,0,0"/>
+                <Button ToolTip="Зберегти" Name="SaveAddClient" Grid.Column="0"  Style="{DynamicResource ButtonStyle}" FontSize="30" Background="#FF0EBF0E" Content="✓" Margin="86,319,176,9" Click="SaveAddClient_Click"/>
+                <Button ToolTip="Відмінити" Name="CancelAddClient"  Style="{DynamicResource ButtonStyle}" FontSize="30" Background="#FFD63C34" Content="X" Margin="187,319,75,9" Click="CancelAddClient_Click"/>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>

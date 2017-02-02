@@ -505,7 +505,7 @@ namespace OTBaseNew.Clients
             get
             {
                 List<Emails.Email> emails = new List<Emails.Email>();
-                foreach (var i in Phones_Ides)
+                foreach (var i in Emails_Ides)
                 {
                     emails.Add(Emails.Email.FindById(i));
                 }

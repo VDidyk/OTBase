@@ -75,6 +75,10 @@ namespace OTBaseNew
             {
                 ChooseRegionComboboxAddClient.Items.Add(i.Name);
             }
+            foreach (var i in Resourses.Resourse.GetAllResourses)
+            {
+                ChooseResourseComboboxAddClient.Items.Add(i.Name);
+            }
         }
         Border selected_manager_for_client_in_add_client;
         private void AddPhoneFieldAddClients_Click(object sender, RoutedEventArgs e)
@@ -201,9 +205,13 @@ namespace OTBaseNew
             AddNewCityTextBoxAddClient.Text = "";
             AddNewCityBtnAddClient.Visibility = System.Windows.Visibility.Visible;
             ChooseCityComboboxAddClient.IsEnabled = true;
-            foreach (var i in Regions.Region.FindByName(ChooseRegionComboboxAddClient.Items[ChooseRegionComboboxAddClient.SelectedIndex].ToString()).GetCities)
+            if (ChooseRegionComboboxAddClient.SelectedIndex != -1)
             {
-                ChooseCityComboboxAddClient.Items.Add(i.Name);
+                ChooseCityComboboxAddClient.Items.Clear();
+                foreach (var i in Regions.Region.FindByName(ChooseRegionComboboxAddClient.Items[ChooseRegionComboboxAddClient.SelectedIndex].ToString()).GetCities)
+                {
+                    ChooseCityComboboxAddClient.Items.Add(i.Name);
+                }
             }
         }
         private void SaveAddClient_Click(object sender, RoutedEventArgs e)
@@ -353,8 +361,10 @@ namespace OTBaseNew
                         p.given_the_time = Convert.ToDateTime(tmpdate1.Value.ToString());
                     }
                 }
+                p.Save();
+                c.Passport_id = p.id;
                 #endregion
-                if(selected_manager_for_client_in_add_client==null)
+                if (selected_manager_for_client_in_add_client == null)
                 {
                     c.Working_user_id = Logined.Id;
                 }
@@ -366,28 +376,42 @@ namespace OTBaseNew
                 }
                 c.Notice = NoticeAddClient.Text;
                 c.Created_user_id = Logined.Id;
-                foreach(var i in phones)
+                foreach (var i in phones)
                 {
                     if (Phones.Phone.FindByNumber(i.number) == null)
                     {
                         i.Save();
+                        c.Phones_Ides.Add(i.Id);
                     }
-                    c.Phones_Ides.Add(i.Id);
+                    else
+                    {
+                        c.Phones_Ides.Add(Phones.Phone.FindByNumber(i.number).Id);
+                    }
                 }
-                foreach(var i in emails)
+                foreach (var i in emails)
                 {
-                    if(Emails.Email.FindByName(i.name)==null)
+                    if (Emails.Email.FindByName(i.name) == null)
                     {
                         i.Save();
+                        c.Emails_Ides.Add(i.Id);
                     }
-                    c.Emails_Ides.Add(i.Id);
+                    else
+                    {
+                        c.Emails_Ides.Add(Emails.Email.FindByName(i.name).Id);
+                    }
                 }
-
+                if (ChooseResourseComboboxAddClient.SelectedIndex != -1)
+                {
+                    c.Resourse_id = Resourses.Resourse.FindByName(ChooseResourseComboboxAddClient.SelectedItem.ToString()).Id;
+                }
+                Clients.ShortClientShow sh = new Clients.ShortClientShow(c);
+                sh.ShowDialog();
             }
             catch (Exception error)
             {
                 MainWindow.Message(error.Message);
             }
+
         }
         #endregion
 

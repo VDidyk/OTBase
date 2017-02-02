@@ -43,8 +43,9 @@ namespace OTBaseNew
         }
         private void timerTick(object sender, EventArgs e)
         {
-            if(seconds>250)
+            if(seconds>500)
             {
+                timer.Stop();
                 this.Close();
             }
             if (!fix)
