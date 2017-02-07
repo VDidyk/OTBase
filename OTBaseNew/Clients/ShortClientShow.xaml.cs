@@ -55,13 +55,13 @@ namespace OTBaseNew.Clients
             }
             if(client.GetResourse!=null)
             {
-                Resourse.Text = client.GetResourse.Name;
+                Resourse.Text = "Ресурс: "+client.GetResourse.Name;
             }
             else
             {
-                Resourse.Text = "Не вказано";
+                Resourse.Text = "Ресурс: " + "Не вказано";
             }
-            Manager.Text=client.GetWorkingdUser.FName+" "+client.GetWorkingdUser.LName;
+            Manager.Text="Ведущий менеджер: "+client.GetWorkingdUser.FName+" "+client.GetWorkingdUser.LName;
             foreach(var i in client.GetPhones)
             {
                 Phones.Items.Add(i.number);

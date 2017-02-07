@@ -102,10 +102,10 @@
             </Border>
             <Border BorderBrush="White" BorderThickness="0 1 1 1" Grid.Column="1">
                 <Grid>
-                    <Grid Name="ClientsGrid" Visibility="Hidden">
+                    <Grid Name="ClientsGrid" Visibility="Visible">
                         <ScrollViewer>
                             <StackPanel>
-                                <Label Style="{DynamicResource LabelStyle}" Background="#FFF4FFFE" Content="Клієнти" FontSize="50" HorizontalContentAlignment="Center"></Label>
+                                <Label BorderThickness="0 0 0 1" BorderBrush="Pink" Style="{DynamicResource LabelStyle}" Content="Клієнти" FontSize="50" HorizontalContentAlignment="Center"></Label>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="738*"/>
@@ -114,9 +114,9 @@
                                     <Border BorderBrush="LightCoral" BorderThickness="0 0 1 0" Grid.Column="0">
                                         <Grid>
                                             <StackPanel>
-                                                <Border BorderBrush="LightCoral" BorderThickness="0 0 0 1" Margin="10 0 10 0">
+                                                <Border BorderBrush="LightCoral" Name="ClientsAddClientBorder" BorderThickness="0 0 0 1" Margin="10 0 10 0">
                                                     <StackPanel Style="{DynamicResource MuneStackPanelStyle}" Height="142">
-                                                        <Grid ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                                        <Grid Name="AddClientClients" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Hidden" MouseLeftButtonDown="AddClientClients_MouseLeftButtonDown">
                                                             <Image HorizontalAlignment="Left" Name="AddClientBtnClients" Height="142" Width="142" Margin="10 0 0 0"/>
                                                             <TextBlock  TextWrapping="Wrap" FontSize="30" Text="Створити Клієнта" Margin="172,5,0,95" Height="42" TextAlignment="Center"/>
                                                             <TextBlock  TextWrapping="Wrap" FontSize="20" HorizontalAlignment="Left" TextAlignment="Justify" Margin="172,46,0,10" Text="Створити нового клієнта,з повною інформацією (дата народження, паспортні дані, адреса,телефони, E-Mail, і т.д. )" ></TextBlock>
@@ -136,7 +136,7 @@
                                                 <Border BorderBrush="LightCoral" BorderThickness="0 0 0 1" Margin="10 0 10 0">
 
                                                     <StackPanel Style="{DynamicResource MuneStackPanelStyle}" Height="142">
-                                                        <Grid ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                                        <Grid Name="FindClientGridClients" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Left" Width="762" MouseLeftButtonDown="FindClientGridClients_MouseLeftButtonDown">
                                                             <Image HorizontalAlignment="Left" Name="SearchClientBtnClients" Height="142" Width="142" Margin="10 0 0 0"/>
                                                             <TextBlock  TextWrapping="Wrap" FontSize="30" Text="Пошук клієнта" Margin="172,5,0,95" Height="42" TextAlignment="Center"/>
                                                             <TextBlock  TextWrapping="Wrap" FontSize="20" HorizontalAlignment="Left" TextAlignment="Justify" Margin="172,46,0,10" Text="Пошук клієнта по певних критеріях (прізвище, адреса, серія паспорта, і т.д.)" ></TextBlock>
@@ -147,7 +147,7 @@
                                             </StackPanel>
                                         </Grid>
                                     </Border>
-                                    <Border Background="#FFF4FFFF" BorderThickness="1" BorderBrush="Azure" Grid.Column="1">
+                                    <Border  BorderThickness="1" BorderBrush="Azure" Grid.Column="1">
                                         <StackPanel>
                                             <Label Style="{DynamicResource LabelStyle}" Content="Швидке створення клієнта" FontSize="30" HorizontalContentAlignment="Center"></Label>
                                             <Label Style="{DynamicResource LabelStyle}" Content="Ім'я" FontSize="25" HorizontalContentAlignment="Center" FontWeight="Medium"></Label>
@@ -168,7 +168,7 @@
                                 <Grid>
                                     <StackPanel>
                                         <Label Style="{DynamicResource LabelStyle}" Content="5 останніх створених клієнтів" FontSize="30" HorizontalContentAlignment="Center"></Label>
-                                        <Grid >
+                                        <Grid Name="FiveLastClientsGridClientGrid">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="312*"/>
                                                 <ColumnDefinition Width="313*"/>
@@ -176,48 +176,14 @@
                                                 <ColumnDefinition Width="314*"/>
                                                 <ColumnDefinition Width="313*"/>
                                             </Grid.ColumnDefinitions>
-                                            <Border Style="{DynamicResource ClientBorderStyle}" Grid.Column="0">
-                                                <StackPanel>
-                                                    <Label Style="{DynamicResource LabelStyle}" Content="Івасюк Ігор" HorizontalContentAlignment="Center"/>
-                                                    <Image Height="150" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Clients\client.png"/>
-                                                    <Label Style="{DynamicResource LabelStyle}" FontWeight="Normal" Content="29.01.2017" HorizontalContentAlignment="Center"/>
-                                                </StackPanel>
-                                            </Border>
-                                            <Border Style="{DynamicResource ClientBorderStyle}" Grid.Column="1">
-                                                <StackPanel>
-                                                    <Label Style="{DynamicResource LabelStyle}" Content="Богданів Каріна" HorizontalContentAlignment="Center"/>
-                                                    <Image Height="150" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Clients\client.png"/>
-                                                    <Label Style="{DynamicResource LabelStyle}" FontWeight="Normal" Content="27.01.2017" HorizontalContentAlignment="Center"/>
-                                                </StackPanel>
-                                            </Border>
-                                            <Border Style="{DynamicResource ClientBorderStyle}" Grid.Column="2">
-                                                <StackPanel>
-                                                    <Label Style="{DynamicResource LabelStyle}" Content="Кірілов Карен" HorizontalContentAlignment="Center"/>
-                                                    <Image Height="150" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Clients\client.png"/>
-                                                    <Label Style="{DynamicResource LabelStyle}" FontWeight="Normal" Content="25.01.2017" HorizontalContentAlignment="Center"/>
-                                                </StackPanel>
-                                            </Border>
-                                            <Border Style="{DynamicResource ClientBorderStyle}" Grid.Column="3">
-                                                <StackPanel>
-                                                    <Label Style="{DynamicResource LabelStyle}" Content="Петрова Петро" HorizontalContentAlignment="Center"/>
-                                                    <Image Height="150" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Clients\client.png"/>
-                                                    <Label Style="{DynamicResource LabelStyle}" FontWeight="Normal" Content="22.01.2017" HorizontalContentAlignment="Center"/>
-                                                </StackPanel>
-                                            </Border>
-                                            <Border Style="{DynamicResource ClientBorderStyle}" Grid.Column="4">
-                                                <StackPanel>
-                                                    <Label Style="{DynamicResource LabelStyle}" Content="Квач Ірина" HorizontalContentAlignment="Center"/>
-                                                    <Image Height="150" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Clients\client.png"/>
-                                                    <Label Style="{DynamicResource LabelStyle}" FontWeight="Normal" Content="21.01.2017" HorizontalContentAlignment="Center"/>
-                                                </StackPanel>
-                                            </Border>
+
                                         </Grid>
                                     </StackPanel>
                                 </Grid>
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>
-                    <Grid Name="ClientAddGrid" >
+                    <Grid Name="ClientAddGrid" Visibility="Hidden" >
                         <Grid Margin="0,0,0,0" VerticalAlignment="Top">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="724*"/>
@@ -230,7 +196,7 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <Button ToolTip="Зберегти" Name="SaveAddClient" Grid.Column="0"  Style="{DynamicResource ButtonStyle}" FontSize="30" Background="#FF0EBF0E" Content="✓" Margin="10 4 10 0" Click="SaveAddClient_Click"/>
-                                <Button ToolTip="Відмінити" Name="CancelAddClient" Grid.Column="1"  Style="{DynamicResource ButtonStyle}" FontSize="30" Background="#FFD63C34" Content="X" Margin="10 4 10 0"/>
+                                <Button ToolTip="Відмінити" Name="CancelAddClient" Grid.Column="1"  Style="{DynamicResource ButtonStyle}" FontSize="30" Background="#FFD63C34" Content="X" Margin="10 4 10 0" Height="46" VerticalAlignment="Top" Click="CancelAddClient_Click"/>
                             </Grid>
                         </Grid>
                         <TabControl  FontSize="30" TabStripPlacement="Bottom" Margin="0,86,0,0" >
@@ -375,6 +341,32 @@
                                 </Grid>
                             </TabItem>
                         </TabControl>
+                    </Grid>
+                    <Grid Name="FindClient" Visibility="Hidden">
+                        <Grid Margin="0,0,0,0" VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="724*"/>
+                                <ColumnDefinition Width="67*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Style="{DynamicResource LabelStyle}" Content="Пошук клієнта" FontSize="30"  Margin="10,10,10,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Grid.ColumnSpan="2" ></Label>
+                            <Grid Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Button ToolTip="Відмінити" Name="CancelFindClient" Grid.Column="1"  Style="{DynamicResource ButtonStyle}" FontSize="30" Background="#FFD63C34" Content="X" Margin="10 4 10 0" Height="46" VerticalAlignment="Top" Click="CancelFindClient_Click" />
+                            </Grid>
+                        </Grid>
+                        <Label Style="{DynamicResource LabelStyle}" Content="Ключове слово" FontSize="25"  Margin="10,61,10,0"  VerticalAlignment="Top" HorizontalContentAlignment="Center" ></Label>
+                        <TextBox Name="FindKeyWordFindClient" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Height="28"  Margin="10,106,10,0"/>
+                        <Button Name="FindClientBtnFindClient" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" Content="Шукати" FontSize="25" Margin="10,148,10,0" Click="FindClientBtnFindClient_Click" Height="40"/>
+                        <Border BorderBrush="Pink" BorderThickness="1" Margin="10,206,10,10">
+                            <ScrollViewer>
+                                <WrapPanel Name="ClientsPanelFindClient" >
+
+                                </WrapPanel>
+                            </ScrollViewer>
+                        </Border>
                     </Grid>
                 </Grid>
             </Border>

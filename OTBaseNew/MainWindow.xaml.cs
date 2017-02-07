@@ -20,6 +20,7 @@ namespace OTBaseNew
     public partial class MainWindow : Window
     {
         public static Users.User Logined;
+        public List<Grid> grids = new List<Grid>();
         public static string Exepath = Environment.CurrentDirectory;
         public MainWindow()
         {
@@ -36,15 +37,14 @@ namespace OTBaseNew
                 //MainWindow.Message(string.Format("Привіт, {0}", Logined.FName));
                 NameLable.Content = Logined.FName;
                 LoadImages();
-                LoadClientsImages();
-                LoadGridAddClient();
+                grids.Add(ClientsGrid);
+                LoadClientsGrid();
             }
         }
         public static void Message(string text)
         {
             Alarm a1 = new Alarm(text, MainWindow.Exepath);
         }
-
         void LoadImages()
         {
             imageBrush.ImageSource = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\User-Icon.png"));
@@ -62,11 +62,28 @@ namespace OTBaseNew
             SearchClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\SearchBtn.png"));
 
         }
-
+        void TurnGridBack()
+        {
+            grids[grids.Count - 1].Visibility = System.Windows.Visibility.Hidden;
+            grids.RemoveAt(grids.Count - 1);
+            grids[grids.Count - 1].Visibility = System.Windows.Visibility.Visible;
+        }
+        void TurnGridNext(Grid grid)
+        {
+            grids[grids.Count - 1].Visibility = System.Windows.Visibility.Hidden;
+            grid.Visibility = System.Windows.Visibility.Visible;
+            grids.Add(grid);
+        }
+        void TurnGridMain(Grid grid)
+        {
+            grids.RemoveAt(grids.Count - 1);
+            grids.Add(grid);
+            grid.Visibility = System.Windows.Visibility.Visible;
+        }
+        #region Сетка Клиенты
         #region Сетка добавить клиента
         void LoadGridAddClient()
         {
-            ManagersWrapPenelInAddClients.Children.Clear();
             foreach (var i in Users.User.GetAllUsers)
             {
                 AddManagerToWrapPanelInAddClients(i);
@@ -218,6 +235,11 @@ namespace OTBaseNew
         {
             try
             {
+                if (LnameAddClient.Text == "")
+                {
+                    MainWindow.Message("Введіть прізвище");
+                    return;
+                }
                 List<Phones.Phone> phones = new List<Phones.Phone>();
                 List<Emails.Email> emails = new List<Emails.Email>();
                 Clients.Client c = new Clients.Client();
@@ -326,8 +348,11 @@ namespace OTBaseNew
                     }
                 }
                 a.address = AddressAddClient.Text;
-                a.Save();
-                c.Address_id = a.id;
+                if (a.address != "" || a.city_id != 0)
+                {
+                    a.Save();
+                    c.Address_id = a.id;
+                }
                 #endregion
                 #region Создает пасспорт
                 Passports.Passport p = new Passports.Passport();
@@ -361,8 +386,11 @@ namespace OTBaseNew
                         p.given_the_time = Convert.ToDateTime(tmpdate1.Value.ToString());
                     }
                 }
-                p.Save();
-                c.Passport_id = p.id;
+                if (p.Fname != "" || p.Lname != "" || p.series != "" || p.given_by != "" || p.given_the_time.Year != 1 || p.given_when.Year != 1)
+                {
+                    p.Save();
+                    c.Passport_id = p.id;
+                }
                 #endregion
                 if (selected_manager_for_client_in_add_client == null)
                 {
@@ -378,26 +406,32 @@ namespace OTBaseNew
                 c.Created_user_id = Logined.Id;
                 foreach (var i in phones)
                 {
-                    if (Phones.Phone.FindByNumber(i.number) == null)
+                    if (i.number != "")
                     {
-                        i.Save();
-                        c.Phones_Ides.Add(i.Id);
-                    }
-                    else
-                    {
-                        c.Phones_Ides.Add(Phones.Phone.FindByNumber(i.number).Id);
+                        if (Phones.Phone.FindByNumber(i.number) == null)
+                        {
+                            i.Save();
+                            c.Phones_Ides.Add(i.Id);
+                        }
+                        else
+                        {
+                            c.Phones_Ides.Add(Phones.Phone.FindByNumber(i.number).Id);
+                        }
                     }
                 }
                 foreach (var i in emails)
                 {
-                    if (Emails.Email.FindByName(i.name) == null)
+                    if (i.name != "")
                     {
-                        i.Save();
-                        c.Emails_Ides.Add(i.Id);
-                    }
-                    else
-                    {
-                        c.Emails_Ides.Add(Emails.Email.FindByName(i.name).Id);
+                        if (Emails.Email.FindByName(i.name) == null)
+                        {
+                            i.Save();
+                            c.Emails_Ides.Add(i.Id);
+                        }
+                        else
+                        {
+                            c.Emails_Ides.Add(Emails.Email.FindByName(i.name).Id);
+                        }
                     }
                 }
                 if (ChooseResourseComboboxAddClient.SelectedIndex != -1)
@@ -405,7 +439,11 @@ namespace OTBaseNew
                     c.Resourse_id = Resourses.Resourse.FindByName(ChooseResourseComboboxAddClient.SelectedItem.ToString()).Id;
                 }
                 Clients.ShortClientShow sh = new Clients.ShortClientShow(c);
+                sh.Owner = this;
                 sh.ShowDialog();
+                MainWindow.Message("Клієнт створений!");
+                CleareAddClientFilesd();
+                TurnGridBack();
             }
             catch (Exception error)
             {
@@ -413,10 +451,170 @@ namespace OTBaseNew
             }
 
         }
+        void CleareAddClientFilesd()
+        {
+            FnameAddClient.Text = "";
+            LnameAddClient.Text = "";
+            MnameAddClient.Text = "";
+            BDayAddClient.Text = "";
+            AddClientTelephonsTextboxStack.Children.Clear();
+            AddClientTelephonsBtnStack.Children.Clear();
+            TextBox t = new TextBox();
+            t.Style = Resources["TexBoxStyle"] as Style;
+            t.Margin = new Thickness(0, 10, 0, 10);
+            Button b = new Button();
+            b.Content = "+";
+            b.Style = Resources["ButtonStyle"] as Style;
+            b.Margin = new Thickness(5, 10, 5, 10);
+            b.SetValue(TextBlock.FontWeightProperty, FontWeights.Bold);
+            b.FontSize = 30;
+            b.Click += AddPhoneFieldAddClients_Click;
+            AddClientTelephonsTextboxStack.Children.Add(t);
+            AddClientTelephonsBtnStack.Children.Add(b);
+            AddPhonesAddClientScroll.ScrollToBottom();
+            AddClientEmailTextboxStack.Children.Clear();
+            AddClientEmailBtnStack.Children.Clear();
+            TextBox t1 = new TextBox();
+            t1.Style = Resources["TexBoxStyle"] as Style;
+            t1.Margin = new Thickness(0, 10, 0, 10);
+            Button b1 = new Button();
+            b1.Content = "+";
+            b1.Style = Resources["ButtonStyle"] as Style;
+            b1.Margin = new Thickness(5, 10, 5, 10);
+            b1.SetValue(TextBlock.FontWeightProperty, FontWeights.Bold);
+            b1.FontSize = 30;
+            b1.Click += AddEmailFieldAddClients_Click;
+            AddClientEmailTextboxStack.Children.Add(t1);
+            AddClientEmailBtnStack.Children.Add(b1);
+            AddPhonesAddClientScroll.ScrollToBottom();
+            AddressAddClient.Text = "";
+            ChooseRegionComboboxAddClient.SelectedIndex = -1;
+            ChooseCityComboboxAddClient.SelectedIndex = -1;
+            FnamePassportAddClient.Text = "";
+            LnamePassportAddClient.Text = "";
+            SerialPassportAddClient.Text = "";
+            GivenByPassportAddClient.Text = "";
+            GivenWhenPassportAddClient.Text = "";
+            GivenTheTimePassportAddClient.Text = "";
+            ChooseResourseComboboxAddClient.SelectedIndex = -1;
+            if (selected_manager_for_client_in_add_client != null)
+                selected_manager_for_client_in_add_client.Style = Resources["ClientBorderStyle"] as Style;
+            selected_manager_for_client_in_add_client = null;
+            NoticeAddClient.Text = "";
+            ManagersWrapPenelInAddClients.Children.Clear();
+            ChooseRegionComboboxAddClient.Items.Clear();
+            ChooseResourseComboboxAddClient.Items.Clear();
+        }
+        private void CancelAddClient_Click(object sender, RoutedEventArgs e)
+        {
+            TurnGridBack();
+            CleareAddClientFilesd();
+        }
         #endregion
+        #region Сетка поиск клиента
+        void AddFindedClientsFindClient(string word)
+        {
+            ClientsPanelFindClient.Children.Clear();
+            List<Clients.Client> clients = Clients.Client.FindByWord(word);
+            if (clients == null)
+            {
+                MainWindow.Message("Дуже багато результату з таким словом. Вкажіть конкретніше слово, або скористайтесь фільтром у списку клієнтів!");
+                return;
+            }
+            for (int i = 0; i < clients.Count; i++)
+            {
+                Border b = new Border();
+                b.Width = 300;
+                b.Style = Resources["ClientBorderStyle"] as Style;
+                StackPanel sp = new StackPanel();
+                b.Child = sp;
+                Label lid = new Label();
+                lid.Content = clients[i].Id.ToString();
+                lid.Visibility = System.Windows.Visibility.Hidden;
+                Label l = new Label();
+                l.Style = Resources["LabelStyle"] as Style;
+                l.Content = clients[i].FName + " " + clients[i].LName;
+                l.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                Image im = new Image();
+                im.Height = 150;
+                im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\client.png"));
+                Label l2 = new Label();
+                l2.Style = Resources["LabelStyle"] as Style;
+                l2.Content = clients[i].Created.ToShortDateString();
+                l2.FontWeight = FontWeights.Normal;
+                l2.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                sp.Children.Add(lid);
+                sp.Children.Add(l);
+                sp.Children.Add(im);
+                sp.Children.Add(l2);
+                ClientsPanelFindClient.Children.Add(b);
+            }
+        }
+        private void FindClientBtnFindClient_Click(object sender, RoutedEventArgs e)
+        {
+            if (FindKeyWordFindClient.Text != "")
+            {
+                AddFindedClientsFindClient(FindKeyWordFindClient.Text);
+            }
+        }
+        private void CancelFindClient_Click(object sender, RoutedEventArgs e)
+        {
+            ClientsPanelFindClient.Children.Clear();
+            TurnGridBack();
+        }
+        #endregion
+        void LoadClientsGrid()
+        {
+            LoadClientsImages();
+            LoadFiveLastClients();
+        }
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
 
-
-
+        }
+        void LoadFiveLastClients()
+        {
+            List<Clients.Client> clients = Clients.Client.GetFiveLastClients();
+            FiveLastClientsGridClientGrid.Children.Clear();
+            for (int i = 0; i < clients.Count; i++)
+            {
+                Border b = new Border();
+                b.Style = Resources["ClientBorderStyle"] as Style;
+                StackPanel sp = new StackPanel();
+                b.Child = sp;
+                Label lid = new Label();
+                lid.Content = clients[i].Id.ToString();
+                lid.Visibility = System.Windows.Visibility.Hidden;
+                Label l = new Label();
+                l.Style = Resources["LabelStyle"] as Style;
+                l.Content = clients[i].FName + " " + clients[i].LName;
+                l.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                Image im = new Image();
+                im.Height = 150;
+                im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\client.png"));
+                Label l2 = new Label();
+                l2.Style = Resources["LabelStyle"] as Style;
+                l2.Content = clients[i].Created.ToShortDateString();
+                l2.FontWeight = FontWeights.Normal;
+                l2.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                sp.Children.Add(lid);
+                sp.Children.Add(l);
+                sp.Children.Add(im);
+                sp.Children.Add(l2);
+                FiveLastClientsGridClientGrid.Children.Add(b);
+                b.SetValue(Grid.ColumnProperty, i);
+            }
+        }
+        private void FindClientGridClients_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TurnGridNext(FindClient);
+        }
+        private void AddClientClients_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LoadGridAddClient();
+            TurnGridNext(ClientAddGrid);
+        }
+        #endregion
 
 
 

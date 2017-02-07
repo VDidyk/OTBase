@@ -1,7 +1,7 @@
 ﻿<Window x:Class="OTBaseNew.Clients.ShortClientShow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ShortClientShow" Height="460" Width="1276">
+        Title="ShortClientShow" Height="460" Width="1276" WindowStyle="None" WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -10,7 +10,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <GroupBox Header="Основна інформація" Margin="0,10,871,262" BorderBrush="Red">
+        <GroupBox Header="Основна інформація" Margin="0,10,871,294" BorderBrush="Red">
             <Grid>
                 <TextBlock Style="{DynamicResource TextBlockStyle}" VerticalAlignment="Top" TextAlignment="Center" Text="ФІО:"  Margin="0,0,0,0"/>
                 <TextBox Name="MainInfo" IsReadOnly="True" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="0,29,0,0"/>
@@ -24,19 +24,19 @@
         <GroupBox Header="Пошта" HorizontalAlignment="Left" Margin="662,10,0,0" BorderBrush="Red" VerticalAlignment="Top" Height="410" Width="255">
             <ListBox Name="Emails"/>
         </GroupBox>
-        <GroupBox Header="Адреса" Margin="0,173,871,152" BorderBrush="Red">
+        <GroupBox Header="Адреса" VerticalAlignment="Top"  Margin="0,163,871,0" BorderBrush="Red">
             <Grid>
                 <TextBox x:Name="Regionandcity" IsReadOnly="True" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="0,10,0,0"/>
                 <TextBox x:Name="Address" IsReadOnly="True" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="0,50,0,0"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Інше" Margin="0,283,871,10" BorderBrush="Red">
+        <GroupBox Header="Інше" VerticalAlignment="Top" Margin="0,283,871,0" BorderBrush="Red" Height="137">
             <Grid>
                 <TextBox x:Name="Resourse" IsReadOnly="True" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="0,28,0,0"/>
                 <TextBox x:Name="Manager" IsReadOnly="True" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="0,76,0,0"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Паспортні дані" Margin="922,10,10,10" BorderBrush="Red">
+        <GroupBox Header="Паспортні дані" Margin="922,10,10,32" BorderBrush="Red">
             <Grid>
                 <TextBlock Style="{DynamicResource TextBlockStyle}" VerticalAlignment="Top" TextAlignment="Center" Text="ФІ:"  Margin="0,0,0,0"/>
                 <TextBox x:Name="FIP" IsReadOnly="True" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="0,29,0,0"/>

@@ -363,7 +363,7 @@ namespace OTBaseNew.Clients
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
                 //Строка-запрос для удаления из таблицы Телефон-Клиент
-                 query = string.Format("DELETE FROM  `PhonesAndClients` WHERE  `Client_id` = {0}", Id);
+                query = string.Format("DELETE FROM  `PhonesAndClients` WHERE  `Client_id` = {0}", Id);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
                 //Строка-запрос для удаления из таблицы Мейлы-Клиент
@@ -555,6 +555,38 @@ namespace OTBaseNew.Clients
                 return requests;
             }
         }
+        public static List<Client> GetFiveLastClients()
+        {
+            string query = string.Format("select * from Clients order by id desc  LIMIT 0,5");
+            //База данных
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
+            //Создает запрос и возвращает результат
+            var list = db.MakeRequest<Client>(query);
+            return list;
+        }
 
+        public static List<Client> FindByWord(string word)
+        {
+            string query = string.Format("SELECT Count(Clients.id) as count FROM Clients left JOIN Passports on Clients.Passport_id=Passports.id left join Addressess on Clients.Address_id = Addressess.id where Clients.fname LIKE '%{0}%' || Clients.lname LIKE '%{0}%' || Clients.mname LIKE '%{0}%' || Passports.series LIKE '%{0}%'|| Passports.given_by LIKE '%{0}%'|| Passports.fname LIKE '%{0}%'|| Passports.lname LIKE '%{0}%' || Clients.Notice LIKE '%{0}%' || Addressess.address LIKE '%{0}%'", word);
+            //База данных
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
+            //Создает запрос и возвращает результат
+            var list = db.MakeRequest(query);
+            if (Convert.ToInt32(list[0]["count"]) > 50)
+            {
+                return null;
+            }
+            else
+            {
+                query = string.Format("SELECT Clients.id FROM Clients left JOIN Passports on Clients.Passport_id=Passports.id left join Addressess on Clients.Address_id = Addressess.id where Clients.fname LIKE '%{0}%' || Clients.lname LIKE '%{0}%' || Clients.mname LIKE '%{0}%' || Passports.series LIKE '%{0}%'|| Passports.given_by LIKE '%{0}%'|| Passports.fname LIKE '%{0}%'|| Passports.lname LIKE '%{0}%' || Clients.Notice LIKE '%{0}%' || Addressess.address LIKE '%{0}%'", word);
+                list = db.MakeRequest(query);
+                List<Client> clients = new List<Client>();
+                foreach (var i in list)
+                {
+                    clients.Add(Clients.Client.FindById(Convert.ToInt32(i["id"])));
+                }
+                return clients;
+            }
+        }
     }
 }
