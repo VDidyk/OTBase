@@ -34,3 +34,5 @@ D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\Alarm.g.cs
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\ScrollBar.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Clients\ShortClientShow.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Clients\ShortClientShow.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\AddList.baml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\AddList.g.cs

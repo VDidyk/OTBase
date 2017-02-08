@@ -1,0 +1,53 @@
+﻿<Window x:Class="OTBaseNew.Other.AddList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AddList" Height="380" Width="1059" WindowStyle="None" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..//MainDictionary.xaml" />
+                <ResourceDictionary Source="..//ScrollBar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid Margin="0,10,0,0">
+            <Border Grid.Column="0" BorderThickness="0 1 1 1" BorderBrush="Red">
+                <Grid>
+                    <Grid>
+                        <Label Name="Head" BorderThickness="0 0 0 1" BorderBrush="Pink" Style="{DynamicResource LabelStyle}" Content="Створити користувача" FontSize="20" HorizontalContentAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top"></Label>
+                        <Grid  VerticalAlignment="Top" HorizontalAlignment="Right" Width="108" Height="35">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button ToolTip="Зберегти" Name="SaveAddUser" Grid.Column="0"  Style="{DynamicResource ButtonStyle}" FontSize="15" Background="#FF0EBF0E" Content="✓" Margin="12 5 12 5" />
+                            <Button ToolTip="Відмінити" Name="CancelAddUser" Grid.Column="1"  Style="{DynamicResource ButtonStyle}" FontSize="15" Background="#FFD63C34" Content="X" Margin="12 5 12 5"  VerticalAlignment="Top" />
+                        </Grid>
+                    </Grid>
+                    <ScrollViewer Name="AddPhonesAddClientScroll" Margin="0,37,0,0">
+
+                        <StackPanel Name="StackPanelWhithPhonesAddClients"  Margin="0,0,0,0">
+                            <Grid Name="GridWhithNewPhonesNumbersAddClient">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="733*"/>
+                                    <ColumnDefinition Width="43*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Name="AddClientTelephonsTextboxStack" Grid.Column="0" >
+                                    <TextBox Style="{DynamicResource TexBoxStyle}" Margin="10 10 10 10" />
+                                </StackPanel>
+                                <StackPanel Name="AddClientTelephonsBtnStack" Grid.Column="1" >
+
+                                    <Button Style="{DynamicResource ButtonStyle}"  Content="+"  FontWeight="Bold" FontSize="13" Grid.Column="1" Margin="5 10 5 10" Click="AddPhoneFieldAddClients_Click"></Button>
+                                </StackPanel >
+
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+
+        </Grid>
+    </Grid>
+</Window>

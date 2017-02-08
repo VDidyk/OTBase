@@ -38,7 +38,6 @@ namespace OTBaseNew
                 NameLable.Content = Logined.FName;
                 LoadImages();
                 grids.Add(ClientsGrid);
-                LoadClientsGrid();
             }
         }
         public static void Message(string text)
@@ -54,32 +53,7 @@ namespace OTBaseNew
             OperatorsMenuImages.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Menu\Operators.png"));
             ConfigMenuImages.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Menu\Config.png"));
         }
-        void LoadClientsImages()
-        {
-
-            AddClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\AddBtn.png"));
-            ShowClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\ShowBtn.png"));
-            SearchClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\SearchBtn.png"));
-
-        }
-        void TurnGridBack()
-        {
-            grids[grids.Count - 1].Visibility = System.Windows.Visibility.Hidden;
-            grids.RemoveAt(grids.Count - 1);
-            grids[grids.Count - 1].Visibility = System.Windows.Visibility.Visible;
-        }
-        void TurnGridNext(Grid grid)
-        {
-            grids[grids.Count - 1].Visibility = System.Windows.Visibility.Hidden;
-            grid.Visibility = System.Windows.Visibility.Visible;
-            grids.Add(grid);
-        }
-        void TurnGridMain(Grid grid)
-        {
-            grids.RemoveAt(grids.Count - 1);
-            grids.Add(grid);
-            grid.Visibility = System.Windows.Visibility.Visible;
-        }
+        //-----------------        
         #region Сетка Клиенты
         #region Сетка добавить клиента
         void LoadGridAddClient()
@@ -568,6 +542,15 @@ namespace OTBaseNew
             LoadClientsImages();
             LoadFiveLastClients();
         }
+        void LoadClientsImages()
+        {
+
+            AddClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\AddBtn.png"));
+            ShowClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\ShowBtn.png"));
+            SearchClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\SearchBtn.png"));
+
+        }
+
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
@@ -615,6 +598,96 @@ namespace OTBaseNew
             TurnGridNext(ClientAddGrid);
         }
         #endregion
+        //-----------------
+        #region Сетка Пользователи
+        void LoadUsersGrid()
+        {
+            AddNewUserImageInUsers.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\add.png"));
+            AddAllUsersInUsersGrid();
+        }
+        void AddAllUsersInUsersGrid()
+        {
+            Border b = UsersPanelInUsers.Children[0] as Border;
+            UsersPanelInUsers.Children.Clear();
+            UsersPanelInUsers.Children.Add(b);
+            foreach(var i in Users.User.GetAllUsers)
+            {
+                AddUserUsersGrid(i);
+            }
+        }
+        void AddUserUsersGrid(Users.User user)
+        {
+            Border b = new Border();
+            b.Width = 250;
+            b.Style = Resources["ClientBorderStyle"] as Style;
+            StackPanel sp = new StackPanel();
+            b.Child = sp;
+            Label lid = new Label();
+            lid.Content = user.Id.ToString();
+            lid.Visibility = System.Windows.Visibility.Hidden;
+            Label l = new Label();
+            l.Style = Resources["LabelStyle"] as Style;
+            l.Content = user.FName + " " + user.LName;
+            l.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            Image im = new Image();
+            im.Height = 150;
+            im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\client.png"));
+            Label l2 = new Label();
+            l2.Style = Resources["LabelStyle"] as Style;
+            l2.Content = user.Created.ToShortDateString();
+            l2.FontWeight = FontWeights.Normal;
+            l2.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            sp.Children.Add(lid);
+            sp.Children.Add(l);
+            sp.Children.Add(im);
+            sp.Children.Add(l2);
+            UsersPanelInUsers.Children.Add(b);
+        }
+        private void AddPhonesAddUser_Click(object sender, RoutedEventArgs e)
+        {
+        }
+        #endregion
+        //-----------------
+        #region Навигация
+        void TurnGridBack()
+        {
+            grids[grids.Count - 1].Visibility = System.Windows.Visibility.Hidden;
+            grids.RemoveAt(grids.Count - 1);
+            grids[grids.Count - 1].Visibility = System.Windows.Visibility.Visible;
+        }
+        void TurnGridNext(Grid grid)
+        {
+            grids[grids.Count - 1].Visibility = System.Windows.Visibility.Hidden;
+            grid.Visibility = System.Windows.Visibility.Visible;
+            grids.Add(grid);
+        }
+        void TurnGridMain(Grid grid)
+        {
+            while (grids.Count > 1)
+            {
+                TurnGridBack();
+            }
+            grids[grids.Count - 1].Visibility = System.Windows.Visibility.Hidden;
+            grids.RemoveAt(grids.Count - 1);
+            grids.Add(grid);
+            grid.Visibility = System.Windows.Visibility.Visible;
+        }
+        #endregion
+        //-----------------
+        #region События при нажатии на кнопки меню
+        private void ClientsButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LoadClientsGrid();
+            TurnGridMain(ClientsGrid);
+        }
+        private void UsersButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LoadUsersGrid();
+            TurnGridMain(UsersGrid);
+        }
+        #endregion
+       
+        //-----------------
 
 
 
