@@ -150,4 +150,16 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="ListBoxStyle" TargetType="ListBox">
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Opacity="0.3"
+                              RenderingBias="Quality"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="Red"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
 </ResourceDictionary>

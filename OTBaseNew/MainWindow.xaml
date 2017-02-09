@@ -103,7 +103,7 @@
             <Border BorderBrush="White" BorderThickness="0 1 1 1" Grid.Column="1">
                 <Grid>
                     <!--Клиенты-->
-                    <Grid Name="ClientsGrid" Visibility="Hidden">
+                    <Grid Name="ClientsGrid" Visibility="Visible">
                         <ScrollViewer>
                             <StackPanel>
                                 <Label BorderThickness="0 0 0 1" BorderBrush="Pink" Style="{DynamicResource LabelStyle}" Content="Клієнти" FontSize="50" HorizontalContentAlignment="Center"></Label>
@@ -124,7 +124,7 @@
                                                         </Grid>
                                                     </StackPanel>
                                                 </Border>
-                                                <Border BorderBrush="LightCoral" BorderThickness="0 0 0 1" Margin="10 0 10 0">
+                                                <Border Name="ShowClientsClients" BorderBrush="LightCoral" BorderThickness="0 0 0 1" Margin="10 0 10 0" MouseLeftButtonDown="ShowClientsClients_MouseLeftButtonDown">
 
                                                     <StackPanel Style="{DynamicResource MuneStackPanelStyle}" Height="142">
                                                         <Grid ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Hidden">
@@ -369,6 +369,45 @@
                             </ScrollViewer>
                         </Border>
                     </Grid>
+                    <Grid Name="ShowClients" Visibility="Hidden">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1189*"/>
+                            <ColumnDefinition Width="394*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" BorderBrush="Pink" BorderThickness="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="23*"/>
+                                    <RowDefinition Height="375*"/>
+                                </Grid.RowDefinitions>
+                                <ScrollViewer Grid.Row="1">
+                                    <WrapPanel>
+
+                                    </WrapPanel>
+                                </ScrollViewer>
+                                <Button ToolTip="Закрити" Name="CloseShowClients" Grid.Row="0" Foreground="White" BorderBrush="Pink" FontSize="30" Background="#FFFBE2E1" Content="X" Click="CloseShowClients_Click"/>
+
+                            </Grid>
+                        </Border>
+                        <Border Grid.Column="1" BorderBrush="Pink" BorderThickness="1">
+                            <ScrollViewer>
+                                <StackPanel>
+                                    <Label BorderThickness="0 0 0 1" BorderBrush="Pink" Style="{DynamicResource LabelStyle}" Content="Фільтр" FontSize="30" HorizontalContentAlignment="Center"></Label>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="По даті створення" FontSize="25" HorizontalContentAlignment="Center" FontWeight="Medium"></Label>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Від:" FontSize="25" HorizontalContentAlignment="Center" FontWeight="Normal"></Label>
+                                    <DatePicker Name="DateBeforeShowClientsGrid" Style="{DynamicResource DatePickerStyle}" Margin="10"/>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="До:" FontSize="25" HorizontalContentAlignment="Center" FontWeight="Normal"></Label>
+                                    <DatePicker Name="DateAfterShowClientsGrid" Style="{DynamicResource DatePickerStyle}" Margin="10"/>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="По автору" FontSize="25" HorizontalContentAlignment="Center" FontWeight="Medium"></Label>
+                                    <ComboBox Name="CreatedManagersComboBoxShowClientsGrid" Style="{DynamicResource ComboBoxStyle}" Margin="10"/>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="По менеджеру" FontSize="25" HorizontalContentAlignment="Center" FontWeight="Medium"></Label>
+                                    <ComboBox Name="WorkingManagersComboBoxShowClientsGrid" Style="{DynamicResource ComboBoxStyle}" Margin="10"/>
+                                    <Button Name="ShowClientsBtnShowClientsGrid" Style="{DynamicResource ButtonStyle}" Margin="10" Content="Вивести" FontSize="25" Click="ShowClientsBtnShowClientsGrid_Click"/>
+                                    <Button Name="ClearFilterBtnShowClientsGrid" Style="{DynamicResource ButtonStyle}" Margin="10" Content="Скинути" FontSize="25"/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Border>
+                    </Grid>
                     <!--Конец клиетов-->
                     <!--Пользователи-->
                     <Grid Name="UsersGrid" Visibility="Hidden">
@@ -378,7 +417,7 @@
                                 <Border Margin="10" Height="500" BorderBrush="Pink" BorderThickness="1">
                                     <ScrollViewer>
                                         <WrapPanel Name="UsersPanelInUsers">
-                                            <Border Style="{DynamicResource ClientBorderStyle}" Width="250" Margin="10" ToolTip="Додати нового користувача">
+                                            <Border Name="CreateNewUserInUsersGrid" Style="{DynamicResource ClientBorderStyle}" Width="250" Margin="10" ToolTip="Додати нового користувача" MouseLeftButtonDown="CreateNewUserInUsersGrid_MouseLeftButtonDown" >
                                                 <Image Name="AddNewUserImageInUsers" Height="100" Margin="0 50 0 50"/>
                                             </Border>
                                         </WrapPanel>
@@ -387,57 +426,70 @@
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>
-                    <Grid Name="AddUserInUsersGrid" Visibility="Visible">
-                        <StackPanel>
-                            <Grid>
-                                <Label BorderThickness="0 0 0 1" BorderBrush="Pink" Style="{DynamicResource LabelStyle}" Content="Створити користувача" FontSize="50" HorizontalContentAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top"></Label>
-                                <Grid  VerticalAlignment="Top" HorizontalAlignment="Right" Width="158">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Button ToolTip="Зберегти" Name="SaveAddUser" Grid.Column="0"  Style="{DynamicResource ButtonStyle}" FontSize="30" Background="#FF0EBF0E" Content="✓" Margin="10 4 10 0" />
-                                    <Button ToolTip="Відмінити" Name="CancelAddUser" Grid.Column="1"  Style="{DynamicResource ButtonStyle}" FontSize="30" Background="#FFD63C34" Content="X" Margin="10 4 10 0" Height="54" VerticalAlignment="Top" />
+                    <Grid Name="AddUserInUsersGrid" Visibility="Hidden">
+                        <ScrollViewer>
+                            <StackPanel>
+                                <Grid>
+                                    <Label BorderThickness="0 0 0 1" BorderBrush="Pink" Style="{DynamicResource LabelStyle}" Content="Створити користувача" FontSize="50" HorizontalContentAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top"></Label>
+                                    <Grid  VerticalAlignment="Top" HorizontalAlignment="Right" Width="158">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button ToolTip="Зберегти" Name="SaveAddUser" Grid.Column="0"  Style="{DynamicResource ButtonStyle}" FontSize="30" Background="#FF0EBF0E" Content="✓" Margin="10 4 10 0" Click="SaveAddUser_Click" />
+                                        <Button ToolTip="Відмінити" Name="CancelAddUser" Grid.Column="1"  Style="{DynamicResource ButtonStyle}" FontSize="30" Background="#FFD63C34" Content="X" Margin="10 4 10 0" Height="54" VerticalAlignment="Top" Click="CancelAddUser_Click" />
+                                    </Grid>
                                 </Grid>
-                            </Grid>
                                 <StackPanel>
                                     <Label  Style="{DynamicResource LabelStyle}" Content="Ім'я" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,0,10,0" FontWeight="Medium" ></Label>
-                                    <TextBox Name="FnameAddUser" Style="{DynamicResource TexBoxStyle}" Height="42" VerticalAlignment="Top" Margin="10,0,10,0"/>
+                                    <TextBox FontSize="30" Name="FnameAddUser" Style="{DynamicResource TexBoxStyle}" Height="42" VerticalAlignment="Top" Margin="10,0,10,0"/>
                                     <Label VerticalAlignment="Top" Style="{DynamicResource LabelStyle}" Content="Прізвище" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,0,10,0" FontWeight="Medium" ></Label>
-                                    <TextBox Name="LnameAddUser" Style="{DynamicResource TexBoxStyle}" Height="42" VerticalAlignment="Top" Margin="10,0,10,0"/>
+                                    <TextBox FontSize="30" Name="LnameAddUser" Style="{DynamicResource TexBoxStyle}" Height="42" VerticalAlignment="Top" Margin="10,0,10,0"/>
                                     <Label VerticalAlignment="Top" Style="{DynamicResource LabelStyle}" Content="По-Батькові" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,0,10,0" FontWeight="Medium" ></Label>
-                                    <TextBox Name="MnameAddUser" Style="{DynamicResource TexBoxStyle}" Height="42" VerticalAlignment="Top" Margin="10,0,10,0"/>
+                                    <TextBox FontSize="30" Name="MnameAddUser" Style="{DynamicResource TexBoxStyle}" Height="42" VerticalAlignment="Top" Margin="10,0,10,0"/>
                                     <Label VerticalAlignment="Top" Style="{DynamicResource LabelStyle}" Content="Логін" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,0,10,0" FontWeight="Medium" ></Label>
-                                    <TextBox Name="LoginAddUser" Style="{DynamicResource TexBoxStyle}" Height="42" VerticalAlignment="Top" Margin="10,0,10,0"/>
+                                    <TextBox FontSize="30" Name="LoginAddUser" Style="{DynamicResource TexBoxStyle}" Height="42" VerticalAlignment="Top" Margin="10,0,10,0" TextChanged="LoginAddUser_TextChanged"/>
                                     <Label VerticalAlignment="Top" Style="{DynamicResource LabelStyle}" Content="Пароль" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,0,10,0" FontWeight="Medium" ></Label>
-                                    <TextBox Name="PasswordAddUser" Style="{DynamicResource TexBoxStyle}" Height="42" VerticalAlignment="Top" Margin="10,0,10,0"/>
+                                    <TextBox FontSize="30" Name="PasswordAddUser" Style="{DynamicResource TexBoxStyle}" Height="42" VerticalAlignment="Top" Margin="10,0,10,0"/>
                                     <Label VerticalAlignment="Top" Style="{DynamicResource LabelStyle}" Content="Дата народження" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,0,10,0" FontWeight="Medium" ></Label>
-                                    <TextBox Name="BDayAddUser" Style="{DynamicResource TexBoxStyle}" Height="42" VerticalAlignment="Top" Margin="10,0,10,0"/>
+                                    <TextBox FontSize="30" Name="BDayAddUser" Style="{DynamicResource TexBoxStyle}" Height="42" VerticalAlignment="Top" Margin="10,0,10,0"/>
                                     <Grid Margin="10,0,10,0" VerticalAlignment="Top">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="247*"/>
                                             <ColumnDefinition Width="1315*"/>
                                         </Grid.ColumnDefinitions>
-                                        <CheckBox Content="Адміністратор" Grid.Column="0" FontSize="15" VerticalAlignment="Bottom">
+                                        <CheckBox Name="AdminChekBoxInAddUserGrid" Content="Адміністратор" Grid.Column="0" FontSize="15" VerticalAlignment="Bottom">
                                             <CheckBox.LayoutTransform>
                                                 <ScaleTransform ScaleX="2" ScaleY="2" />
                                             </CheckBox.LayoutTransform>
                                         </CheckBox>
                                         <StackPanel Grid.Column="1">
                                             <Label VerticalAlignment="Top"  Style="{DynamicResource LabelStyle}" Content="Посада" FontSize="25" HorizontalContentAlignment="Center"  FontWeight="Medium" ></Label>
-                                            <ComboBox Style="{DynamicResource ComboBoxStyle}" FontSize="25"/>
+                                            <ComboBox Name="PositionsComboboxInAddUsersGrid" Style="{DynamicResource ComboBoxStyle}" FontSize="30"/>
                                         </StackPanel>
                                     </Grid>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Button Name="AddPhonesAddUser" Style="{DynamicResource ButtonStyle}" Margin="10 10 10 0" Content="Додати телефони" Grid.Column="0" FontSize="25" Click="AddPhonesAddUser_Click"/>
-                                    <Button Name="AddEmailsAddUser" Style="{DynamicResource ButtonStyle}" Margin="10 10 10 0" Content="Додати E-Mail" Grid.Column="1" FontSize="25"/>
-                                </Grid>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel>
+                                            <Label  Style="{DynamicResource LabelStyle}" Content="Додати телефон" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,10,10,0" FontWeight="Medium" ></Label>
+                                            <TextBox Name="AddPhoneBoxAddUser" Style="{DynamicResource TexBoxStyle}" Height="42" FontSize="30" VerticalAlignment="Top" Margin="10,10,10,0" Grid.Column="0"/>
+                                            <Button Name="AddPhonesAddUser" Style="{DynamicResource ButtonStyle}" Margin="10 10 10 0" Content="Додати телефон" Grid.Column="0" FontSize="25" Click="AddPhonesAddUser_Click"/>
+                                            <ListBox  FontSize="30" Style="{DynamicResource ListBoxStyle}" Name="PhonesListBoxInAddUser" Height="300" Margin="10 10 10 10"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1">
+                                            <Label  Style="{DynamicResource LabelStyle}" Content="Додати Email" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,10,10,0" FontWeight="Medium" ></Label>
+                                            <TextBox FontSize="30" Name="AddEmailBoxAddUser" Style="{DynamicResource TexBoxStyle}" Height="42" VerticalAlignment="Top" Margin="10,10,10,0" />
+                                            <Button Name="AddEmailsAddUser" Style="{DynamicResource ButtonStyle}" Margin="10 10 10 0" Content="Додати Email"  FontSize="25" Click="AddEmailsAddUser_Click"/>
+                                            <ListBox FontSize="30" Style="{DynamicResource ListBoxStyle}" Name="EmailsListBoxInAddUser" Height="300" Margin="10 10 10 10"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
                             </StackPanel>
-                        </StackPanel>
+                        </ScrollViewer>
                     </Grid>
                     <!--Конец пользователям-->
                 </Grid>

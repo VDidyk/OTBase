@@ -143,5 +143,47 @@ namespace OTBaseNew.Positions
                 return position;
             }
         }
+        public static Position FindByName(string name)
+        {
+            //Запрос
+            string query = string.Format("SELECT * FROM `Positions` WHERE name='{0}'", name);
+            //База данных
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
+            //Создает запрос и возвращает результат
+            var list = db.MakeRequest(query);
+            //Если ничего не нашло, то возвращает ноль
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            //Если нашло, то создает объект должности
+            else
+            {
+                //создает объект должности
+                Position position = new Position();
+                //Присваивает ИД
+                position.Id = Convert.ToInt32((list[0])["id"].ToString());
+                //Присваивает имя с запроса
+                //Присваивает имя с запроса
+                position.Name = (list[0])["name"].ToString();
+                //Присваивает дату создания с запроса
+                position.Created = Convert.ToDateTime((list[0])["created"].ToString());
+                //Возвращает должность
+                return position;
+            }
+        }
+        public static List<Position> GetAllPositions
+        {
+            private set { }
+            get
+            {
+                string query = string.Format(" select * from Positions");
+                //База данных
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                //Создает запрос и возвращает результат
+                List<Position> users = db.MakeRequest<Position>(query);
+                return users;
+            }
+        }
     }
 }

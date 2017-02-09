@@ -38,6 +38,7 @@ namespace OTBaseNew
                 NameLable.Content = Logined.FName;
                 LoadImages();
                 grids.Add(ClientsGrid);
+                LoadClientsGrid();
             }
         }
         public static void Message(string text)
@@ -537,6 +538,44 @@ namespace OTBaseNew
             TurnGridBack();
         }
         #endregion
+        #region Сетка показать клиентов
+        void LoadShowClientsGrid()
+        {
+            foreach (var i in Users.User.GetAllUsers)
+            {
+                CreatedManagersComboBoxShowClientsGrid.Items.Add(i.FName + " " + i.LName);
+                WorkingManagersComboBoxShowClientsGrid.Items.Add(i.FName + " " + i.LName);
+            }
+            DateBeforeShowClientsGrid.Text = DateTime.Now.ToString();
+            DateAfterShowClientsGrid.Text = (DateTime.Now.AddDays(1)).ToString();
+            TurnGridNext(ShowClients);
+        }
+        private void ShowClientsBtnShowClientsGrid_Click(object sender, RoutedEventArgs e)
+        {
+            string date = "";
+            string working = "";
+            string created = "";
+            date = string.Format("created between '{0}' and '{1}'", MySqlWorker.DataBase.ConvertDateToMySqlString(Convert.ToDateTime(DateBeforeShowClientsGrid.Text)), MySqlWorker.DataBase.ConvertDateToMySqlString(Convert.ToDateTime(DateAfterShowClientsGrid.Text)));
+            
+            if (WorkingManagersComboBoxShowClientsGrid.SelectedIndex != -1)
+                working = string.Format("&& working_user_id={0}", Users.User.GetAllUsers[WorkingManagersComboBoxShowClientsGrid.SelectedIndex].Id.ToString());
+            if (CreatedManagersComboBoxShowClientsGrid.SelectedIndex != -1)
+                created = string.Format("&& created_user_id={0}", Users.User.GetAllUsers[CreatedManagersComboBoxShowClientsGrid.SelectedIndex].Id.ToString());
+            string query = "select * from Clients where " + date + " " + working + " " + created;
+            //База данных
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
+            //Создает запрос и возвращает результат
+            var list = db.MakeRequest(query);
+        }
+        private void CloseShowClients_Click(object sender, RoutedEventArgs e)
+        {
+            TurnGridBack();
+        }
+        private void ShowClientsClients_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LoadShowClientsGrid();
+        }
+        #endregion
         void LoadClientsGrid()
         {
             LoadClientsImages();
@@ -550,7 +589,6 @@ namespace OTBaseNew
             SearchClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\SearchBtn.png"));
 
         }
-
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
@@ -604,13 +642,14 @@ namespace OTBaseNew
         {
             AddNewUserImageInUsers.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\add.png"));
             AddAllUsersInUsersGrid();
+
         }
         void AddAllUsersInUsersGrid()
         {
             Border b = UsersPanelInUsers.Children[0] as Border;
             UsersPanelInUsers.Children.Clear();
             UsersPanelInUsers.Children.Add(b);
-            foreach(var i in Users.User.GetAllUsers)
+            foreach (var i in Users.User.GetAllUsers)
             {
                 AddUserUsersGrid(i);
             }
@@ -643,9 +682,160 @@ namespace OTBaseNew
             sp.Children.Add(l2);
             UsersPanelInUsers.Children.Add(b);
         }
+        private void CreateNewUserInUsersGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (MainWindow.Logined.IsAdmin)
+                LoadAddUserGrid();
+            else
+            {
+                MainWindow.Message("У Вас немає прав доступу!");
+            }
+        }
+        #region Создать пользователя
         private void AddPhonesAddUser_Click(object sender, RoutedEventArgs e)
         {
+            if (AddPhoneBoxAddUser.Text != "")
+            {
+                PhonesListBoxInAddUser.Items.Add(Other.Utility.ConvertStringToPhoneString(AddPhoneBoxAddUser.Text));
+                AddPhoneBoxAddUser.Text = "";
+            }
         }
+        private void AddEmailsAddUser_Click(object sender, RoutedEventArgs e)
+        {
+            if (AddEmailBoxAddUser.Text != "")
+            {
+                EmailsListBoxInAddUser.Items.Add(AddEmailBoxAddUser.Text);
+                AddEmailBoxAddUser.Text = "";
+            }
+        }
+        void LoadAddUserGrid()
+        {
+            TurnGridNext(AddUserInUsersGrid);
+            foreach (var i in Positions.Position.GetAllPositions)
+            {
+                PositionsComboboxInAddUsersGrid.Items.Add(i.Name);
+            }
+        }
+        void ClearAllUserValuesInAddUserGrid()
+        {
+            FnameAddUser.Text = "";
+            LnameAddUser.Text = "";
+            MnameAddUser.Text = "";
+            LoginAddUser.Text = "";
+            PasswordAddUser.Text = "";
+            BDayAddUser.Text = "";
+            PositionsComboboxInAddUsersGrid.Items.Clear();
+            AdminChekBoxInAddUserGrid.IsChecked = false;
+            AddPhoneBoxAddUser.Text = "";
+            AddEmailBoxAddUser.Text = "";
+            PhonesListBoxInAddUser.Items.Clear();
+            EmailsListBoxInAddUser.Items.Clear();
+        }
+        private void CancelAddUser_Click(object sender, RoutedEventArgs e)
+        {
+            ClearAllUserValuesInAddUserGrid();
+            TurnGridBack();
+        }
+        private void SaveAddUser_Click(object sender, RoutedEventArgs e)
+        {
+            if (LoginAddUser.Text == "")
+            {
+                MainWindow.Message("Ведіть логін!");
+                return;
+            }
+            if (PasswordAddUser.Text == "")
+            {
+                MainWindow.Message("Ведіть пароль!");
+                return;
+            }
+            if (Users.User.FindByLogin(LoginAddUser.Text) != null)
+            {
+                MainWindow.Message("Такий логін вже існує!");
+                return;
+            }
+            if (PositionsComboboxInAddUsersGrid.SelectedIndex == -1)
+            {
+                MainWindow.Message("Оберіть посаду!");
+                return;
+            }
+            Users.User u = new Users.User();
+            u.FName = FnameAddUser.Text;
+            u.LName = LnameAddUser.Text;
+            u.MName = MnameAddUser.Text;
+            u.Login = LoginAddUser.Text;
+            u.Password = PasswordAddUser.Text;
+            if (BDayAddUser.Text != "")
+            {
+                DateTime? b = Other.Utility.ConvertStringToDateTime(BDayAddUser.Text);
+                if (b == null)
+                {
+                    MainWindow.Message("Дата народження введена не вірно! (Формат: дд.мм.рррр)");
+                    return;
+                }
+                else
+                {
+                    u.Bday = Convert.ToDateTime(b.Value.ToShortDateString());
+                }
+            }
+            u.Position = Positions.Position.FindByName(PositionsComboboxInAddUsersGrid.SelectedItem.ToString());
+            if (AdminChekBoxInAddUserGrid.IsChecked == true)
+            {
+                u.IsAdmin = true;
+            }
+            else
+            {
+                u.IsAdmin = false;
+            }
+            u.Save();
+            foreach (var i in PhonesListBoxInAddUser.Items)
+            {
+                Phones.Phone p = Phones.Phone.FindByNumber(i.ToString());
+                if (p == null)
+                {
+                    p = new Phones.Phone();
+                    p.number = i.ToString();
+                    p.Users_Ides.Add(u.Id);
+                    p.Save();
+                }
+                else
+                {
+                    p.Users_Ides.Add(u.Id);
+                    p.Save();
+                }
+            }
+            foreach (var i in EmailsListBoxInAddUser.Items)
+            {
+                Emails.Email p = Emails.Email.FindByName(i.ToString());
+                if (p == null)
+                {
+                    p = new Emails.Email();
+                    p.name = i.ToString();
+                    p.Users_Ides.Add(u.Id);
+                    p.Save();
+                }
+                else
+                {
+                    p.Users_Ides.Add(u.Id);
+                    p.Save();
+                }
+            }
+            AddAllUsersInUsersGrid();
+            ClearAllUserValuesInAddUserGrid();
+            TurnGridBack();
+        }
+        private void LoginAddUser_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (LoginAddUser.Text != "")
+            {
+                char sumbol = LoginAddUser.Text[LoginAddUser.Text.Length - 1];
+                if (sumbol == ' ')
+                {
+                    LoginAddUser.Text = LoginAddUser.Text = LoginAddUser.Text.Substring(0, LoginAddUser.Text.Length - 1);
+                    LoginAddUser.SelectionStart = LoginAddUser.Text.Length;
+                }
+            }
+        }
+        #endregion
         #endregion
         //-----------------
         #region Навигация
@@ -685,20 +875,12 @@ namespace OTBaseNew
             LoadUsersGrid();
             TurnGridMain(UsersGrid);
         }
-        #endregion
+
+        #endregion             
+
        
+
+        
         //-----------------
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
