@@ -38,7 +38,7 @@ namespace OTBaseNew
                 NameLable.Content = Logined.FName;
                 LoadImages();
                 grids.Add(ClientsGrid);
-                LoadClientsGrid();
+
             }
         }
         public static void Message(string text)
@@ -53,6 +53,13 @@ namespace OTBaseNew
             UsersMenuImages.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Menu\Users.png"));
             OperatorsMenuImages.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Menu\Operators.png"));
             ConfigMenuImages.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Menu\Config.png"));
+        }
+        void LookClient(object sender, MouseButtonEventArgs e)
+        {
+            Border b = (Border)sender;
+            StackPanel sp = (StackPanel)b.Child;
+            Label id = (Label)sp.Children[0];
+            LoadShowClient(Clients.Client.FindById(Convert.ToInt32(id.Content)));
         }
         //-----------------        
         #region Сетка Клиенты
@@ -546,7 +553,7 @@ namespace OTBaseNew
                 CreatedManagersComboBoxShowClientsGrid.Items.Add(i.FName + " " + i.LName);
                 WorkingManagersComboBoxShowClientsGrid.Items.Add(i.FName + " " + i.LName);
             }
-            DateBeforeShowClientsGrid.Text = DateTime.Now.ToString();
+            DateBeforeShowClientsGrid.Text = DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0)).ToShortDateString();
             DateAfterShowClientsGrid.Text = (DateTime.Now.AddDays(1)).ToString();
             TurnGridNext(ShowClients);
         }
@@ -556,7 +563,7 @@ namespace OTBaseNew
             string working = "";
             string created = "";
             date = string.Format("created between '{0}' and '{1}'", MySqlWorker.DataBase.ConvertDateToMySqlString(Convert.ToDateTime(DateBeforeShowClientsGrid.Text)), MySqlWorker.DataBase.ConvertDateToMySqlString(Convert.ToDateTime(DateAfterShowClientsGrid.Text)));
-            
+
             if (WorkingManagersComboBoxShowClientsGrid.SelectedIndex != -1)
                 working = string.Format("&& working_user_id={0}", Users.User.GetAllUsers[WorkingManagersComboBoxShowClientsGrid.SelectedIndex].Id.ToString());
             if (CreatedManagersComboBoxShowClientsGrid.SelectedIndex != -1)
@@ -566,6 +573,11 @@ namespace OTBaseNew
             MySqlWorker.DataBase db = SQL.SqlConnect.db;
             //Создает запрос и возвращает результат
             var list = db.MakeRequest(query);
+            ClientsPanelInShowClients.Children.Clear();
+            foreach (var i in list)
+            {
+                AddClientInShowClientsGrid(Clients.Client.FindById(Convert.ToInt32(i["id"])));
+            }
         }
         private void CloseShowClients_Click(object sender, RoutedEventArgs e)
         {
@@ -574,6 +586,177 @@ namespace OTBaseNew
         private void ShowClientsClients_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             LoadShowClientsGrid();
+        }
+        void AddClientInShowClientsGrid(Clients.Client client)
+        {
+            Border b = new Border();
+            b.Width = 300;
+            b.Style = Resources["ClientBorderStyle"] as Style;
+            StackPanel sp = new StackPanel();
+            b.Child = sp;
+            Label lid = new Label();
+            lid.Content = client.Id.ToString();
+            lid.Visibility = System.Windows.Visibility.Hidden;
+            Label l = new Label();
+            l.Style = Resources["LabelStyle"] as Style;
+            l.Content = client.FName + " " + client.LName;
+            l.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            Image im = new Image();
+            im.Height = 150;
+            im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\client.png"));
+            Label l2 = new Label();
+            l2.Style = Resources["LabelStyle"] as Style;
+            l2.Content = client.Created.ToShortDateString();
+            l2.FontWeight = FontWeights.Normal;
+            l2.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            sp.Children.Add(lid);
+            sp.Children.Add(l);
+            sp.Children.Add(im);
+            sp.Children.Add(l2);
+            ClientsPanelInShowClients.Children.Add(b);
+        }
+        private void ClearFilterBtnShowClientsGrid_Click(object sender, RoutedEventArgs e)
+        {
+            DateBeforeShowClientsGrid.Text = DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0)).ToShortDateString();
+            DateAfterShowClientsGrid.Text = (DateTime.Now.AddDays(1)).ToString();
+            WorkingManagersComboBoxShowClientsGrid.SelectedIndex = -1;
+            WorkingManagersComboBoxShowClientsGrid.SelectedIndex = -1;
+        }
+        #endregion
+        #region Сетка показать клиента
+        void LoadShowClient(Clients.Client client)
+        {
+            TurnGridNext(ShowClient);
+            MainInfoImageShowClient.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\Card.png"));
+            PassportImageShowClient.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\Passport.png"));
+            AddressImageShowClient.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\House.png"));
+            InfoImageShowClient.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\info.png"));
+
+            //Основная информация
+            FullNameShowClient.Text = client.FName + " " + client.LName + " " + client.MName;
+            IdShowClient.Text = client.Id.ToString();
+            if (client.Bday.Year != 1)
+            {
+                BDayShowClient.Text = client.Bday.ToShortDateString();
+            }
+            else
+            {
+                BDayShowClient.Text = "Не вказано";
+            }
+            CreatedShowClient.Text = client.Created.ToShortDateString();
+            Passports.Passport p = client.GetPassport;
+            if (p != null)
+            {
+                PassportBorderInShowUser.Visibility = System.Windows.Visibility.Visible;
+                PassportBorderInShowUser.Height = 250;
+                if (p.Fname != "" || p.Lname != "")
+                {
+                    FullNamePassportShowClient.Text = p.Fname + " " + p.Lname;
+                }
+                else
+                {
+                    FullNamePassportShowClient.Text = "Ім'я та прізвище не вказані!";
+                }
+                if (p.series != "")
+                {
+                    SerialPassportShowClient.Text = p.series;
+                }
+                else
+                {
+                    SerialPassportShowClient.Text = "Пусто";
+                }
+                if (p.given_by != "")
+                {
+                    GivenByPassportShowClient.Text = p.given_by;
+                }
+                else
+                {
+                    GivenByPassportShowClient.Text = "Пусто";
+                }
+                if (p.given_when.Year != 1)
+                {
+                    GivenWhenPassportShowClient.Text = p.given_when.ToShortDateString();
+                }
+                else
+                {
+                    GivenWhenPassportShowClient.Text = "Пусто";
+                }
+                if (p.given_the_time.Year != -1)
+                {
+                    GivenForPassportShowClient.Text = p.given_the_time.ToShortDateString();
+                }
+                else
+                {
+                    GivenForPassportShowClient.Text = "Пусто";
+                }
+            }
+            else
+            {
+                PassportBorderInShowUser.Visibility = System.Windows.Visibility.Hidden;
+                PassportBorderInShowUser.Height = 0;
+            }
+
+            Addresses.Address a = client.GetAddress;
+            if (a != null)
+            {
+                AddressBorderInShowUser.Visibility = System.Windows.Visibility.Visible;
+                AddressBorderInShowUser.Height = 250;
+                if (a.GetCity != null)
+                {
+                    CityShowClient.Text = a.GetCity.Name;
+                    if (a.GetCity.GetRegion != null)
+                    {
+                        RegionShowClient.Text = a.GetCity.GetRegion.Name;
+
+                    }
+                    else
+                    {
+                        RegionShowClient.Text = "Не вказано";
+                    }
+                }
+                else
+                {
+                    CityShowClient.Text = "Не вказано";
+                    RegionShowClient.Text = "Не вказано";
+                }
+                if (a.address != "")
+                {
+                    AddressShowClient.Text = a.address;
+                }
+                else
+                {
+                    AddressShowClient.Text = "Не вказано";
+                }
+            }
+            else
+            {
+                AddressBorderInShowUser.Visibility = System.Windows.Visibility.Hidden;
+                AddressBorderInShowUser.Height = 0;
+            }
+
+            Users.User cu=client.GetCreatedUser;
+            WhoCreatedShowClient.Text = cu.LName + " " + cu.FName;
+            Users.User wu = client.GetWorkingdUser;
+            WorkingShowClient.Text = wu.LName + " " + wu.FName;
+            Users.User u = client.GetEditdUser;
+            if (u != null)
+            {
+                WhoEditedShowClient.Text = u.LName + " " + u.FName;
+            }
+            else
+            {
+                WhoEditedShowClient.Text = "Не редагувався";
+            }
+            if (client.Notice!="")
+            NoticeShowClient.Text = client.Notice;
+            else
+            {
+                NoticeShowClient.Text = "Пусто";
+            }
+        }
+        private void CloseShowClient_Click(object sender, RoutedEventArgs e)
+        {
+            TurnGridBack();
         }
         #endregion
         void LoadClientsGrid()
@@ -600,6 +783,7 @@ namespace OTBaseNew
             for (int i = 0; i < clients.Count; i++)
             {
                 Border b = new Border();
+                b.MouseLeftButtonDown += LookClient;
                 b.Style = Resources["ClientBorderStyle"] as Style;
                 StackPanel sp = new StackPanel();
                 b.Child = sp;
@@ -876,11 +1060,7 @@ namespace OTBaseNew
             TurnGridMain(UsersGrid);
         }
 
-        #endregion             
-
-       
-
-        
+        #endregion
         //-----------------
     }
 }

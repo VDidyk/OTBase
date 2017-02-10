@@ -103,7 +103,7 @@
             <Border BorderBrush="White" BorderThickness="0 1 1 1" Grid.Column="1">
                 <Grid>
                     <!--Клиенты-->
-                    <Grid Name="ClientsGrid" Visibility="Visible">
+                    <Grid Name="ClientsGrid" Visibility="Hidden">
                         <ScrollViewer>
                             <StackPanel>
                                 <Label BorderThickness="0 0 0 1" BorderBrush="Pink" Style="{DynamicResource LabelStyle}" Content="Клієнти" FontSize="50" HorizontalContentAlignment="Center"></Label>
@@ -381,7 +381,7 @@
                                     <RowDefinition Height="375*"/>
                                 </Grid.RowDefinitions>
                                 <ScrollViewer Grid.Row="1">
-                                    <WrapPanel>
+                                    <WrapPanel Name="ClientsPanelInShowClients">
 
                                     </WrapPanel>
                                 </ScrollViewer>
@@ -403,10 +403,136 @@
                                     <Label Style="{DynamicResource LabelStyle}" Content="По менеджеру" FontSize="25" HorizontalContentAlignment="Center" FontWeight="Medium"></Label>
                                     <ComboBox Name="WorkingManagersComboBoxShowClientsGrid" Style="{DynamicResource ComboBoxStyle}" Margin="10"/>
                                     <Button Name="ShowClientsBtnShowClientsGrid" Style="{DynamicResource ButtonStyle}" Margin="10" Content="Вивести" FontSize="25" Click="ShowClientsBtnShowClientsGrid_Click"/>
-                                    <Button Name="ClearFilterBtnShowClientsGrid" Style="{DynamicResource ButtonStyle}" Margin="10" Content="Скинути" FontSize="25"/>
+                                    <Button Name="ClearFilterBtnShowClientsGrid" Style="{DynamicResource ButtonStyle}" Margin="10" Content="Скинути" FontSize="25" Click="ClearFilterBtnShowClientsGrid_Click"/>
                                 </StackPanel>
                             </ScrollViewer>
                         </Border>
+                    </Grid>
+                    <Grid Name="ShowClient" Visibility="Hidden">
+                        <Button ToolTip="Відмінити" Name="CloseShowClient" HorizontalAlignment="Right" Height="35" Width="35" Grid.Column="1"  Style="{DynamicResource ButtonStyle}" FontSize="20" Background="#FFD63C34" Content="X" Margin="10 4 10 4"  VerticalAlignment="Top" Click="CloseShowClient_Click" />
+                        <TabControl >
+                            <TabItem Style="{DynamicResource TabItemStyle}" FontSize="25" Header="Інформація" >
+                                <Grid>
+                                    <ScrollViewer>
+                                        <StackPanel>
+                                            <Border Height="250" Background="LightBlue">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="376*"/>
+                                                        <ColumnDefinition Width="1207*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Image Name="MainInfoImageShowClient" Grid.Column="0" Margin="0"/>
+                                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" >
+                                                        <TextBox Name="FullNameShowClient" IsReadOnly="True" Background="Transparent" BorderThickness="0" Text="Виктор Анатольевич Колыба" Margin="20 0 0 0" FontSize="30" Grid.Column="1" FontWeight="Bold"/>
+                                                        <WrapPanel>
+                                                            <Label Style="{DynamicResource LabelStyle}" Content="Номер клієнта:" Margin="20 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                            <Label Style="{DynamicResource LabelStyle}" Content="#" Margin="20 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                            <TextBox Name="IdShowClient" IsReadOnly="True" Background="Transparent" BorderThickness="0" Text="1" Margin="0 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                        </WrapPanel>
+                                                        <WrapPanel>
+                                                            <Label Style="{DynamicResource LabelStyle}" Content="Дата народження:" Margin="20 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                            <TextBox Name="BDayShowClient" IsReadOnly="True" Background="Transparent" BorderThickness="0" Text="16.01.1946" Margin="0 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                        </WrapPanel>
+                                                        <WrapPanel>
+                                                            <Label Style="{DynamicResource LabelStyle}" Content="Дата створення:" Margin="20 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                            <TextBox  Name="CreatedShowClient" IsReadOnly="True" Background="Transparent" BorderThickness="0" Text="16.01.2017" Margin="0 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                        </WrapPanel>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                            <Border Name="PassportBorderInShowUser" Height="250" Background="LightCoral">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="376*"/>
+                                                        <ColumnDefinition Width="1207*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Image Name="PassportImageShowClient"  Margin="20" Grid.Column="0"/>
+                                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                        <TextBox Name="FullNamePassportShowClient" IsReadOnly="True" Background="Transparent" BorderThickness="0" Text="Viktor Koluba" Margin="20 0 0 0" FontSize="30" Grid.Column="1" FontWeight="Bold"/>
+                                                        <WrapPanel>
+                                                            <Label Style="{DynamicResource LabelStyle}" Content="Серія:" Margin="20 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                            <TextBox Name="SerialPassportShowClient" IsReadOnly="True" Background="Transparent" BorderThickness="0" Text="EX546234" Margin="0 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                        </WrapPanel>
+                                                        <WrapPanel>
+                                                            <Label Style="{DynamicResource LabelStyle}" Content="Ким видано:" Margin="20 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                            <TextBox Name="GivenByPassportShowClient" IsReadOnly="True" Background="Transparent" BorderThickness="0" Text="4625" Margin="0 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                        </WrapPanel>
+                                                        <WrapPanel>
+                                                            <Label Style="{DynamicResource LabelStyle}" Content="Коли виданий:" Margin="20 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                            <TextBox Name="GivenWhenPassportShowClient" IsReadOnly="True" Background="Transparent" BorderThickness="0" Text="25.04.2014" Margin="0 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                        </WrapPanel>
+                                                        <WrapPanel>
+                                                            <Label Style="{DynamicResource LabelStyle}" Content="До коли виданий:" Margin="20 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                            <TextBox Name="GivenForPassportShowClient" IsReadOnly="True" Background="Transparent" BorderThickness="0" Text="25.04.2024" Margin="0 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                        </WrapPanel>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                            <Border Name="AddressBorderInShowUser" Height="250" Background="LightGreen">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="376*"/>
+                                                        <ColumnDefinition Width="1207*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Image Name="AddressImageShowClient"  Grid.Column="0" Margin="10"/>
+                                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" >
+                                                        <WrapPanel>
+                                                            <Label Style="{DynamicResource LabelStyle}" Content="Область:" Margin="20 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                            <TextBox Name="RegionShowClient" IsReadOnly="True" Background="Transparent" BorderThickness="0" Text="Львівська" Margin="0 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                        </WrapPanel>
+                                                        <WrapPanel>
+                                                            <Label Style="{DynamicResource LabelStyle}" Content="Місто:" Margin="20 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                            <TextBox Name="CityShowClient" IsReadOnly="True" Background="Transparent" BorderThickness="0" Text="Львів" Margin="0 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                        </WrapPanel>
+                                                        <WrapPanel>
+                                                            <Label Style="{DynamicResource LabelStyle}" Content="Адреса:" Margin="20 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                            <TextBox Name="AddressShowClient" IsReadOnly="True" Background="Transparent" BorderThickness="0" Text="Чайковського 2/15" Margin="0 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                        </WrapPanel>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                            <Border Height="250" Background="LightSalmon">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="376*"/>
+                                                        <ColumnDefinition Width="1207*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Image Name="InfoImageShowClient" Grid.Column="0" Margin="10"/>
+                                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" >
+                                                        <WrapPanel>
+                                                            <Label Style="{DynamicResource LabelStyle}" Content="Створив:" Margin="20 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                            <TextBox Name="WhoCreatedShowClient" IsReadOnly="True" Background="Transparent" BorderThickness="0" Text="Сорока Ольга" Margin="0 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                        </WrapPanel>
+                                                        <WrapPanel>
+                                                            <Label Style="{DynamicResource LabelStyle}" Content="Працюючий менеджер:" Margin="20 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                            <TextBox Name="WorkingShowClient" IsReadOnly="True" Background="Transparent" BorderThickness="0" Text="Сорока Ольга" Margin="0 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                        </WrapPanel>
+                                                        <WrapPanel>
+                                                            <Label Style="{DynamicResource LabelStyle}" Content="Останній редагував:" Margin="20 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                            <TextBox Name="WhoEditedShowClient" IsReadOnly="True" Background="Transparent" BorderThickness="0" Text="Сорока Ольга" Margin="0 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                        </WrapPanel>
+                                                        <WrapPanel>
+                                                            <Label Style="{DynamicResource LabelStyle}" Content="Помітка:" Margin="20 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                            <TextBox  Name="NoticeShowClient" IsReadOnly="True" Background="Transparent" BorderThickness="0" Text="Бере Єгипет" Margin="0 0 0 0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                                                        </WrapPanel>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Style="{DynamicResource TabItemStyle}" FontSize="25"  Header="Контакти">
+                                <Grid Background="#FFE5E5E5"/>
+                            </TabItem>
+                            <TabItem Style="{DynamicResource TabItemStyle}" FontSize="25"  Header="Заявки">
+                                <Grid Background="#FFE5E5E5"/>
+                            </TabItem>
+                            <TabItem Style="{DynamicResource TabItemStyle}" FontSize="25"  Header="Дії">
+                                <Grid Background="#FFE5E5E5"/>
+                            </TabItem>
+                        </TabControl>
+
                     </Grid>
                     <!--Конец клиетов-->
                     <!--Пользователи-->
