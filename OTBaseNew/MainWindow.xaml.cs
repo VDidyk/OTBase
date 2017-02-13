@@ -38,7 +38,7 @@ namespace OTBaseNew
                 NameLable.Content = Logined.FName;
                 LoadImages();
                 grids.Add(ClientsGrid);
-
+                LoadShowClient(Clients.Client.FindById(2));
             }
         }
         public static void Message(string text)
@@ -753,6 +753,16 @@ namespace OTBaseNew
             {
                 NoticeShowClient.Text = "Пусто";
             }
+            AddClientPhonesInShowClientGrid(client);
+            AddClientEmailsInShowClientGrid(client);
+            EditMainInfoImgInShowClientGrid.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\Card.png"));
+            EditPassportImgInShowClientGrid.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\Passport.png"));
+            EditAddressImgInShowClientGrid.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\House.png"));
+            EditContactsImgInShowClientGrid.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\Contacts.png"));
+            EditDiscountsImgInShowClientGrid.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\Discount.png"));
+            AddRequestImgInShowClientGrid.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\bell.png"));
+            AddToBlackListImgInShowClientGrid.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\blacklist.png"));
+            DeleteImgInShowClientGrid.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\delete.png"));
         }
         private void CloseShowClient_Click(object sender, RoutedEventArgs e)
         {
@@ -771,6 +781,32 @@ namespace OTBaseNew
             ShowClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\ShowBtn.png"));
             SearchClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\SearchBtn.png"));
 
+        }
+        void AddClientPhonesInShowClientGrid(Clients.Client client)
+        {
+            PhonesListInShowClient.Children.Clear();
+            foreach(var i in client.GetPhones)
+            {
+                TextBox t = new TextBox();
+                t.Style = Resources["TexBoxStyle"] as Style;
+                t.IsReadOnly = true;
+                t.Margin = new Thickness(10);
+                t.Text = i.number;
+                PhonesListInShowClient.Children.Add(t);
+            }
+        }
+        void AddClientEmailsInShowClientGrid(Clients.Client client)
+        {
+            EmailsListInShowClient.Children.Clear();
+            foreach (var i in client.GetEmails)
+            {
+                TextBox t = new TextBox();
+                t.Style = Resources["TexBoxStyle"] as Style;
+                t.IsReadOnly = true;
+                t.Margin = new Thickness(10);
+                t.Text = i.name;
+                EmailsListInShowClient.Children.Add(t);
+            }
         }
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
