@@ -19,7 +19,9 @@ namespace OTBaseNew
     /// </summary>
     public partial class MainWindow : Window
     {
+        public Clients.Client ClientToShow;
         public static Users.User Logined;
+        StackPanel ActualEditClientPanel;
         public List<Grid> grids = new List<Grid>();
         public static string Exepath = Environment.CurrentDirectory;
         public MainWindow()
@@ -38,7 +40,8 @@ namespace OTBaseNew
                 NameLable.Content = Logined.FName;
                 LoadImages();
                 grids.Add(ClientsGrid);
-                LoadShowClient(Clients.Client.FindById(2));
+                ClientToShow = Clients.Client.FindById(2);
+                LoadShowClient(ClientToShow);
             }
         }
         public static void Message(string text)
@@ -626,6 +629,10 @@ namespace OTBaseNew
         #region Сетка показать клиента
         void LoadShowClient(Clients.Client client)
         {
+            if (client == null)
+            {
+                TurnGridBack();
+            }
             TurnGridNext(ShowClient);
             MainInfoImageShowClient.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\Card.png"));
             PassportImageShowClient.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\Passport.png"));
@@ -734,7 +741,7 @@ namespace OTBaseNew
                 AddressBorderInShowUser.Height = 0;
             }
 
-            Users.User cu=client.GetCreatedUser;
+            Users.User cu = client.GetCreatedUser;
             WhoCreatedShowClient.Text = cu.LName + " " + cu.FName;
             Users.User wu = client.GetWorkingdUser;
             WorkingShowClient.Text = wu.LName + " " + wu.FName;
@@ -747,8 +754,8 @@ namespace OTBaseNew
             {
                 WhoEditedShowClient.Text = "Не редагувався";
             }
-            if (client.Notice!="")
-            NoticeShowClient.Text = client.Notice;
+            if (client.Notice != "")
+                NoticeShowClient.Text = client.Notice;
             else
             {
                 NoticeShowClient.Text = "Пусто";
@@ -768,6 +775,48 @@ namespace OTBaseNew
         {
             TurnGridBack();
         }
+        private void EditClientMainInfoSaveShowClient_Click(object sender, RoutedEventArgs e)
+        {
+            if (EditClientLNameShowClient.Text == "")
+            {
+                MainWindow.Message("Введіть прізвище!");
+                return;
+            }
+            ClientToShow.FName = EditClientFNameShowClient.Text;
+            ClientToShow.LName = EditClientLNameShowClient.Text;
+            ClientToShow.MName = EditClientMNameShowClient.Text;
+            if (Other.Utility.ConvertStringToDateTime(EditClientBDayShowClient.Text) != null)
+            {
+                ClientToShow.Bday = Convert.ToDateTime(Other.Utility.ConvertStringToDateTime(EditClientBDayShowClient.Text.ToString()));
+            }
+            else
+            {
+                ClientToShow.Bday = Convert.ToDateTime("01.01.0001");
+            }
+            if (EditClientResourseShowClient.SelectedIndex != -1)
+            {
+                ClientToShow.GetResourse = Resourses.Resourse.FindByName(EditClientResourseShowClient.Items[EditClientResourseShowClient.SelectedIndex].ToString());
+            }
+            else
+            {
+                ClientToShow.Resourse_id = 0;
+            }
+            if (EditClientWorkingManagerShowClient.SelectedIndex != -1)
+            {
+                ClientToShow.Working_user_id = Users.User.GetAllUsers.ToList()[EditClientWorkingManagerShowClient.SelectedIndex].Id;
+            }
+            else
+            {
+                MainWindow.Message("Не обраний менеджер!");
+                return;
+            }
+            ClientToShow.Last_edit_user_id = MainWindow.Logined.Id;
+            ClientToShow.Save();
+            EditClientBorderShowClient.Visibility = System.Windows.Visibility.Hidden;
+            EditClientBorderShowClient.Height = 0;
+            LoadShowClient(ClientToShow);
+
+        }
         #endregion
         void LoadClientsGrid()
         {
@@ -785,7 +834,7 @@ namespace OTBaseNew
         void AddClientPhonesInShowClientGrid(Clients.Client client)
         {
             PhonesListInShowClient.Children.Clear();
-            foreach(var i in client.GetPhones)
+            foreach (var i in client.GetPhones)
             {
                 TextBox t = new TextBox();
                 t.Style = Resources["TexBoxStyle"] as Style;
@@ -854,6 +903,57 @@ namespace OTBaseNew
         {
             LoadGridAddClient();
             TurnGridNext(ClientAddGrid);
+        }
+        void LoadEditMainInfoShowClient(Clients.Client client)
+        {
+            if(ActualEditClientPanel!=null)
+            {
+                ActualEditClientPanel.Visibility = System.Windows.Visibility.Hidden;
+                ActualEditClientPanel = null;
+            }
+            ActualEditClientPanel = MainInfoEditClientStackPanelShowClient;
+            ActualEditClientPanel.Visibility = System.Windows.Visibility.Visible;
+            EditClientFNameShowClient.Text = client.FName;
+            EditClientLNameShowClient.Text = client.LName;
+            EditClientMNameShowClient.Text = client.MName;
+            EditClientBDayShowClient.Text = client.Bday.ToShortDateString();
+            var tmp = Resourses.Resourse.GetAllResourses;
+            EditClientResourseShowClient.Items.Clear();
+            for (int i = 0; i < tmp.Count; i++)
+            {
+                EditClientResourseShowClient.Items.Add(tmp[i].Name);
+                if (client.Resourse_id == tmp[i].Id)
+                {
+                    EditClientResourseShowClient.SelectedIndex = i;
+                }
+            }
+            var tmp1 = Users.User.GetAllUsers;
+            EditClientWorkingManagerShowClient.Items.Clear();
+            for (int i = 0; i < tmp1.Count; i++)
+            {
+                EditClientWorkingManagerShowClient.Items.Add(tmp1[i].FName + " " + tmp1[i].LName);
+                if (client.Working_user_id == tmp1[i].Id)
+                {
+                    EditClientWorkingManagerShowClient.SelectedIndex = i;
+                }
+            }
+            EditClientBorderShowClient.Visibility = System.Windows.Visibility.Visible;
+            EditClientBorderShowClient.Height = MainInfoEditClientStackPanelShowClient.Height;
+            ShowClientActionsScroll.ScrollToHome();
+        }
+        private void EditMainInfoInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LoadEditMainInfoShowClient(ClientToShow);
+        }
+        private void EditClientMainInfoCancelShowClient_Click(object sender, RoutedEventArgs e)
+        {
+            EditClientBorderShowClient.Visibility = System.Windows.Visibility.Hidden;
+            EditClientBorderShowClient.Height = 0;
+            if (ActualEditClientPanel != null)
+            {
+                ActualEditClientPanel.Visibility = System.Windows.Visibility.Hidden;
+                ActualEditClientPanel = null;
+            }
         }
         #endregion
         //-----------------
@@ -1097,6 +1197,12 @@ namespace OTBaseNew
         }
 
         #endregion
+
+       
+
+       
+
+
         //-----------------
     }
 }

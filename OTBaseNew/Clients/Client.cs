@@ -187,7 +187,7 @@ namespace OTBaseNew.Clients
                     if (!exist)
                     {
                         //Срока-запрос
-                        query = string.Format("Delete from `EmailsAndClients` where Id={0}", Convert.ToInt32(i["Id"]));
+                        query = string.Format("Delete from `EmailsAndClients` where Id={0}", Convert.ToInt32(i["id"]));
                         //Удаляем ее из базы
                         db.MakeRequest(query);
                     }
