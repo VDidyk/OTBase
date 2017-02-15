@@ -548,24 +548,55 @@
                                 <Grid Background="White">
                                     <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" Name="ShowClientActionsScroll">                                     
                                         <StackPanel>
-                                            <Border BorderThickness="0 0 0 5" BorderBrush="Pink" Name="EditClientBorderShowClient" Visibility="Hidden" Height="0">
-                                                <StackPanel Name="MainInfoEditClientStackPanelShowClient">
-                                                    <Label Style="{DynamicResource LabelStyle}" Content="Редугувати інформацію"/>
-                                                    <Label Style="{DynamicResource LabelStyle}" Content="Ім'я" FontWeight="Normal" />
-                                                    <TextBox Name="EditClientFNameShowClient" Style="{DynamicResource TexBoxStyle}" Margin="10"/>
-                                                    <Label Style="{DynamicResource LabelStyle}" Content="Прізвище" FontWeight="Normal" />
-                                                    <TextBox Name="EditClientLNameShowClient" Style="{DynamicResource TexBoxStyle}" Margin="10"/>
-                                                    <Label Style="{DynamicResource LabelStyle}" Content="По-Батькові" FontWeight="Normal" />
-                                                    <TextBox Name="EditClientMNameShowClient" Style="{DynamicResource TexBoxStyle}" Margin="10"/>
-                                                    <Label Style="{DynamicResource LabelStyle}" Content="Дата народження" FontWeight="Normal" />
-                                                    <TextBox Name="EditClientBDayShowClient" Style="{DynamicResource TexBoxStyle}" Margin="10"/>
-                                                    <Label Style="{DynamicResource LabelStyle}" Content="Ресурс" FontWeight="Normal" />
-                                                    <ComboBox Name="EditClientResourseShowClient" Style="{DynamicResource ComboBoxStyle}" Margin="10"/>
-                                                    <Label Style="{DynamicResource LabelStyle}" Content="Менеджер" FontWeight="Normal" />
-                                                    <ComboBox Name="EditClientWorkingManagerShowClient" Style="{DynamicResource ComboBoxStyle}" Margin="10"/>
-                                                    <Button Name="EditClientMainInfoSaveShowClient" Style="{DynamicResource ButtonStyle}" Content="Зберегти" Background="LightGreen" Margin="10" Click="EditClientMainInfoSaveShowClient_Click"/>
-                                                    <Button Name="EditClientMainInfoCancelShowClient" Style="{DynamicResource ButtonStyle}" Content="Закрити" Margin="10" Click="EditClientMainInfoCancelShowClient_Click"/>
-                                                </StackPanel>
+                                            <Border BorderThickness="0 0 0 5" BorderBrush="Pink" Name="EditClientBorderShowClient" Visibility="Visible" Height="0">
+                                                <Grid>
+                                                    <StackPanel Name="MainInfoEditClientStackPanelShowClient" Visibility="Hidden">
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Редугувати інформацію"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Ім'я" FontWeight="Normal" />
+                                                        <TextBox Name="EditClientFNameShowClient" Style="{DynamicResource TexBoxStyle}" Margin="10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Прізвище" FontWeight="Normal" />
+                                                        <TextBox Name="EditClientLNameShowClient" Style="{DynamicResource TexBoxStyle}" Margin="10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="По-Батькові" FontWeight="Normal" />
+                                                        <TextBox Name="EditClientMNameShowClient" Style="{DynamicResource TexBoxStyle}" Margin="10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Дата народження" FontWeight="Normal" />
+                                                        <TextBox Name="EditClientBDayShowClient" Style="{DynamicResource TexBoxStyle}" Margin="10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Ресурс" FontWeight="Normal" />
+                                                        <ComboBox Name="EditClientResourseShowClient" Style="{DynamicResource ComboBoxStyle}" Margin="10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Менеджер" FontWeight="Normal" />
+                                                        <ComboBox Name="EditClientWorkingManagerShowClient" Style="{DynamicResource ComboBoxStyle}" Margin="10"/>
+                                                        <Button Name="EditClientMainInfoSaveShowClient" Style="{DynamicResource ButtonStyle}" Content="Зберегти" Background="LightGreen" Margin="10" Click="EditClientMainInfoSaveShowClient_Click"/>
+                                                        <Button Name="EditClientMainInfoCancelShowClient" Style="{DynamicResource ButtonStyle}" Content="Закрити" Margin="10" Click="EditClientMainInfoCancelShowClient_Click"/>
+                                                    </StackPanel>
+                                                    <StackPanel Name="PassportEditClientStackPanelShowClient" Visibility="Hidden">
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Редугувати паспорт"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Ім'я" FontWeight="Normal" />
+                                                        <TextBox Name="EditClientPassportFNameShowClient" Style="{DynamicResource TexBoxStyle}" Margin="10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Прізвище" FontWeight="Normal" />
+                                                        <TextBox Name="EditClientPassportLNameShowClient" Style="{DynamicResource TexBoxStyle}" Margin="10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Номер паспорта" FontWeight="Normal" />
+                                                        <TextBox Name="EditClientPassportSerieShowClient" Style="{DynamicResource TexBoxStyle}" Margin="10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Дата видачі" FontWeight="Normal" />
+                                                        <TextBox Name="EditClientGivenWhenShowClient" Style="{DynamicResource TexBoxStyle}" Margin="10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="До коли дійсний" FontWeight="Normal" />
+                                                        <TextBox Name="EditClientGivenTheTimeShowClient" Style="{DynamicResource TexBoxStyle}" Margin="10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Ким видано" FontWeight="Normal" />
+                                                        <TextBox Name="EditClientGivenByShowClient" Style="{DynamicResource TexBoxStyle}" Margin="10"/>
+                                                        <Button Name="EditClientPassportMainInfoSaveShowClient" Style="{DynamicResource ButtonStyle}" Content="Зберегти" Background="LightGreen" Margin="10" Click="EditClientPassportMainInfoSaveShowClient_Click" />
+                                                        <Button Name="EditClientPassportMainInfoCancelShowClient" Style="{DynamicResource ButtonStyle}" Content="Закрити" Margin="10" Click="EditClientMainInfoCancelShowClient_Click"/>
+                                                    </StackPanel>
+                                                    <StackPanel Name="AddressEditClientStackPanelShowClient" Visibility="Hidden">
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Редугувати адресу"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Область" FontWeight="Normal" />
+                                                        <ComboBox Name="EditClientAddressRegionShowClient" Style="{DynamicResource ComboBoxStyle}" Margin="10" SelectionChanged="EditClientAddressRegionShowClient_SelectionChanged"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Місто" FontWeight="Normal" />
+                                                        <ComboBox Name="EditClientAddressCityShowClient" Style="{DynamicResource ComboBoxStyle}" Margin="10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Адреса" FontWeight="Normal" />
+                                                        <TextBox Name="EditClientAddressShowClient" Style="{DynamicResource TexBoxStyle}" Margin="10"/>
+                                                        <Button Name="EditClientAddressSaveShowClient" Style="{DynamicResource ButtonStyle}" Content="Зберегти" Background="LightGreen" Margin="10" Click="EditClientAddressSaveShowClient_Click" />
+                                                        <Button Name="EditClientAddressCancelShowClient" Style="{DynamicResource ButtonStyle}" Content="Закрити" Margin="10" Click="EditClientMainInfoCancelShowClient_Click"/>
+                                                    </StackPanel>
+
+                                                </Grid>
                                             </Border>
                                             <WrapPanel>
                                                     <Border Name="EditMainInfoInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditMainInfoInShowClientGrid_MouseLeftButtonDown">
@@ -574,13 +605,13 @@
                                                             <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Редагувати інформацію"/>
                                                         </StackPanel>
                                                     </Border>
-                                                    <Border Name="EditPassportInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}">
+                                                    <Border Name="EditPassportInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditPassportInShowClientGrid_MouseLeftButtonDown">
                                                         <StackPanel>
                                                             <Image Name="EditPassportImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
                                                             <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Редагувати паспорт"/>
                                                         </StackPanel>
                                                     </Border>
-                                                    <Border Name="EditAddressInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}">
+                                                    <Border Name="EditAddressInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditAddressInShowClientGrid_MouseLeftButtonDown">
                                                         <StackPanel>
                                                             <Image Name="EditAddressImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
                                                             <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Редагувати адресу"/>

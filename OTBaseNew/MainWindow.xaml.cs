@@ -812,10 +812,66 @@ namespace OTBaseNew
             }
             ClientToShow.Last_edit_user_id = MainWindow.Logined.Id;
             ClientToShow.Save();
+            MainWindow.Message("Інформацію змінено");
             EditClientBorderShowClient.Visibility = System.Windows.Visibility.Hidden;
             EditClientBorderShowClient.Height = 0;
             LoadShowClient(ClientToShow);
 
+        }
+        private void EditClientAddressSaveShowClient_Click(object sender, RoutedEventArgs e)
+        {
+            Addresses.Address a = ClientToShow.GetAddress;
+            if (a == null)
+            {
+                a = new Addresses.Address();
+                a.ClientOwners.Add(ClientToShow);
+            }
+
+            if (EditClientAddressCityShowClient.SelectedIndex != -1)
+            {
+                a.GetCity = Cities.City.FindByName(EditClientAddressCityShowClient.SelectedItem.ToString());
+            }
+            a.address = EditClientAddressShowClient.Text;
+            a.Save();
+            ClientToShow.Last_edit_user_id = MainWindow.Logined.Id;
+            ClientToShow.Save();
+            AddressEditClientStackPanelShowClient.Visibility = System.Windows.Visibility.Hidden;
+            EditClientBorderShowClient.Height = 0;
+            MainWindow.Message("Адресу змінено");
+            LoadShowClient(ClientToShow);
+
+        }
+        private void EditClientPassportMainInfoSaveShowClient_Click(object sender, RoutedEventArgs e)
+        {
+            Passports.Passport p = ClientToShow.GetPassport;
+            if (p == null)
+            {
+                p = new Passports.Passport();
+                p.ClientOwners.Add(ClientToShow);
+            }
+            p.Fname = EditClientPassportFNameShowClient.Text;
+            p.Lname = EditClientPassportLNameShowClient.Text;
+            p.series = EditClientPassportSerieShowClient.Text;
+            if (Other.Utility.ConvertStringToDateTime(EditClientGivenWhenShowClient.Text) != null)
+            {
+                p.given_when = Convert.ToDateTime(EditClientGivenWhenShowClient.Text);
+            }
+            if (Other.Utility.ConvertStringToDateTime(EditClientGivenTheTimeShowClient.Text) != null)
+            {
+                p.given_the_time = Convert.ToDateTime(EditClientGivenTheTimeShowClient.Text);
+            }
+            p.given_by = EditClientGivenByShowClient.Text;
+            p.Save();
+            ClientToShow.Last_edit_user_id = MainWindow.Logined.Id;
+            ClientToShow.Save();
+            PassportEditClientStackPanelShowClient.Visibility = System.Windows.Visibility.Hidden;
+            EditClientBorderShowClient.Height = 0;
+            MainWindow.Message("Паспортні дані змінено");
+            LoadShowClient(ClientToShow);
+        }
+        private void EditAddressInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LoadEditAddressShowClient(ClientToShow.GetAddress);
         }
         #endregion
         void LoadClientsGrid()
@@ -906,7 +962,7 @@ namespace OTBaseNew
         }
         void LoadEditMainInfoShowClient(Clients.Client client)
         {
-            if(ActualEditClientPanel!=null)
+            if (ActualEditClientPanel != null)
             {
                 ActualEditClientPanel.Visibility = System.Windows.Visibility.Hidden;
                 ActualEditClientPanel = null;
@@ -941,13 +997,89 @@ namespace OTBaseNew
             EditClientBorderShowClient.Height = MainInfoEditClientStackPanelShowClient.Height;
             ShowClientActionsScroll.ScrollToHome();
         }
+        void LoadEditPassportShowClient(Passports.Passport passport)
+        {
+            if (ActualEditClientPanel != null)
+            {
+                ActualEditClientPanel.Visibility = System.Windows.Visibility.Hidden;
+                ActualEditClientPanel = null;
+            }
+            ActualEditClientPanel = PassportEditClientStackPanelShowClient;
+            ActualEditClientPanel.Visibility = System.Windows.Visibility.Visible;
+            if (passport != null)
+            {
+
+                EditClientPassportFNameShowClient.Text = passport.Fname;
+                EditClientPassportLNameShowClient.Text = passport.Lname;
+                EditClientPassportSerieShowClient.Text = passport.series;
+                if (passport.given_when.Year != 1)
+                {
+                    EditClientGivenWhenShowClient.Text = passport.given_when.ToShortDateString();
+                }
+                if (passport.given_the_time.Year != 1)
+                {
+                    EditClientGivenTheTimeShowClient.Text = passport.given_the_time.ToShortDateString();
+                }
+                EditClientGivenByShowClient.Text = passport.given_by;
+            }
+            EditClientBorderShowClient.Visibility = System.Windows.Visibility.Visible;
+            EditClientBorderShowClient.Height = PassportEditClientStackPanelShowClient.Height;
+            ShowClientActionsScroll.ScrollToHome();
+        }
+        void LoadEditAddressShowClient(Addresses.Address address)
+        {
+            if (ActualEditClientPanel != null)
+            {
+                ActualEditClientPanel.Visibility = System.Windows.Visibility.Hidden;
+                ActualEditClientPanel = null;
+            }
+            ActualEditClientPanel = AddressEditClientStackPanelShowClient;
+            ActualEditClientPanel.Visibility = System.Windows.Visibility.Visible;
+            if (address != null)
+            {
+                List<Regions.Region> regions = Regions.Region.GetAllRegions;
+                EditClientAddressRegionShowClient.Items.Clear();
+                for (int i = 0; i < regions.Count; i++)
+                {
+                    EditClientAddressRegionShowClient.Items.Add(regions[i].Name);
+                    if (address.GetCity != null && address.GetCity.GetRegion != null)
+                    {
+                        if (address.GetCity.GetRegion.Id == regions[i].Id)
+                        {
+                            EditClientAddressRegionShowClient.SelectedIndex = i;
+                        }
+                    }
+                }
+                if (EditClientAddressRegionShowClient.SelectedIndex != -1)
+                {
+                    List<Cities.City> cities = Regions.Region.FindByName(EditClientAddressRegionShowClient.SelectedItem.ToString()).GetCities;
+                    for (int i = 0; i < cities.Count; i++)
+                    {
+                        EditClientAddressCityShowClient.Items.Add(cities[i].Name);
+                        if (address.GetCity.Id == cities[i].Id)
+                        {
+                            EditClientAddressCityShowClient.SelectedIndex = i;
+                        }
+                    }
+                }
+                EditClientAddressShowClient.Text = address.address;
+            }
+            EditClientBorderShowClient.Visibility = System.Windows.Visibility.Visible;
+            EditClientBorderShowClient.Height = AddressEditClientStackPanelShowClient.Height;
+            ShowClientActionsScroll.ScrollToHome();
+        }
         private void EditMainInfoInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             LoadEditMainInfoShowClient(ClientToShow);
         }
+        private void EditPassportInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LoadEditPassportShowClient(ClientToShow.GetPassport);
+        }
         private void EditClientMainInfoCancelShowClient_Click(object sender, RoutedEventArgs e)
         {
-            EditClientBorderShowClient.Visibility = System.Windows.Visibility.Hidden;
+            Button b = (Button)sender;
+            ((StackPanel)b.Parent).Visibility = System.Windows.Visibility.Hidden;
             EditClientBorderShowClient.Height = 0;
             if (ActualEditClientPanel != null)
             {
@@ -955,6 +1087,19 @@ namespace OTBaseNew
                 ActualEditClientPanel = null;
             }
         }
+        private void EditClientAddressRegionShowClient_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            EditClientAddressCityShowClient.Items.Clear();
+            if (EditClientAddressRegionShowClient.SelectedIndex != -1)
+            {
+                List<Cities.City> cities = Regions.Region.FindByName(EditClientAddressRegionShowClient.SelectedItem.ToString()).GetCities;
+                for (int i = 0; i < cities.Count; i++)
+                {
+                    EditClientAddressCityShowClient.Items.Add(cities[i].Name);
+                }
+            }
+        }
+
         #endregion
         //-----------------
         #region Сетка Пользователи
@@ -1198,9 +1343,13 @@ namespace OTBaseNew
 
         #endregion
 
-       
+        
 
-       
+
+
+
+
+
 
 
         //-----------------
