@@ -44,10 +44,6 @@ namespace OTBaseNew.Passports
         /// </summary>
         public void Save()
         {
-            if(given_when>=given_the_time)
-            {
-                throw new Exception("Wrong dates");
-            }
             //Строка-запрос
             string query = string.Format("SELECT * FROM `Passports` WHERE id={0}", id);
             //База данных
@@ -66,7 +62,7 @@ namespace OTBaseNew.Passports
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Passports`(`series`, `given_when`, `given_the_time`, `given_by`,`Fname`,`Lname`) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}'); SELECT * FROM `Passports` order by id desc;", series, MySqlWorker.DataBase.ConvertDateToMySqlString(given_when), MySqlWorker.DataBase.ConvertDateToMySqlString(given_the_time), given_by,Fname,Lname);
+                query = string.Format("INSERT INTO `Passports`(`series`, `given_when`, `given_the_time`, `given_by`,`Fname`,`Lname`) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}'); SELECT * FROM `Passports` order by id desc LIMIT 0 , 1;", series, MySqlWorker.DataBase.ConvertDateToMySqlString(given_when), MySqlWorker.DataBase.ConvertDateToMySqlString(given_the_time), given_by, Fname, Lname);
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id

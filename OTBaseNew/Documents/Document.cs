@@ -63,7 +63,7 @@ namespace OTBaseNew.Documents
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Documents`(`name`, `extension`,`bytes`,`operator_id`,created) VALUES ('{0}','{1}',@bytes,'{3}','{4}'); SELECT * FROM `Documents` order by id desc;", Name, Extension, Bytes, Operator_id.ToString(), MySqlWorker.DataBase.ConvertDateToMySqlString(Created));
+                query = string.Format("INSERT INTO `Documents`(`name`, `extension`,`bytes`,`operator_id`,created) VALUES ('{0}','{1}',@bytes,'{3}','{4}'); SELECT * FROM `Documents` order by id desc;LIMIT 0 , 1;", Name, Extension, Bytes, Operator_id.ToString(), MySqlWorker.DataBase.ConvertDateToMySqlString(Created));
                 MySql.Data.MySqlClient.MySqlCommand command = new MySql.Data.MySqlClient.MySqlCommand(query);
                 command.Parameters.AddWithValue("@bytes", Bytes);
                 //Создает запрос и возвращает результат

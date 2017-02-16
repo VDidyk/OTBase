@@ -66,7 +66,7 @@ namespace OTBaseNew.Discounts
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Discounts`(`tour`, `discount`, `client_id`) VALUES ('{0}','{1}','{2}','{3}')", Tour, discount, Client_id.ToString(),Operator_id.ToString());
+                query = string.Format("INSERT INTO `Discounts`(`tour`, `discount`, `client_id`) VALUES ('{0}','{1}','{2}','{3}'); SELECT * FROM `Discounts` order by id desc;LIMIT 0 , 1;", Tour, discount, Client_id.ToString(), Operator_id.ToString());
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id

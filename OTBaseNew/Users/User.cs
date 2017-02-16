@@ -196,7 +196,7 @@ namespace OTBaseNew.Users
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Users` (`fname`, `lname`, `mname`, `password`, `isadmin`,  `position_id`, `bday`, `created`,`login`) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'); SELECT * FROM `Users` order by id desc;", FName, LName, MName, Password, MySqlWorker.DataBase.ConvertBoolToInt(IsAdmin).ToString(), Position_id.ToString(), MySqlWorker.DataBase.ConvertDateToMySqlString(Bday), MySqlWorker.DataBase.ConvertDateToMySqlString(DateTime.Now), Login);
+                query = string.Format("INSERT INTO `Users` (`fname`, `lname`, `mname`, `password`, `isadmin`,  `position_id`, `bday`, `created`,`login`) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'); SELECT * FROM `Users` order by id desc;LIMIT 0 , 1;", FName, LName, MName, Password, MySqlWorker.DataBase.ConvertBoolToInt(IsAdmin).ToString(), Position_id.ToString(), MySqlWorker.DataBase.ConvertDateToMySqlString(Bday), MySqlWorker.DataBase.ConvertDateToMySqlString(DateTime.Now), Login);
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id

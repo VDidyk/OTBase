@@ -62,7 +62,8 @@ namespace OTBaseNew
             Border b = (Border)sender;
             StackPanel sp = (StackPanel)b.Child;
             Label id = (Label)sp.Children[0];
-            LoadShowClient(Clients.Client.FindById(Convert.ToInt32(id.Content)));
+            ClientToShow = Clients.Client.FindById(Convert.ToInt32(id.Content));
+            LoadShowClient(ClientToShow);
         }
         //-----------------        
         #region Сетка Клиенты
@@ -770,11 +771,15 @@ namespace OTBaseNew
             AddRequestImgInShowClientGrid.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\bell.png"));
             AddToBlackListImgInShowClientGrid.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\blacklist.png"));
             DeleteImgInShowClientGrid.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\delete.png"));
+            if (ActualEditClientPanel != null)
+                ActualEditClientPanel.Visibility = System.Windows.Visibility.Hidden;
+            EditClientBorderShowClient.Height = 0;
         }
         private void CloseShowClient_Click(object sender, RoutedEventArgs e)
         {
             TurnGridBack();
         }
+        //Сейвы
         private void EditClientMainInfoSaveShowClient_Click(object sender, RoutedEventArgs e)
         {
             if (EditClientLNameShowClient.Text == "")
@@ -821,18 +826,28 @@ namespace OTBaseNew
         private void EditClientAddressSaveShowClient_Click(object sender, RoutedEventArgs e)
         {
             Addresses.Address a = ClientToShow.GetAddress;
-            if (a == null)
+            if (EditClientAddressCityShowClient.SelectedIndex == -1 && EditClientAddressShowClient.Text == "")
             {
-                a = new Addresses.Address();
-                a.ClientOwners.Add(ClientToShow);
+                if (a != null)
+                {
+                    a.Delete();
+                    ClientToShow.Address_id = 0;
+                }
             }
-
-            if (EditClientAddressCityShowClient.SelectedIndex != -1)
+            else
             {
-                a.GetCity = Cities.City.FindByName(EditClientAddressCityShowClient.SelectedItem.ToString());
+                if (a == null)
+                {
+                    a = new Addresses.Address();
+                }
+                if (EditClientAddressCityShowClient.SelectedIndex != -1)
+                {
+                    a.GetCity = Cities.City.FindByName(EditClientAddressCityShowClient.SelectedItem.ToString());
+                }
+                a.address = EditClientAddressShowClient.Text;
+                a.Save();
+                ClientToShow.Address_id = a.id;
             }
-            a.address = EditClientAddressShowClient.Text;
-            a.Save();
             ClientToShow.Last_edit_user_id = MainWindow.Logined.Id;
             ClientToShow.Save();
             AddressEditClientStackPanelShowClient.Visibility = System.Windows.Visibility.Hidden;
@@ -844,24 +859,36 @@ namespace OTBaseNew
         private void EditClientPassportMainInfoSaveShowClient_Click(object sender, RoutedEventArgs e)
         {
             Passports.Passport p = ClientToShow.GetPassport;
-            if (p == null)
+            if (EditClientPassportFNameShowClient.Text == "" && EditClientPassportLNameShowClient.Text == "" && EditClientPassportSerieShowClient.Text == "" && EditClientGivenWhenShowClient.Text == "" && EditClientGivenTheTimeShowClient.Text == "" && EditClientGivenByShowClient.Text == "")
             {
-                p = new Passports.Passport();
-                p.ClientOwners.Add(ClientToShow);
+                if (p != null)
+                {
+                    ClientToShow.Passport_id = 0;
+                    ClientToShow.Save();
+                    p.Delete();
+                }
             }
-            p.Fname = EditClientPassportFNameShowClient.Text;
-            p.Lname = EditClientPassportLNameShowClient.Text;
-            p.series = EditClientPassportSerieShowClient.Text;
-            if (Other.Utility.ConvertStringToDateTime(EditClientGivenWhenShowClient.Text) != null)
+            else
             {
-                p.given_when = Convert.ToDateTime(EditClientGivenWhenShowClient.Text);
+                if (p == null)
+                {
+                    p = new Passports.Passport();
+                }
+                p.Fname = EditClientPassportFNameShowClient.Text;
+                p.Lname = EditClientPassportLNameShowClient.Text;
+                p.series = EditClientPassportSerieShowClient.Text;
+                if (Other.Utility.ConvertStringToDateTime(EditClientGivenWhenShowClient.Text) != null)
+                {
+                    p.given_when = Convert.ToDateTime(EditClientGivenWhenShowClient.Text);
+                }
+                if (Other.Utility.ConvertStringToDateTime(EditClientGivenTheTimeShowClient.Text) != null)
+                {
+                    p.given_the_time = Convert.ToDateTime(EditClientGivenTheTimeShowClient.Text);
+                }
+                p.given_by = EditClientGivenByShowClient.Text;
+                p.Save();
+                ClientToShow.GetPassport = p;
             }
-            if (Other.Utility.ConvertStringToDateTime(EditClientGivenTheTimeShowClient.Text) != null)
-            {
-                p.given_the_time = Convert.ToDateTime(EditClientGivenTheTimeShowClient.Text);
-            }
-            p.given_by = EditClientGivenByShowClient.Text;
-            p.Save();
             ClientToShow.Last_edit_user_id = MainWindow.Logined.Id;
             ClientToShow.Save();
             PassportEditClientStackPanelShowClient.Visibility = System.Windows.Visibility.Hidden;
@@ -869,97 +896,7 @@ namespace OTBaseNew
             MainWindow.Message("Паспортні дані змінено");
             LoadShowClient(ClientToShow);
         }
-        private void EditAddressInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            LoadEditAddressShowClient(ClientToShow.GetAddress);
-        }
-        #endregion
-        void LoadClientsGrid()
-        {
-            LoadClientsImages();
-            LoadFiveLastClients();
-        }
-        void LoadClientsImages()
-        {
-
-            AddClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\AddBtn.png"));
-            ShowClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\ShowBtn.png"));
-            SearchClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\SearchBtn.png"));
-
-        }
-        void AddClientPhonesInShowClientGrid(Clients.Client client)
-        {
-            PhonesListInShowClient.Children.Clear();
-            foreach (var i in client.GetPhones)
-            {
-                TextBox t = new TextBox();
-                t.Style = Resources["TexBoxStyle"] as Style;
-                t.IsReadOnly = true;
-                t.Margin = new Thickness(10);
-                t.Text = i.number;
-                PhonesListInShowClient.Children.Add(t);
-            }
-        }
-        void AddClientEmailsInShowClientGrid(Clients.Client client)
-        {
-            EmailsListInShowClient.Children.Clear();
-            foreach (var i in client.GetEmails)
-            {
-                TextBox t = new TextBox();
-                t.Style = Resources["TexBoxStyle"] as Style;
-                t.IsReadOnly = true;
-                t.Margin = new Thickness(10);
-                t.Text = i.name;
-                EmailsListInShowClient.Children.Add(t);
-            }
-        }
-        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-        void LoadFiveLastClients()
-        {
-            List<Clients.Client> clients = Clients.Client.GetFiveLastClients();
-            FiveLastClientsGridClientGrid.Children.Clear();
-            for (int i = 0; i < clients.Count; i++)
-            {
-                Border b = new Border();
-                b.MouseLeftButtonDown += LookClient;
-                b.Style = Resources["ClientBorderStyle"] as Style;
-                StackPanel sp = new StackPanel();
-                b.Child = sp;
-                Label lid = new Label();
-                lid.Content = clients[i].Id.ToString();
-                lid.Visibility = System.Windows.Visibility.Hidden;
-                Label l = new Label();
-                l.Style = Resources["LabelStyle"] as Style;
-                l.Content = clients[i].FName + " " + clients[i].LName;
-                l.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-                Image im = new Image();
-                im.Height = 150;
-                im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\client.png"));
-                Label l2 = new Label();
-                l2.Style = Resources["LabelStyle"] as Style;
-                l2.Content = clients[i].Created.ToShortDateString();
-                l2.FontWeight = FontWeights.Normal;
-                l2.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-                sp.Children.Add(lid);
-                sp.Children.Add(l);
-                sp.Children.Add(im);
-                sp.Children.Add(l2);
-                FiveLastClientsGridClientGrid.Children.Add(b);
-                b.SetValue(Grid.ColumnProperty, i);
-            }
-        }
-        private void FindClientGridClients_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            TurnGridNext(FindClient);
-        }
-        private void AddClientClients_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            LoadGridAddClient();
-            TurnGridNext(ClientAddGrid);
-        }
+        // Загрузки
         void LoadEditMainInfoShowClient(Clients.Client client)
         {
             if (ActualEditClientPanel != null)
@@ -1022,6 +959,15 @@ namespace OTBaseNew
                 }
                 EditClientGivenByShowClient.Text = passport.given_by;
             }
+            else
+            {
+                EditClientPassportFNameShowClient.Text = "";
+                EditClientPassportLNameShowClient.Text = "";
+                EditClientPassportSerieShowClient.Text = "";
+                EditClientGivenWhenShowClient.Text = "";
+                EditClientGivenTheTimeShowClient.Text = "";
+                EditClientGivenByShowClient.Text = "";
+            }
             EditClientBorderShowClient.Visibility = System.Windows.Visibility.Visible;
             EditClientBorderShowClient.Height = PassportEditClientStackPanelShowClient.Height;
             ShowClientActionsScroll.ScrollToHome();
@@ -1064,9 +1010,28 @@ namespace OTBaseNew
                 }
                 EditClientAddressShowClient.Text = address.address;
             }
+            else
+            {
+                List<Regions.Region> regions = Regions.Region.GetAllRegions;
+                EditClientAddressRegionShowClient.Items.Clear();
+                EditClientAddressCityShowClient.Items.Clear();
+                for (int i = 0; i < regions.Count; i++)
+                {
+                    EditClientAddressRegionShowClient.Items.Add(regions[i].Name);
+                }
+                EditClientAddressRegionShowClient.SelectedIndex = -1;
+                EditClientAddressCityShowClient.SelectedIndex = -1;
+                EditClientAddressShowClient.Text = "";
+            }
             EditClientBorderShowClient.Visibility = System.Windows.Visibility.Visible;
             EditClientBorderShowClient.Height = AddressEditClientStackPanelShowClient.Height;
             ShowClientActionsScroll.ScrollToHome();
+        }
+        // Конец загрузки
+        //Операции
+        private void EditAddressInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LoadEditAddressShowClient(ClientToShow.GetAddress);
         }
         private void EditMainInfoInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -1099,7 +1064,89 @@ namespace OTBaseNew
                 }
             }
         }
+        #endregion
+        void LoadClientsGrid()
+        {
+            LoadClientsImages();
+            LoadFiveLastClients();
+        }
+        void LoadClientsImages()
+        {
 
+            AddClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\AddBtn.png"));
+            ShowClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\ShowBtn.png"));
+            SearchClientBtnClients.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\SearchBtn.png"));
+
+        }
+        void AddClientPhonesInShowClientGrid(Clients.Client client)
+        {
+            PhonesListInShowClient.Children.Clear();
+            foreach (var i in client.GetPhones)
+            {
+                TextBox t = new TextBox();
+                t.Style = Resources["TexBoxStyle"] as Style;
+                t.IsReadOnly = true;
+                t.Margin = new Thickness(10);
+                t.Text = i.number;
+                PhonesListInShowClient.Children.Add(t);
+            }
+        }
+        void AddClientEmailsInShowClientGrid(Clients.Client client)
+        {
+            EmailsListInShowClient.Children.Clear();
+            foreach (var i in client.GetEmails)
+            {
+                TextBox t = new TextBox();
+                t.Style = Resources["TexBoxStyle"] as Style;
+                t.IsReadOnly = true;
+                t.Margin = new Thickness(10);
+                t.Text = i.name;
+                EmailsListInShowClient.Children.Add(t);
+            }
+        }
+        void LoadFiveLastClients()
+        {
+            List<Clients.Client> clients = Clients.Client.GetFiveLastClients();
+            FiveLastClientsGridClientGrid.Children.Clear();
+            for (int i = 0; i < clients.Count; i++)
+            {
+                Border b = new Border();
+                b.MouseLeftButtonDown += LookClient;
+                b.Style = Resources["ClientBorderStyle"] as Style;
+                StackPanel sp = new StackPanel();
+                b.Child = sp;
+                Label lid = new Label();
+                lid.Content = clients[i].Id.ToString();
+                lid.Visibility = System.Windows.Visibility.Hidden;
+                Label l = new Label();
+                l.Style = Resources["LabelStyle"] as Style;
+                l.Content = clients[i].FName + " " + clients[i].LName;
+                l.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                Image im = new Image();
+                im.Height = 150;
+                im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\client.png"));
+                Label l2 = new Label();
+                l2.Style = Resources["LabelStyle"] as Style;
+                l2.Content = clients[i].Created.ToShortDateString();
+                l2.FontWeight = FontWeights.Normal;
+                l2.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                sp.Children.Add(lid);
+                sp.Children.Add(l);
+                sp.Children.Add(im);
+                sp.Children.Add(l2);
+                FiveLastClientsGridClientGrid.Children.Add(b);
+                b.SetValue(Grid.ColumnProperty, i);
+            }
+        }
+        private void FindClientGridClients_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TurnGridNext(FindClient);
+        }
+        private void AddClientClients_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LoadGridAddClient();
+            TurnGridNext(ClientAddGrid);
+        }
         #endregion
         //-----------------
         #region Сетка Пользователи
@@ -1342,16 +1389,6 @@ namespace OTBaseNew
         }
 
         #endregion
-
-        
-
-
-
-
-
-
-
-
         //-----------------
     }
 }

@@ -147,7 +147,7 @@ namespace OTBaseNew.Phones
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Phones`(`Number`) VALUES ('{0}'); SELECT * FROM `Phones` order by id desc;", number);
+                query = string.Format("INSERT INTO `Phones`(`Number`) VALUES ('{0}'); SELECT * FROM `Phones` order by id desc;LIMIT 0 , 1;", number);
                 //Создает запрос и возвращает результат
                 var answer = db.MakeRequest(query);
                 //Присвоить id

@@ -147,7 +147,7 @@ namespace OTBaseNew.Emails
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Emails`(`Name`) VALUES ('{0}'); SELECT * FROM `Emails` order by id desc;", name);
+                query = string.Format("INSERT INTO `Emails`(`Name`) VALUES ('{0}'); SELECT * FROM `Emails` order by id desc;LIMIT 0 , 1;", name);
                 //Создает запрос и возвращает результат
                 var answer = db.MakeRequest(query);
                 //Присвоить id

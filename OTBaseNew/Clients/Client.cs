@@ -267,7 +267,7 @@ namespace OTBaseNew.Clients
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Clients`(`fname`, `lname`, `mname`, `bday`, `address_id`, `passport_id`, `resourse_id`, `created`, `notice`, `created_user_id`, `last_edit_user_id`, `working_user_id`) VALUES ('{0}','{1}','{2}','{3}',{4},{5},{6},'{7}','{8}',{9},'{10}','{11}'); SELECT * FROM `Clients` order by id desc;", FName, LName, MName, MySqlWorker.DataBase.ConvertDateToMySqlString(Bday), Address_id.ToString(), Passport_id.ToString(), Resourse_id.ToString(), MySqlWorker.DataBase.ConvertDateToMySqlString(DateTime.Now), Notice, this.Created_user_id.ToString(), Last_edit_user_id.ToString(), Working_user_id.ToString());
+                query = string.Format("INSERT INTO `Clients`(`fname`, `lname`, `mname`, `bday`, `address_id`, `passport_id`, `resourse_id`, `created`, `notice`, `created_user_id`, `last_edit_user_id`, `working_user_id`) VALUES ('{0}','{1}','{2}','{3}',{4},{5},{6},'{7}','{8}',{9},'{10}','{11}'); SELECT * FROM `Clients` order by id desc;LIMIT 0 , 1;", FName, LName, MName, MySqlWorker.DataBase.ConvertDateToMySqlString(Bday), Address_id.ToString(), Passport_id.ToString(), Resourse_id.ToString(), MySqlWorker.DataBase.ConvertDateToMySqlString(DateTime.Now), Notice, this.Created_user_id.ToString(), Last_edit_user_id.ToString(), Working_user_id.ToString());
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id

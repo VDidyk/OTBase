@@ -49,7 +49,7 @@ namespace OTBaseNew.Actions
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Actions`(`name`, `created`,`request_id`,`User_id`) VALUES ('{0}','{1}','{2}','{3}'); SELECT * FROM `Actions` order by id desc;", Name, MySqlWorker.DataBase.ConvertDateToMySqlString(Created), Request_id.ToString(), User_id.ToString());
+                query = string.Format("INSERT INTO `Actions`(`name`, `created`,`request_id`,`User_id`) VALUES ('{0}','{1}','{2}','{3}'); SELECT * FROM `Actions` order by id desc;LIMIT 0 , 1;", Name, MySqlWorker.DataBase.ConvertDateToMySqlString(Created), Request_id.ToString(), User_id.ToString());
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id

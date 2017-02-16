@@ -43,7 +43,7 @@ namespace OTBaseNew.Cities
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Cities`(`name`) VALUES ('{0}',{1}); SELECT * FROM `Cities` order by id desc;",Name,Region_id);
+                query = string.Format("INSERT INTO `Cities`(`name`) VALUES ('{0}',{1}); SELECT * FROM `Cities` order by id desc;LIMIT 0 , 1;", Name, Region_id);
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id

@@ -46,7 +46,7 @@ namespace OTBaseNew.Addresses
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Addressess`(`city_id`, `address`) VALUES ('{0}','{1}'); SELECT * FROM `Addressess` order by id desc;", city_id.ToString(),address);
+                query = string.Format("INSERT INTO `Addressess`(`city_id`, `address`) VALUES ('{0}','{1}'); SELECT * FROM `Addressess` order by id desc;LIMIT 0 , 1;", city_id.ToString(), address);
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id

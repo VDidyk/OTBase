@@ -39,7 +39,7 @@ namespace OTBaseNew.Regions
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Region`(`name`) VALUES ('{0}'); SELECT * FROM `Region` order by id desc;", Name);
+                query = string.Format("INSERT INTO `Region`(`name`) VALUES ('{0}'); SELECT * FROM `Region` order by id desc;LIMIT 0 , 1;", Name);
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id
