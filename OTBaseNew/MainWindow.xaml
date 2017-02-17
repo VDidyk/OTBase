@@ -546,7 +546,7 @@
                             </TabItem>
                             <TabItem Style="{DynamicResource TabItemStyle}" FontSize="25"  Header="Дії">
                                 <Grid Background="White">
-                                    <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" Name="ShowClientActionsScroll">                                     
+                                    <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" Name="ShowClientActionsScroll">
                                         <StackPanel>
                                             <Border BorderThickness="0 0 0 5" BorderBrush="Pink" Name="EditClientBorderShowClient" Visibility="Visible" Height="0">
                                                 <Grid>
@@ -595,59 +595,99 @@
                                                         <Button Name="EditClientAddressSaveShowClient" Style="{DynamicResource ButtonStyle}" Content="Зберегти" Background="LightGreen" Margin="10" Click="EditClientAddressSaveShowClient_Click" />
                                                         <Button Name="EditClientAddressCancelShowClient" Style="{DynamicResource ButtonStyle}" Content="Закрити" Margin="10" Click="EditClientMainInfoCancelShowClient_Click"/>
                                                     </StackPanel>
+                                                    <StackPanel Name="ContactsEditClientStackPanelShowClient" Visibility="Hidden">
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Редугувати контакти"/>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="777*"/>
+                                                                <ColumnDefinition Width="778*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <StackPanel Grid.Column="0">
+                                                                <Label Style="{DynamicResource LabelStyle}" Content="Телефони"/>
+                                                                <Grid Margin="10 0 0 10">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="349*"/>
+                                                                        <ColumnDefinition Width="40*"/>
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Visible" CanContentScroll="True">
+                                                                        <StackPanel Height="250" Name="PhonesStackPanelInShowClient">
+
+                                                                        </StackPanel>
+                                                                    </ScrollViewer>
+                                                                    <Button Name="AddPhoneInShowClient" Grid.Column="1" Style="{DynamicResource ButtonStyle}" Content="+" FontSize="80" Click="AddPhoneInShowClient_Click"/>
+                                                                </Grid>
+                                                            </StackPanel>
+                                                            <StackPanel Grid.Column="1">
+                                                                <Label Style="{DynamicResource LabelStyle}" Content="Email-и"/>
+                                                                <Grid Margin="10 0 0 10">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="349*"/>
+                                                                        <ColumnDefinition Width="40*"/>
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <ScrollViewer Grid.Column="0">
+                                                                        <StackPanel Height="250" Name="EmailsStackPanelInShowClient">
+                                                                        </StackPanel>
+                                                                    </ScrollViewer>
+                                                                    <Button Name="AddEmailInShowClient" Grid.Column="1" Style="{DynamicResource ButtonStyle}" Content="+" FontSize="80" Click="AddEmailInShowClient_Click"/>
+                                                                </Grid>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                        <Button Name="EditClientContactsSaveShowClient" Style="{DynamicResource ButtonStyle}" Content="Зберегти" Background="LightGreen" Margin="10" Click="EditClientContactsSaveShowClient_Click" />
+                                                        <Button Name="EditClientContactsCancelShowClient" Style="{DynamicResource ButtonStyle}" Content="Закрити" Margin="10" Click="EditClientMainInfoCancelShowClient_Click"/>
+                                                    </StackPanel>
 
                                                 </Grid>
                                             </Border>
                                             <WrapPanel>
-                                                    <Border Name="EditMainInfoInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditMainInfoInShowClientGrid_MouseLeftButtonDown">
-                                                        <StackPanel>
-                                                            <Image Name="EditMainInfoImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
-                                                            <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Редагувати інформацію"/>
-                                                        </StackPanel>
-                                                    </Border>
-                                                    <Border Name="EditPassportInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditPassportInShowClientGrid_MouseLeftButtonDown">
-                                                        <StackPanel>
-                                                            <Image Name="EditPassportImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
-                                                            <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Редагувати паспорт"/>
-                                                        </StackPanel>
-                                                    </Border>
-                                                    <Border Name="EditAddressInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditAddressInShowClientGrid_MouseLeftButtonDown">
-                                                        <StackPanel>
-                                                            <Image Name="EditAddressImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
-                                                            <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Редагувати адресу"/>
-                                                        </StackPanel>
-                                                    </Border>
-                                                    <Border Name="EditContactsInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}">
-                                                        <StackPanel>
-                                                            <Image Name="EditContactsImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
-                                                            <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Редагувати контакти"/>
-                                                        </StackPanel>
-                                                    </Border>
-                                                    <Border Name="EditDiscountsInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}">
-                                                        <StackPanel>
-                                                            <Image Name="EditDiscountsImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
-                                                            <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Редагувати знижки"/>
-                                                        </StackPanel>
-                                                    </Border>
-                                                    <Border Name="AddRequestInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}">
-                                                        <StackPanel>
-                                                            <Image Name="AddRequestImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
-                                                            <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Створити заявку"/>
-                                                        </StackPanel>
-                                                    </Border>
-                                                    <Border Name="AddToBlackListInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}">
-                                                        <StackPanel>
-                                                            <Image Name="AddToBlackListImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
-                                                            <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Додати до чорного списку"/>
-                                                        </StackPanel>
-                                                    </Border>
-                                                    <Border Name="DeleteInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}">
-                                                        <StackPanel>
-                                                            <Image Name="DeleteImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
-                                                            <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Видалити клієнта"/>
-                                                        </StackPanel>
-                                                    </Border>
-                                                </WrapPanel>
+                                                <Border Name="EditMainInfoInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditMainInfoInShowClientGrid_MouseLeftButtonDown">
+                                                    <StackPanel>
+                                                        <Image Name="EditMainInfoImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Редагувати інформацію"/>
+                                                    </StackPanel>
+                                                </Border>
+                                                <Border Name="EditPassportInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditPassportInShowClientGrid_MouseLeftButtonDown">
+                                                    <StackPanel>
+                                                        <Image Name="EditPassportImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Редагувати паспорт"/>
+                                                    </StackPanel>
+                                                </Border>
+                                                <Border Name="EditAddressInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditAddressInShowClientGrid_MouseLeftButtonDown">
+                                                    <StackPanel>
+                                                        <Image Name="EditAddressImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Редагувати адресу"/>
+                                                    </StackPanel>
+                                                </Border>
+                                                <Border Name="EditContactsInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}">
+                                                    <StackPanel MouseLeftButtonDown="StackPanel_MouseLeftButtonDown">
+                                                        <Image Name="EditContactsImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Редагувати контакти"/>
+                                                    </StackPanel>
+                                                </Border>
+                                                <Border Name="EditDiscountsInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}">
+                                                    <StackPanel>
+                                                        <Image Name="EditDiscountsImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Редагувати знижки"/>
+                                                    </StackPanel>
+                                                </Border>
+                                                <Border Name="AddRequestInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}">
+                                                    <StackPanel>
+                                                        <Image Name="AddRequestImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Створити заявку"/>
+                                                    </StackPanel>
+                                                </Border>
+                                                <Border Name="AddToBlackListInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}">
+                                                    <StackPanel>
+                                                        <Image Name="AddToBlackListImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Додати до чорного списку"/>
+                                                    </StackPanel>
+                                                </Border>
+                                                <Border Name="DeleteInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}">
+                                                    <StackPanel>
+                                                        <Image Name="DeleteImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
+                                                        <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Видалити клієнта"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </WrapPanel>
                                         </StackPanel>
                                     </ScrollViewer>
                                 </Grid>

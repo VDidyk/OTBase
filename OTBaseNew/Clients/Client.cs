@@ -140,7 +140,7 @@ namespace OTBaseNew.Clients
                     if (!exist)
                     {
                         //Срока-запрос
-                        query = string.Format("Delete from `PhonesAndClients` where Id={0}", Convert.ToInt32(i["Id"]));
+                        query = string.Format("Delete from `PhonesAndClients` where Id={0}", Convert.ToInt32(i["id"]));
                         //Удаляем ее из базы
                         db.MakeRequest(query);
                     }
@@ -173,7 +173,7 @@ namespace OTBaseNew.Clients
                     //Есть ли мейл в списке
                     bool exist = false;
                     //Прогон по айди
-                    foreach (var j in Phones_Ides)
+                    foreach (var j in Emails_Ides)
                     {
                         //Если мейл сущесвтует, то его удалять не надо
                         if (Convert.ToInt32(i["Email_id"]) == j)

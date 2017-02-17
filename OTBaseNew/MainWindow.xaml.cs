@@ -896,6 +896,122 @@ namespace OTBaseNew
             MainWindow.Message("Паспортні дані змінено");
             LoadShowClient(ClientToShow);
         }
+        private void EditClientContactsSaveShowClient_Click(object sender, RoutedEventArgs e)
+        {
+            List<Phones.Phone> phones = new List<Phones.Phone>();
+            foreach (var i in PhonesStackPanelInShowClient.Children)
+            {
+                TextBox t = i as TextBox;
+                string number = Other.Utility.ConvertStringToPhoneString(t.Text);
+                if (number != "")
+                {
+                    Phones.Phone p = Phones.Phone.FindByNumber(number);
+                    if (p == null)
+                    {
+                        p = new Phones.Phone();
+                        p.number = number;
+                        p.Save();
+                    }
+                    phones.Add(p);
+                }
+            }
+            List<Phones.Phone> uphones = ClientToShow.GetPhones;
+
+            foreach(var i in phones)
+            {
+                bool exist = false;
+                foreach (var j in uphones)
+                {
+                    if(j.Id==i.Id)
+                    {
+                        exist = true;
+                        break;
+                    }
+                }
+                if(!exist)
+                {
+                    ClientToShow.Phones_Ides.Add(i.Id);
+                }
+            }
+            uphones=ClientToShow.GetPhones;
+            foreach (var i in uphones)
+            {
+                bool exist = false;
+                foreach(var j in phones)
+                {
+                    if(i.Id==j.Id)
+                    {
+                        exist = true;
+                    }
+                }
+                if(!exist)
+                {
+                    ClientToShow.Phones_Ides.Remove(i.Id);
+                }
+            }
+
+
+
+            List<Emails.Email> emails = new List<Emails.Email>();
+            foreach (var i in EmailsStackPanelInShowClient.Children)
+            {
+                TextBox t = i as TextBox;
+                string number = t.Text;
+                if (number != "")
+                {
+                    Emails.Email p = Emails.Email.FindByName(number);
+                    if (p == null)
+                    {
+                        p = new Emails.Email();
+                        p.name = number;
+                        p.Save();
+                    }
+                    emails.Add(p);
+                }
+            }
+            List<Emails.Email> uemails = ClientToShow.GetEmails;
+
+            foreach (var i in emails)
+            {
+                bool exist = false;
+                foreach (var j in uemails)
+                {
+                    if (j.Id == i.Id)
+                    {
+                        exist = true;
+                        break;
+                    }
+                }
+                if (!exist)
+                {
+                    ClientToShow.Emails_Ides.Add(i.Id);
+                }
+            }
+            uemails = ClientToShow.GetEmails;
+            foreach (var i in uemails)
+            {
+                bool exist = false;
+                foreach (var j in emails)
+                {
+                    if (i.Id == j.Id)
+                    {
+                        exist = true;
+                    }
+                }
+                if (!exist)
+                {
+                    ClientToShow.Emails_Ides.Remove(i.Id);
+                }
+            }
+
+            ClientToShow.Save();
+            ClientToShow.Last_edit_user_id = MainWindow.Logined.Id;
+            ClientToShow.Save();
+            PassportEditClientStackPanelShowClient.Visibility = System.Windows.Visibility.Hidden;
+            EditClientBorderShowClient.Height = 0;
+            MainWindow.Message("Контактні дані змінено");
+            LoadShowClient(ClientToShow);
+        }
         // Загрузки
         void LoadEditMainInfoShowClient(Clients.Client client)
         {
@@ -1027,7 +1143,39 @@ namespace OTBaseNew
             EditClientBorderShowClient.Height = AddressEditClientStackPanelShowClient.Height;
             ShowClientActionsScroll.ScrollToHome();
         }
-        // Конец загрузки
+        void LoadEditContactsShowClient(Clients.Client client)
+        {
+            if (ActualEditClientPanel != null)
+            {
+                ActualEditClientPanel.Visibility = System.Windows.Visibility.Hidden;
+                ActualEditClientPanel = null;
+            }
+            ActualEditClientPanel = ContactsEditClientStackPanelShowClient;
+            ActualEditClientPanel.Visibility = System.Windows.Visibility.Visible;
+            List<Phones.Phone> phones = client.GetPhones;
+            List<Emails.Email> emails = client.GetEmails;
+            PhonesStackPanelInShowClient.Children.Clear();
+            for (int i = 0; i < phones.Count; i++)
+            {
+                TextBox t = new TextBox();
+                t.Text = phones[i].number;
+                t.Margin = new Thickness(10);
+                t.Style = Resources["TexBoxStyle"] as Style;
+                PhonesStackPanelInShowClient.Children.Add(t);
+            }
+            EmailsStackPanelInShowClient.Children.Clear();
+            for (int i = 0; i < emails.Count; i++)
+            {
+                TextBox t = new TextBox();
+                t.Text = emails[i].name;
+                t.Margin = new Thickness(10);
+                t.Style = Resources["TexBoxStyle"] as Style;
+                EmailsStackPanelInShowClient.Children.Add(t);
+            }
+            EditClientBorderShowClient.Visibility = System.Windows.Visibility.Visible;
+            EditClientBorderShowClient.Height = AddressEditClientStackPanelShowClient.Height;
+            ShowClientActionsScroll.ScrollToHome();
+        }
         //Операции
         private void EditAddressInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -1040,6 +1188,10 @@ namespace OTBaseNew
         private void EditPassportInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             LoadEditPassportShowClient(ClientToShow.GetPassport);
+        }
+        private void StackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LoadEditContactsShowClient(ClientToShow);
         }
         private void EditClientMainInfoCancelShowClient_Click(object sender, RoutedEventArgs e)
         {
@@ -1063,6 +1215,20 @@ namespace OTBaseNew
                     EditClientAddressCityShowClient.Items.Add(cities[i].Name);
                 }
             }
+        }
+        private void AddPhoneInShowClient_Click(object sender, RoutedEventArgs e)
+        {
+            TextBox t = new TextBox();
+            t.Margin = new Thickness(10);
+            t.Style = Resources["TexBoxStyle"] as Style;
+            PhonesStackPanelInShowClient.Children.Add(t);
+        }
+        private void AddEmailInShowClient_Click(object sender, RoutedEventArgs e)
+        {
+            TextBox t = new TextBox();
+            t.Margin = new Thickness(10);
+            t.Style = Resources["TexBoxStyle"] as Style;
+            EmailsStackPanelInShowClient.Children.Add(t);
         }
         #endregion
         void LoadClientsGrid()
@@ -1388,7 +1554,7 @@ namespace OTBaseNew
             TurnGridMain(UsersGrid);
         }
 
-        #endregion
+        #endregion       
         //-----------------
     }
 }
