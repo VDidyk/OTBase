@@ -124,6 +124,27 @@ namespace OTBaseNew.Operators
                 return position;
             }
         }
+        public static Operator FindByName(string name)
+        {
+            //Запрос
+            string query = string.Format("SELECT * FROM `Operators` WHERE Name='{0}'", name);
+            //База данных
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
+            //Создает запрос и возвращает результат
+            var list = db.MakeRequest<Operator>(query);
+            //Если ничего не нашло, то возвращает ноль
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            //Если нашло, то создает объект должности
+            else
+            {
+                //создает объект должности
+                Operator position = list[0];
+                return position;
+            }
+        }
         /// <summary>
         /// Заявки по операторах
         /// </summary>
@@ -141,5 +162,19 @@ namespace OTBaseNew.Operators
                 return list;
             }
         }
+        static public List<Operator> GetAllOperators
+        {
+            private set { }
+            get
+            {
+                string query = string.Format(" select * from Operators");
+                //База данных
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                //Создает запрос и возвращает результат
+                return db.MakeRequest<Operator>(query);
+
+            }
+        }
+
     }
 }

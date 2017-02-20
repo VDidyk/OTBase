@@ -518,6 +518,20 @@
                                                     </StackPanel>
                                                 </Grid>
                                             </Border>
+                                            <Border Height="250" Background="LightGray">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="376*"/>
+                                                        <ColumnDefinition Width="1207*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Image Name="DiscountsImageShowClient" Grid.Column="0" Margin="10"/>
+                                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" >
+                                                        <Label Content="Знижки:" Style="{DynamicResource LabelStyle}"/>
+                                                        <WrapPanel Name="DicsountsWrapPanelShowClient">
+                                                        </WrapPanel>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
                                         </StackPanel>
                                     </ScrollViewer>
                                 </Grid>
@@ -635,7 +649,33 @@
                                                         <Button Name="EditClientContactsSaveShowClient" Style="{DynamicResource ButtonStyle}" Content="Зберегти" Background="LightGreen" Margin="10" Click="EditClientContactsSaveShowClient_Click" />
                                                         <Button Name="EditClientContactsCancelShowClient" Style="{DynamicResource ButtonStyle}" Content="Закрити" Margin="10" Click="EditClientMainInfoCancelShowClient_Click"/>
                                                     </StackPanel>
-
+                                                    <StackPanel Name="DiscountsEditClientStackPanelShowClient" Visibility="Hidden">
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Редугувати знижки"/>
+                                                        <Grid Height="350">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="1479*"/>
+                                                                <ColumnDefinition Width="76*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Button Name="AddValueAndDurationFieldInEditSidcountsInShowCLient" Grid.Column="1" Style="{DynamicResource ButtonStyle}" Content="+" FontSize="50" Click="AddValueAndDurationFieldInEditSidcountsInShowCLient_Click"/>
+                                                            <ScrollViewer>
+                                                                <Grid>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="278*"/>
+                                                                        <ColumnDefinition Width="263*"/>
+                                                                        <ColumnDefinition Width="190*"/>
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <Label Style="{DynamicResource LabelStyle}" Content="Напрямок"/>
+                                                                    <StackPanel Margin="0 30 0 0" Name="EditDicsountDurationStackPanelInShowClient"/>
+                                                                    <Label Style="{DynamicResource LabelStyle}" Grid.Column="1" Content="Знижка" />
+                                                                    <StackPanel Margin="0 30 0 0" Name="EditDicsountValueStackPanelInShowClient" Grid.Column="1" />
+                                                                    <Label Style="{DynamicResource LabelStyle}" Grid.Column="2" Content="Оператор" />
+                                                                    <StackPanel Margin="0 30 0 0" Name="EditDicsountChouseOperetorStackPanelInShowClient" Grid.Column="2" />
+                                                                </Grid>
+                                                            </ScrollViewer>
+                                                        </Grid>
+                                                        <Button Name="EditClientDiscountssSaveShowClient" Style="{DynamicResource ButtonStyle}" Content="Зберегти" Background="LightGreen" Margin="10" Click="EditClientDiscountssSaveShowClient_Click" />
+                                                        <Button Name="EditClientDiscountsCancelShowClient" Style="{DynamicResource ButtonStyle}" Content="Закрити" Margin="10" Click="EditClientMainInfoCancelShowClient_Click"/>
+                                                    </StackPanel>
                                                 </Grid>
                                             </Border>
                                             <WrapPanel>
@@ -663,7 +703,7 @@
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Редагувати контакти"/>
                                                     </StackPanel>
                                                 </Border>
-                                                <Border Name="EditDiscountsInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}">
+                                                <Border Name="EditDiscountsInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditDiscountsInShowClientGrid_MouseLeftButtonDown">
                                                     <StackPanel>
                                                         <Image Name="EditDiscountsImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Редагувати знижки"/>

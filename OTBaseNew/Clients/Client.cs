@@ -527,12 +527,12 @@ namespace OTBaseNew.Clients
             }
             get
             {
-                List<Discounts.Discount> discounts = new List<Discounts.Discount>();
-                foreach (var i in Discounts_Ides)
-                {
-                    discounts.Add(Discounts.Discount.FindById(i));
-                }
-                return discounts;
+                //Строка-запрос
+                string query = string.Format("SELECT * FROM `Discounts` WHERE client_id={0}", Id);
+                //База данных
+                MySqlWorker.DataBase db = SQL.SqlConnect.db;
+                //Создает запрос и возвращает результат
+                return db.MakeRequest<Discounts.Discount>(query);
             }
         }
         public List<Requests.Request> GetRequests

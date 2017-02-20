@@ -639,7 +639,7 @@ namespace OTBaseNew
             PassportImageShowClient.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\Passport.png"));
             AddressImageShowClient.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\House.png"));
             InfoImageShowClient.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\info.png"));
-
+            DiscountsImageShowClient.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\Discount.png"));
             //Основная информация
             FullNameShowClient.Text = client.FName + " " + client.LName + " " + client.MName;
             IdShowClient.Text = client.Id.ToString();
@@ -774,6 +774,18 @@ namespace OTBaseNew
             if (ActualEditClientPanel != null)
                 ActualEditClientPanel.Visibility = System.Windows.Visibility.Hidden;
             EditClientBorderShowClient.Height = 0;
+
+            DicsountsWrapPanelShowClient.Children.Clear();
+            List<Discounts.Discount> discounts = client.GetDiscounts;
+            foreach (var i in discounts)
+            {
+                TextBox t = new TextBox();
+                t.Style = Resources["TexBoxStyle"] as Style;
+                t.Margin = new Thickness(10, 0, 0, 0);
+                t.IsReadOnly = true;
+                t.Text = i.Tour + ": " + i.discount;
+                DicsountsWrapPanelShowClient.Children.Add(t);
+            }
         }
         private void CloseShowClient_Click(object sender, RoutedEventArgs e)
         {
@@ -917,34 +929,34 @@ namespace OTBaseNew
             }
             List<Phones.Phone> uphones = ClientToShow.GetPhones;
 
-            foreach(var i in phones)
+            foreach (var i in phones)
             {
                 bool exist = false;
                 foreach (var j in uphones)
                 {
-                    if(j.Id==i.Id)
+                    if (j.Id == i.Id)
                     {
                         exist = true;
                         break;
                     }
                 }
-                if(!exist)
+                if (!exist)
                 {
                     ClientToShow.Phones_Ides.Add(i.Id);
                 }
             }
-            uphones=ClientToShow.GetPhones;
+            uphones = ClientToShow.GetPhones;
             foreach (var i in uphones)
             {
                 bool exist = false;
-                foreach(var j in phones)
+                foreach (var j in phones)
                 {
-                    if(i.Id==j.Id)
+                    if (i.Id == j.Id)
                     {
                         exist = true;
                     }
                 }
-                if(!exist)
+                if (!exist)
                 {
                     ClientToShow.Phones_Ides.Remove(i.Id);
                 }
@@ -1004,12 +1016,62 @@ namespace OTBaseNew
                 }
             }
 
-            ClientToShow.Save();
             ClientToShow.Last_edit_user_id = MainWindow.Logined.Id;
             ClientToShow.Save();
             PassportEditClientStackPanelShowClient.Visibility = System.Windows.Visibility.Hidden;
             EditClientBorderShowClient.Height = 0;
             MainWindow.Message("Контактні дані змінено");
+            LoadShowClient(ClientToShow);
+        }
+        private void EditClientDiscountssSaveShowClient_Click(object sender, RoutedEventArgs e)
+        {
+            List<Discounts.Discount> discounts = ClientToShow.GetDiscounts;
+            foreach (var i in discounts)
+            {
+                i.Delete();
+            }
+            ClientToShow.Discounts_Ides.Clear();
+            for (int i = 0; i < EditDicsountDurationStackPanelInShowClient.Children.Count; i++)
+            {
+                TextBox t1 = EditDicsountDurationStackPanelInShowClient.Children[i] as TextBox;
+                TextBox t2 = EditDicsountValueStackPanelInShowClient.Children[i] as TextBox;
+                ComboBox c = EditDicsountChouseOperetorStackPanelInShowClient.Children[i] as ComboBox;
+                if (t1.Text == "" && t2.Text == "")
+                {
+
+                }
+                else
+                {
+                    if (t1.Text == "" || t2.Text == "")
+                    {
+                        MainWindow.Message("Всі поля мають бути заповнені!");
+                        return;
+                    }
+                    else
+                    {
+                        Discounts.Discount d = new Discounts.Discount();
+                        d.Tour = t1.Text;
+                        d.discount = t2.Text;
+                        if (c.SelectedIndex != -1)
+                        {
+                            Operators.Operator o = Operators.Operator.FindByName(c.SelectedItem.ToString());
+                            if (o != null)
+                            {
+                                d.Operator_id = o.Id;
+                            }
+                        }
+                        d.Client_id = ClientToShow.Id;
+                        d.Save();
+                        ClientToShow.Discounts_Ides.Add(d.Id);
+                    }
+                }
+
+            }
+            ClientToShow.Last_edit_user_id = MainWindow.Logined.Id;
+            ClientToShow.Save();
+            PassportEditClientStackPanelShowClient.Visibility = System.Windows.Visibility.Hidden;
+            EditClientBorderShowClient.Height = 0;
+            MainWindow.Message("Знижки змінено");
             LoadShowClient(ClientToShow);
         }
         // Загрузки
@@ -1176,6 +1238,49 @@ namespace OTBaseNew
             EditClientBorderShowClient.Height = AddressEditClientStackPanelShowClient.Height;
             ShowClientActionsScroll.ScrollToHome();
         }
+        void LoadEditDiscountsShowClient(Clients.Client client)
+        {
+            if (ActualEditClientPanel != null)
+            {
+                ActualEditClientPanel.Visibility = System.Windows.Visibility.Hidden;
+                ActualEditClientPanel = null;
+            }
+            ActualEditClientPanel = DiscountsEditClientStackPanelShowClient;
+            ActualEditClientPanel.Visibility = System.Windows.Visibility.Visible;
+            List<Discounts.Discount> discountrs = client.GetDiscounts;
+            EditDicsountChouseOperetorStackPanelInShowClient.Children.Clear();
+            EditDicsountValueStackPanelInShowClient.Children.Clear();
+            EditDicsountDurationStackPanelInShowClient.Children.Clear();
+            foreach (var i in discountrs)
+            {
+                TextBox t = new TextBox();
+                t.Style = Resources["TexBoxStyle"] as Style;
+                t.Margin = new Thickness(10);
+                t.Text = i.Tour;
+                EditDicsountDurationStackPanelInShowClient.Children.Add(t);
+                t = new TextBox();
+                t.Style = Resources["TexBoxStyle"] as Style;
+                t.Margin = new Thickness(10);
+                t.Text = i.discount;
+                EditDicsountValueStackPanelInShowClient.Children.Add(t);
+                ComboBox c = new ComboBox();
+                c.Margin = new Thickness(10);
+                c.Style = Resources["ComboBoxStyle"] as Style;
+                List<Operators.Operator> operators = Operators.Operator.GetAllOperators;
+                for (int j = 0; j < operators.Count; j++)
+                {
+                    c.Items.Add(operators[j].Name);
+                    if (i.Operator_id == operators[j].Id)
+                    {
+                        c.SelectedIndex = j;
+                    }
+                }
+                EditDicsountChouseOperetorStackPanelInShowClient.Children.Add(c);
+            }
+            EditClientBorderShowClient.Visibility = System.Windows.Visibility.Visible;
+            EditClientBorderShowClient.Height = AddressEditClientStackPanelShowClient.Height;
+            ShowClientActionsScroll.ScrollToHome();
+        }
         //Операции
         private void EditAddressInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -1188,6 +1293,10 @@ namespace OTBaseNew
         private void EditPassportInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             LoadEditPassportShowClient(ClientToShow.GetPassport);
+        }
+        private void EditDiscountsInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LoadEditDiscountsShowClient(ClientToShow);
         }
         private void StackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -1229,6 +1338,26 @@ namespace OTBaseNew
             t.Margin = new Thickness(10);
             t.Style = Resources["TexBoxStyle"] as Style;
             EmailsStackPanelInShowClient.Children.Add(t);
+        }
+        private void AddValueAndDurationFieldInEditSidcountsInShowCLient_Click(object sender, RoutedEventArgs e)
+        {
+            TextBox t = new TextBox();
+            t.Style = Resources["TexBoxStyle"] as Style;
+            t.Margin = new Thickness(10);
+            EditDicsountDurationStackPanelInShowClient.Children.Add(t);
+            t = new TextBox();
+            t.Style = Resources["TexBoxStyle"] as Style;
+            t.Margin = new Thickness(10);
+            EditDicsountValueStackPanelInShowClient.Children.Add(t);
+            ComboBox c = new ComboBox();
+            c.Margin = new Thickness(10);
+            c.Style = Resources["ComboBoxStyle"] as Style;
+            List<Operators.Operator> operators = Operators.Operator.GetAllOperators;
+            foreach (var i in operators)
+            {
+                c.Items.Add(i.Name);
+            }
+            EditDicsountChouseOperetorStackPanelInShowClient.Children.Add(c);
         }
         #endregion
         void LoadClientsGrid()
@@ -1554,7 +1683,9 @@ namespace OTBaseNew
             TurnGridMain(UsersGrid);
         }
 
-        #endregion       
+        #endregion
+
+
         //-----------------
     }
 }
