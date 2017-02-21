@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 namespace OTBaseNew
 {
     /// <summary>
@@ -19,6 +20,10 @@ namespace OTBaseNew
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Проверки
+        bool CheckToLastFiveClients = false;
+        #endregion
+        public DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
         public Clients.Client ClientToShow;
         public static Users.User Logined;
         StackPanel ActualEditClientPanel;
@@ -36,13 +41,21 @@ namespace OTBaseNew
             }
             else
             {
+                timer.Tick += new EventHandler(dispatcherTimer_Tick);
+                timer.Interval = new TimeSpan(0, 0,10);
+                timer.Start();
+
+
                 //MainWindow.Message(string.Format("Привіт, {0}", Logined.FName));
                 NameLable.Content = Logined.FName;
                 LoadImages();
                 grids.Add(ClientsGrid);
-                ClientToShow = Clients.Client.FindById(2);
-                LoadShowClient(ClientToShow);
             }
+        }
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            if (CheckToLastFiveClients)
+            CheckLastFiveAddedClients();
         }
         public static void Message(string text)
         {
@@ -64,6 +77,10 @@ namespace OTBaseNew
             Label id = (Label)sp.Children[0];
             ClientToShow = Clients.Client.FindById(Convert.ToInt32(id.Content));
             LoadShowClient(ClientToShow);
+        }
+        void CleareAllCheckes()
+        {
+            CheckToLastFiveClients = false;
         }
         //-----------------        
         #region Сетка Клиенты
@@ -426,6 +443,7 @@ namespace OTBaseNew
                 }
                 Clients.ShortClientShow sh = new Clients.ShortClientShow(c);
                 sh.Owner = this;
+                c.OnClientAdd += c_OnClientAdd;
                 sh.ShowDialog();
                 MainWindow.Message("Клієнт створений!");
                 CleareAddClientFilesd();
@@ -435,7 +453,10 @@ namespace OTBaseNew
             {
                 MainWindow.Message(error.Message);
             }
-
+        }
+        void c_OnClientAdd(object sender, EventArgs e)
+        {
+            CheckLastFiveAddedClients();
         }
         void CleareAddClientFilesd()
         {
@@ -1074,6 +1095,17 @@ namespace OTBaseNew
             MainWindow.Message("Знижки змінено");
             LoadShowClient(ClientToShow);
         }
+        private void EditClientDeleteShowClient_Click(object sender, RoutedEventArgs e)
+        {
+            ClientToShow.OnClientRemove += ClientToShow_OnClientRemove;
+            ClientToShow.Delete();
+            MainWindow.Message("Клієнт був видалений");
+            TurnGridBack();
+        }
+        void ClientToShow_OnClientRemove(object sender, EventArgs e)
+        {
+            CheckLastFiveAddedClients();
+        }
         // Загрузки
         void LoadEditMainInfoShowClient(Clients.Client client)
         {
@@ -1281,6 +1313,19 @@ namespace OTBaseNew
             EditClientBorderShowClient.Height = AddressEditClientStackPanelShowClient.Height;
             ShowClientActionsScroll.ScrollToHome();
         }
+        void LoadDeleteShowClient()
+        {
+            if (ActualEditClientPanel != null)
+            {
+                ActualEditClientPanel.Visibility = System.Windows.Visibility.Hidden;
+                ActualEditClientPanel = null;
+            }
+            ActualEditClientPanel = DeleteClientStackPanelShowClient;
+            ActualEditClientPanel.Visibility = System.Windows.Visibility.Visible;
+            EditClientBorderShowClient.Visibility = System.Windows.Visibility.Visible;
+            EditClientBorderShowClient.Height = AddressEditClientStackPanelShowClient.Height;
+            ShowClientActionsScroll.ScrollToHome();
+        }
         //Операции
         private void EditAddressInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -1297,6 +1342,10 @@ namespace OTBaseNew
         private void EditDiscountsInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             LoadEditDiscountsShowClient(ClientToShow);
+        }
+        private void DeleteInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LoadDeleteShowClient();
         }
         private void StackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -1676,16 +1725,45 @@ namespace OTBaseNew
         {
             LoadClientsGrid();
             TurnGridMain(ClientsGrid);
+            CleareAllCheckes();
+            CheckToLastFiveClients = true;
         }
         private void UsersButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             LoadUsersGrid();
             TurnGridMain(UsersGrid);
+            CleareAllCheckes();
         }
 
         #endregion
-
-
         //-----------------
+        #region Проверки в фоновом потоке
+        void CheckLastFiveAddedClients()
+        {
+            List<int> ides = new List<int>();
+            foreach(var i in FiveLastClientsGridClientGrid.Children)
+            {
+                Border b = i as Border;
+                StackPanel sp = b.Child as StackPanel;
+                int id = Convert.ToInt32(((Label)sp.Children[0]).Content);
+                ides.Add(id);
+            }
+            List<Clients.Client> clients = Clients.Client.GetFiveLastClients();
+           if(clients.Count!=ides.Count)
+           {
+               LoadFiveLastClients();
+           }
+           else
+           {
+               for (int i = 0; i < clients.Count; i++)
+               {
+                   if (clients[i].Id != ides[i])
+                   {
+                       LoadFiveLastClients();
+                   }
+               }
+           }
+        }
+        #endregion
     }
 }

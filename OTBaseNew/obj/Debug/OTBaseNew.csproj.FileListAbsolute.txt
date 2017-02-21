@@ -36,3 +36,5 @@ D:\OTBase\OTBase\OTBaseNew\obj\Debug\Clients\ShortClientShow.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Clients\ShortClientShow.g.cs
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\AddList.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\AddList.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\YesOrNo.baml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\YesOrNo.g.cs

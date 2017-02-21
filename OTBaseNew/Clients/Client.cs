@@ -8,6 +8,8 @@ namespace OTBaseNew.Clients
 {
     public class Client
     {
+        public event EventHandler OnClientAdd;
+        public event EventHandler OnClientRemove;
         /// <summary>
         /// ИД
         /// </summary>
@@ -302,7 +304,8 @@ namespace OTBaseNew.Clients
                     db.MakeRequest(query);
                 }
                 #endregion
-
+                if (OnClientAdd!=null)
+                OnClientAdd(this,new EventArgs());
             }
             //Операция закончена, возвращает тру
         }
@@ -369,13 +372,11 @@ namespace OTBaseNew.Clients
                 //Строка-запрос для удаления из таблицы Мейлы-Клиент
                 query = string.Format("DELETE FROM  `EmailsAndClients` WHERE  `Client_id` = {0}", Id);
                 //Создает запрос и возвращает результат
-                db.MakeRequest(query);
-                //Строка-запрос
-                query = string.Format("DELETE FROM  `Clients` WHERE  `id` = {0}", Id);
-                //Создает запрос и возвращает результат
-                db.MakeRequest(query);
+                db.MakeRequest(query);              
                 //Удаляет адрес с базы данных
+                if (GetAddress!=null)
                 GetAddress.Delete();
+                if(GetPassport!=null)
                 //Удаляет аддресс
                 GetPassport.Delete();
                 //Удаляет скидки
@@ -383,6 +384,12 @@ namespace OTBaseNew.Clients
                 {
                     i.Delete();
                 }
+                //Строка-запрос
+                query = string.Format("DELETE FROM  `Clients` WHERE  `id` = {0}", Id);
+                //Создает запрос и возвращает результат
+                db.MakeRequest(query);
+                if (OnClientRemove != null)
+                    OnClientRemove(this, new EventArgs());
             }
         }
         /// <summary>

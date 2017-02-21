@@ -408,7 +408,7 @@
                             </ScrollViewer>
                         </Border>
                     </Grid>
-                    <Grid Name="ShowClient" Visibility="Visible">
+                    <Grid Name="ShowClient" Visibility="Hidden">
                         <Button ToolTip="Відмінити" Name="CloseShowClient" HorizontalAlignment="Right" Height="35" Width="35" Grid.Column="1"  Style="{DynamicResource ButtonStyle}" FontSize="20" Background="#FFD63C34" Content="X" Margin="10 4 10 4"  VerticalAlignment="Top" Click="CloseShowClient_Click" />
                         <TabControl >
                             <TabItem Style="{DynamicResource TabItemStyle}" FontSize="25" Header="Інформація" >
@@ -676,6 +676,11 @@
                                                         <Button Name="EditClientDiscountssSaveShowClient" Style="{DynamicResource ButtonStyle}" Content="Зберегти" Background="LightGreen" Margin="10" Click="EditClientDiscountssSaveShowClient_Click" />
                                                         <Button Name="EditClientDiscountsCancelShowClient" Style="{DynamicResource ButtonStyle}" Content="Закрити" Margin="10" Click="EditClientMainInfoCancelShowClient_Click"/>
                                                     </StackPanel>
+                                                    <StackPanel Name="DeleteClientStackPanelShowClient" Visibility="Hidden">
+                                                        <Label Style="{DynamicResource LabelStyle}" Content="Ви впевнені що хочете видалити клієнта?" HorizontalContentAlignment="Center" FontSize="40"/>
+                                                        <Button Name="EditClientDeleteShowClient" Style="{DynamicResource ButtonStyle}" Content="Видалити" Background="LightCoral" Margin="10" Click="EditClientDeleteShowClient_Click"  />
+                                                        <Button Name="EditCliensDeleteCancelShowClient" Style="{DynamicResource ButtonStyle}" Content="Закрити" Margin="10" Click="EditClientMainInfoCancelShowClient_Click"/>
+                                                    </StackPanel>
                                                 </Grid>
                                             </Border>
                                             <WrapPanel>
@@ -721,7 +726,7 @@
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Додати до чорного списку"/>
                                                     </StackPanel>
                                                 </Border>
-                                                <Border Name="DeleteInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}">
+                                                <Border Name="DeleteInShowClientGrid" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="DeleteInShowClientGrid_MouseLeftButtonDown">
                                                     <StackPanel>
                                                         <Image Name="DeleteImgInShowClientGrid" Height="240" Margin="10 10 10 10"/>
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Видалити клієнта"/>

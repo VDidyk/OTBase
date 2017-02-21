@@ -78,6 +78,9 @@
       <DependentUpon>Alarm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Other\Utility.cs" />
+    <Compile Include="Other\YesOrNo.xaml.cs">
+      <DependentUpon>YesOrNo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Passports\Passport.cs" />
     <Compile Include="Phones\Phone.cs" />
     <Compile Include="Positions\Position.cs" />
@@ -115,6 +118,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Other\Alarm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Other\YesOrNo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
