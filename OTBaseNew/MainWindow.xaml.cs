@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Microsoft.Win32;
 namespace OTBaseNew
 {
     /// <summary>
@@ -42,7 +43,7 @@ namespace OTBaseNew
             else
             {
                 timer.Tick += new EventHandler(dispatcherTimer_Tick);
-                timer.Interval = new TimeSpan(0, 0,10);
+                timer.Interval = new TimeSpan(0, 0, 10);
                 timer.Start();
 
 
@@ -55,7 +56,7 @@ namespace OTBaseNew
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             if (CheckToLastFiveClients)
-            CheckLastFiveAddedClients();
+                CheckLastFiveAddedClients();
         }
         public static void Message(string text)
         {
@@ -135,53 +136,6 @@ namespace OTBaseNew
             ((Button)sender).Visibility = System.Windows.Visibility.Hidden;
             AddPhonesAddClientScroll.ScrollToBottom();
         }
-        private void AddNewRegionBtnAddClient_Click(object sender, RoutedEventArgs e)
-        {
-            if (AddNewRegionTextBoxAddClient.Visibility == System.Windows.Visibility.Hidden)
-            {
-                AddNewRegionTextBoxAddClient.Visibility = System.Windows.Visibility.Visible;
-                AddNewRegionBtnAddClient.Visibility = System.Windows.Visibility.Hidden;
-                AddNewRegionTextBoxAddClient.Focus();
-                ChooseRegionComboboxAddClient.IsEnabled = false;
-            }
-        }
-        private void AddNewRegionTextBoxAddClient_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (((TextBox)sender).Text == "")
-            {
-                AddNewRegionTextBoxAddClient.Visibility = System.Windows.Visibility.Hidden;
-                AddNewRegionBtnAddClient.Visibility = System.Windows.Visibility.Visible;
-                ChooseRegionComboboxAddClient.IsEnabled = true;
-                ChooseRegionComboboxAddClient.SelectedIndex = -1;
-            }
-        }
-        private void AddNewCityBtnAddClient_Click(object sender, RoutedEventArgs e)
-        {
-            if (ChooseRegionComboboxAddClient.SelectedIndex == -1 && AddNewRegionTextBoxAddClient.Text == "")
-            {
-                MainWindow.Message("Оберіть область!");
-            }
-            else
-            {
-                if (AddNewCityTextBoxAddClient.Visibility == System.Windows.Visibility.Hidden)
-                {
-                    AddNewCityTextBoxAddClient.Visibility = System.Windows.Visibility.Visible;
-                    AddNewCityBtnAddClient.Visibility = System.Windows.Visibility.Hidden;
-                    AddNewCityTextBoxAddClient.Focus();
-                    ChooseCityComboboxAddClient.IsEnabled = false;
-                }
-            }
-        }
-
-        private void AddNewCityTextBoxAddClient_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (((TextBox)sender).Text == "")
-            {
-                AddNewCityTextBoxAddClient.Visibility = System.Windows.Visibility.Hidden;
-                AddNewCityBtnAddClient.Visibility = System.Windows.Visibility.Visible;
-                ChooseCityComboboxAddClient.IsEnabled = true;
-            }
-        }
         private void ManagerBorderInAddClient_Mouse_Down(object sender, MouseButtonEventArgs e)
         {
             if (selected_manager_for_client_in_add_client != null)
@@ -221,10 +175,6 @@ namespace OTBaseNew
         }
         private void ChooseRegionComboboxAddClient_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            AddNewCityTextBoxAddClient.Visibility = System.Windows.Visibility.Hidden;
-            AddNewCityTextBoxAddClient.Text = "";
-            AddNewCityBtnAddClient.Visibility = System.Windows.Visibility.Visible;
-            ChooseCityComboboxAddClient.IsEnabled = true;
             if (ChooseRegionComboboxAddClient.SelectedIndex != -1)
             {
                 ChooseCityComboboxAddClient.Items.Clear();
@@ -296,59 +246,6 @@ namespace OTBaseNew
                 if (ChooseCityComboboxAddClient.SelectedIndex != -1)
                 {
                     a.city_id = Cities.City.FindByName(ChooseCityComboboxAddClient.SelectedItem.ToString()).Id;
-                }
-                else
-                {
-                    if (AddNewCityTextBoxAddClient.Text != "")
-                    {
-                        Cities.City city = new Cities.City();
-                        city.Name = AddNewCityTextBoxAddClient.Text;
-                        if (ChooseRegionComboboxAddClient.SelectedIndex != -1 || AddNewRegionTextBoxAddClient.Text != "")
-                        {
-                            MainWindow.Message("Оберіть або створіть нову область!");
-                            return;
-                        }
-                        else
-                        {
-                            if (ChooseRegionComboboxAddClient.SelectedIndex != -1)
-                            {
-                                try
-                                {
-                                    Regions.Region r = Regions.Region.FindByName(ChooseRegionComboboxAddClient.SelectedItem.ToString());
-                                    city.Region_id = r.Id;
-                                    city.Save();
-                                }
-                                catch
-                                {
-                                    Cities.City ci = Cities.City.FindByName(city.Name);
-                                    a.city_id = ci.Id;
-                                }
-                            }
-                            else
-                            {
-                                Regions.Region r = new Regions.Region();
-                                try
-                                {
-                                    r.Name = AddNewRegionTextBoxAddClient.Text;
-                                    r.Save();
-                                }
-                                catch
-                                {
-                                    r = Regions.Region.FindByName(r.Name);
-                                }
-                                try
-                                {
-                                    city.Region_id = r.Id;
-                                    city.Save();
-                                }
-                                catch
-                                {
-                                    Cities.City ci = Cities.City.FindByName(city.Name);
-                                    a.city_id = ci.Id;
-                                }
-                            }
-                        }
-                    }
                 }
                 a.address = AddressAddClient.Text;
                 if (a.address != "" || a.city_id != 0)
@@ -445,7 +342,6 @@ namespace OTBaseNew
                 sh.Owner = this;
                 c.OnClientAdd += c_OnClientAdd;
                 sh.ShowDialog();
-                MainWindow.Message("Клієнт створений!");
                 CleareAddClientFilesd();
                 TurnGridBack();
             }
@@ -530,30 +426,7 @@ namespace OTBaseNew
             }
             for (int i = 0; i < clients.Count; i++)
             {
-                Border b = new Border();
-                b.Width = 300;
-                b.Style = Resources["ClientBorderStyle"] as Style;
-                StackPanel sp = new StackPanel();
-                b.Child = sp;
-                Label lid = new Label();
-                lid.Content = clients[i].Id.ToString();
-                lid.Visibility = System.Windows.Visibility.Hidden;
-                Label l = new Label();
-                l.Style = Resources["LabelStyle"] as Style;
-                l.Content = clients[i].FName + " " + clients[i].LName;
-                l.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-                Image im = new Image();
-                im.Height = 150;
-                im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\client.png"));
-                Label l2 = new Label();
-                l2.Style = Resources["LabelStyle"] as Style;
-                l2.Content = clients[i].Created.ToShortDateString();
-                l2.FontWeight = FontWeights.Normal;
-                l2.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-                sp.Children.Add(lid);
-                sp.Children.Add(l);
-                sp.Children.Add(im);
-                sp.Children.Add(l2);
+                Border b = CreateClientBorder(clients[i]);
                 ClientsPanelFindClient.Children.Add(b);
             }
         }
@@ -614,30 +487,7 @@ namespace OTBaseNew
         }
         void AddClientInShowClientsGrid(Clients.Client client)
         {
-            Border b = new Border();
-            b.Width = 300;
-            b.Style = Resources["ClientBorderStyle"] as Style;
-            StackPanel sp = new StackPanel();
-            b.Child = sp;
-            Label lid = new Label();
-            lid.Content = client.Id.ToString();
-            lid.Visibility = System.Windows.Visibility.Hidden;
-            Label l = new Label();
-            l.Style = Resources["LabelStyle"] as Style;
-            l.Content = client.FName + " " + client.LName;
-            l.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-            Image im = new Image();
-            im.Height = 150;
-            im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\client.png"));
-            Label l2 = new Label();
-            l2.Style = Resources["LabelStyle"] as Style;
-            l2.Content = client.Created.ToShortDateString();
-            l2.FontWeight = FontWeights.Normal;
-            l2.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-            sp.Children.Add(lid);
-            sp.Children.Add(l);
-            sp.Children.Add(im);
-            sp.Children.Add(l2);
+            Border b = CreateClientBorder(client);
             ClientsPanelInShowClients.Children.Add(b);
         }
         private void ClearFilterBtnShowClientsGrid_Click(object sender, RoutedEventArgs e)
@@ -1454,32 +1304,10 @@ namespace OTBaseNew
             FiveLastClientsGridClientGrid.Children.Clear();
             for (int i = 0; i < clients.Count; i++)
             {
-                Border b = new Border();
-                b.MouseLeftButtonDown += LookClient;
-                b.Style = Resources["ClientBorderStyle"] as Style;
-                StackPanel sp = new StackPanel();
-                b.Child = sp;
-                Label lid = new Label();
-                lid.Content = clients[i].Id.ToString();
-                lid.Visibility = System.Windows.Visibility.Hidden;
-                Label l = new Label();
-                l.Style = Resources["LabelStyle"] as Style;
-                l.Content = clients[i].FName + " " + clients[i].LName;
-                l.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-                Image im = new Image();
-                im.Height = 150;
-                im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\client.png"));
-                Label l2 = new Label();
-                l2.Style = Resources["LabelStyle"] as Style;
-                l2.Content = clients[i].Created.ToShortDateString();
-                l2.FontWeight = FontWeights.Normal;
-                l2.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-                sp.Children.Add(lid);
-                sp.Children.Add(l);
-                sp.Children.Add(im);
-                sp.Children.Add(l2);
-                FiveLastClientsGridClientGrid.Children.Add(b);
+                Border b = CreateClientBorder(clients[i]);
+                b.Width = double.NaN;
                 b.SetValue(Grid.ColumnProperty, i);
+                FiveLastClientsGridClientGrid.Children.Add(b);
             }
         }
         private void FindClientGridClients_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -1490,6 +1318,35 @@ namespace OTBaseNew
         {
             LoadGridAddClient();
             TurnGridNext(ClientAddGrid);
+        }
+        public Border CreateClientBorder(Clients.Client client)
+        {
+            Border b = new Border();
+            b.Width = 300;
+            b.MouseLeftButtonDown += LookClient;
+            b.Style = Resources["ClientBorderStyle"] as Style;
+            StackPanel sp = new StackPanel();
+            b.Child = sp;
+            Label lid = new Label();
+            lid.Content = client.Id.ToString();
+            lid.Visibility = System.Windows.Visibility.Hidden;
+            Label l = new Label();
+            l.Style = Resources["LabelStyle"] as Style;
+            l.Content = client.FName + " " + client.LName;
+            l.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            Image im = new Image();
+            im.Height = 150;
+            im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\client.png"));
+            Label l2 = new Label();
+            l2.Style = Resources["LabelStyle"] as Style;
+            l2.Content = client.Created.ToShortDateString();
+            l2.FontWeight = FontWeights.Normal;
+            l2.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            sp.Children.Add(lid);
+            sp.Children.Add(l);
+            sp.Children.Add(im);
+            sp.Children.Add(l2);
+            return b;
         }
         #endregion
         //-----------------
@@ -1694,6 +1551,137 @@ namespace OTBaseNew
         #endregion
         #endregion
         //-----------------
+        #region Сетка Операторы
+        void LoadOperatorGrid()
+        {
+            CreateOperatorNameInOperatorGrid.Text = "";
+            CreateOperatorSiteInOperatorGrid.Text = "";
+            DocumentsPanelInOperatorsGrid.Children.Clear();
+        }
+        Border CreateDocumentBorder(string path)
+        {
+            Border b = new Border();
+            b.MouseLeftButtonDown += DocumentBorder_MouseLeftButtonDown;
+            b.Style = Resources["DocumentBorder"] as Style;
+            StackPanel sp = new StackPanel();
+            sp.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            b.Child = sp;
+            Label l = new Label();
+            l.Visibility = System.Windows.Visibility.Hidden;
+            l.Content = path;
+            sp.Children.Add(l);
+            Image im = new Image();
+            im.Width = 120;
+            im.Height = 120;
+            im.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            im.Margin = new Thickness(0, 10, 0, 0);
+            im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\document.png"));
+            sp.Children.Add(im);
+            TextBlock t = new TextBlock();
+            t.Style = Resources["TextBlockStyle"] as Style;
+            t.TextAlignment = TextAlignment.Center;
+            t.Margin = new Thickness(0, 10, 0, 0);
+            t.Text = System.IO.Path.GetFileName(path);
+            sp.Children.Add(t);
+            return b;
+        }
+        private void CreateOperatorDocumentsInOperatorGrid_Click(object sender, RoutedEventArgs e)
+        {
+            if (CreateOperatorDocumentsInOperatorGrid.Background == Brushes.LightGreen)
+            {
+                OpenFileDialog ofd = new OpenFileDialog();
+                if (ofd.ShowDialog() == true)
+                {
+                    string path = ofd.FileName;
+                    Border b = CreateDocumentBorder(path);
+                    DocumentsPanelInOperatorsGrid.Children.Add(b);
+                }
+            }
+            else
+            {
+                List<Border> BordersForDelete = new List<Border>();
+                foreach (var i in DocumentsPanelInOperatorsGrid.Children)
+                {
+                    Border bo = i as Border;
+                    if (bo.Style == (Style)Resources["SelectedDocumentBorder"])
+                    {
+                        BordersForDelete.Add(bo);
+                    }
+                }
+                foreach (var i in BordersForDelete)
+                {
+                    DocumentsPanelInOperatorsGrid.Children.Remove(i);
+                }
+                CreateOperatorDocumentsInOperatorGrid.Background = Brushes.LightGreen;
+                CreateOperatorDocumentsInOperatorGrid.Content = "Додати файл";
+            }
+        }
+        private void DocumentBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Border b = (Border)sender;
+            if (b.Style == (Style)Resources["DocumentBorder"])
+            {
+                b.Style = Resources["SelectedDocumentBorder"] as Style;
+            }
+            else
+            {
+                b.Style = Resources["DocumentBorder"] as Style;
+            }
+            bool existselected = false;
+            foreach (var i in DocumentsPanelInOperatorsGrid.Children)
+            {
+                Border bo = i as Border;
+                if (bo.Style == (Style)Resources["SelectedDocumentBorder"])
+                {
+                    existselected = true;
+                    break;
+                }
+            }
+            if (existselected)
+            {
+                CreateOperatorDocumentsInOperatorGrid.Background = Brushes.Red;
+                CreateOperatorDocumentsInOperatorGrid.Content = "Видалити обрані файли";
+            }
+            else
+            {
+                CreateOperatorDocumentsInOperatorGrid.Background = Brushes.LightGreen;
+                CreateOperatorDocumentsInOperatorGrid.Content = "Додати файл";
+            }
+        }
+        private void CreateOperatorInOperatorGrid_Click(object sender, RoutedEventArgs e)
+        {
+            if(!MainWindow.Logined.IsAdmin)
+            {
+                MainWindow.Message("У Вас немає права на створення оператора!");
+                return;
+            }
+            if (CreateOperatorNameInOperatorGrid.Text == "")
+            {
+                MainWindow.Message("Назва не може бути пуста!");
+                return;
+            }
+            Operators.Operator o = new Operators.Operator();
+            o.Name = CreateOperatorNameInOperatorGrid.Text;
+            o.Site = CreateOperatorSiteInOperatorGrid.Text;
+            o.Save();
+            foreach (var i in DocumentsPanelInOperatorsGrid.Children)
+            {
+                Documents.Document d = new Documents.Document();
+                Border b = i as Border;
+                StackPanel s = b.Child as StackPanel;
+                Label l = s.Children[0] as Label;
+                string path = l.Content.ToString();
+                d.Bytes = Documents.Document.GetBytesFromFile(path);
+                d.Name = System.IO.Path.GetFileNameWithoutExtension(path);
+                d.Extension = System.IO.Path.GetExtension(path);
+                d.Operator_id = o.Id;
+                d.Save();
+            }
+            MainWindow.Message("Оператор створений!");
+            LoadOperatorGrid();
+        }
+        #endregion
+        //-----------------
         #region Навигация
         void TurnGridBack()
         {
@@ -1741,7 +1729,7 @@ namespace OTBaseNew
         void CheckLastFiveAddedClients()
         {
             List<int> ides = new List<int>();
-            foreach(var i in FiveLastClientsGridClientGrid.Children)
+            foreach (var i in FiveLastClientsGridClientGrid.Children)
             {
                 Border b = i as Border;
                 StackPanel sp = b.Child as StackPanel;
@@ -1749,21 +1737,27 @@ namespace OTBaseNew
                 ides.Add(id);
             }
             List<Clients.Client> clients = Clients.Client.GetFiveLastClients();
-           if(clients.Count!=ides.Count)
-           {
-               LoadFiveLastClients();
-           }
-           else
-           {
-               for (int i = 0; i < clients.Count; i++)
-               {
-                   if (clients[i].Id != ides[i])
-                   {
-                       LoadFiveLastClients();
-                   }
-               }
-           }
+            if (clients.Count != ides.Count)
+            {
+                LoadFiveLastClients();
+            }
+            else
+            {
+                for (int i = 0; i < clients.Count; i++)
+                {
+                    if (clients[i].Id != ides[i])
+                    {
+                        LoadFiveLastClients();
+                    }
+                }
+            }
         }
         #endregion
+
+
+
+
+
+
     }
 }

@@ -105,6 +105,7 @@ namespace OTBaseNew.Clients
         private void SaveAddClient_Click(object sender, RoutedEventArgs e)
         {
             client.Save();
+            MainWindow.Message("Клієнт створений!");
             this.Close();
         }
 

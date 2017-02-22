@@ -95,7 +95,7 @@ namespace OTBaseNew.Operators
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Positions`(`name`, `created`) VALUES ('{0}','{1}'); SELECT * FROM `Positions` order by id desc;LIMIT 0 , 1;", Name, MySqlWorker.DataBase.ConvertDateToMySqlString(DateTime.Now));
+                query = string.Format("INSERT INTO `Operators`(`name`,`site`) VALUES ('{0}','{1}'); SELECT * FROM `Operators` order by id desc LIMIT 0 , 1;", Name, Site);
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id

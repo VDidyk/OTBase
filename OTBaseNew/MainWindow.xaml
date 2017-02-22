@@ -96,7 +96,6 @@
                                 </StackPanel>
                             </Grid>
                         </Border>
-
                     </StackPanel>
                 </ScrollViewer>
             </Border>
@@ -280,24 +279,12 @@
                                     <Label Style="{DynamicResource LabelStyle}" Content="Область" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,49,10,0" FontWeight="Medium" VerticalAlignment="Top"></Label>
                                     <Label Style="{DynamicResource LabelStyle}" Content="Оберіть вже існуючу область, або створіть нову." FontSize="20" HorizontalContentAlignment="Center" VerticalAlignment="Top" Margin="10,81,10,0" FontWeight="Medium" ></Label>
                                     <Grid Margin="0,121,0,0" Height="50" VerticalAlignment="Top">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="281*"/>
-                                            <ColumnDefinition Width="112*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <ComboBox  Name="ChooseRegionComboboxAddClient" Style="{DynamicResource ComboBoxStyle}" Grid.Column="0" Margin="10 0 10 0" Background="White" SelectionChanged="ChooseRegionComboboxAddClient_SelectionChanged"/>
-                                        <Button Name="AddNewRegionBtnAddClient" Grid.Column="1" Style="{DynamicResource ButtonStyle}" Margin="10 0 10 0" Content="Створити нову область" Click="AddNewRegionBtnAddClient_Click"/>
-                                        <TextBox Name="AddNewRegionTextBoxAddClient" Grid.Column="1" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="10 3 10 0" Visibility="Hidden" LostFocus="AddNewRegionTextBoxAddClient_LostFocus"/>
+                                        <ComboBox  Name="ChooseRegionComboboxAddClient" Style="{DynamicResource ComboBoxStyle}"  Margin="10 0 10 0" Background="White" SelectionChanged="ChooseRegionComboboxAddClient_SelectionChanged"/>
                                     </Grid>
                                     <Label VerticalAlignment="Top" Style="{DynamicResource LabelStyle}" Content="Місто" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,176,10,0" FontWeight="Medium" ></Label>
                                     <Label VerticalAlignment="Top" Style="{DynamicResource LabelStyle}" Content="Оберіть вже існуюче місто, або створіть нове." FontSize="20" HorizontalContentAlignment="Center"  Margin="10,220,10,0" FontWeight="Medium" ></Label>
                                     <Grid VerticalAlignment="Top" Margin="0,264,0,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="375*"/>
-                                            <ColumnDefinition Width="149*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Button Name="AddNewCityBtnAddClient" Grid.Column="1" Style="{DynamicResource ButtonStyle}" Margin="10 0 10 0" Content="Створити нове місто" Click="AddNewCityBtnAddClient_Click"/>
-                                        <TextBox Name="AddNewCityTextBoxAddClient" Grid.Column="1" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Margin="10 3 10 0" Visibility="Hidden" LostFocus="AddNewCityTextBoxAddClient_LostFocus"/>
-                                        <ComboBox Name="ChooseCityComboboxAddClient" Style="{DynamicResource ComboBoxStyle}" Grid.Column="0" Margin="10 0 10 0" Background="White"/>
+                                        <ComboBox Name="ChooseCityComboboxAddClient" Style="{DynamicResource ComboBoxStyle}"  Margin="10 0 10 0" Background="White"/>
                                     </Grid>
                                     <Label VerticalAlignment="Top" Style="{DynamicResource LabelStyle}" Content="Адреса" FontSize="25" HorizontalContentAlignment="Center"  Margin="10,334,10,0" FontWeight="Medium" ></Label>
                                     <TextBox Name="AddressAddClient" VerticalAlignment="Top" Style="{DynamicResource TexBoxStyle}" Height="30" Margin="10,379,10,0" />
@@ -824,6 +811,43 @@
                         </ScrollViewer>
                     </Grid>
                     <!--Конец пользователям-->
+                    <!--Операторы-->
+                    <Grid Name="OperatorsGrid" Visibility="Visible">
+                        <StackPanel>
+                            <Label Style="{DynamicResource LabelStyle}" Content="Оператори" FontSize="30" HorizontalContentAlignment="Center"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness="1" BorderBrush="Pink">
+                                    <StackPanel>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Створити оператора" FontSize="20" HorizontalContentAlignment="Center"/>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Назва" FontSize="20" HorizontalContentAlignment="Center"/>
+                                        <TextBox Name="CreateOperatorNameInOperatorGrid" Style="{DynamicResource TexBoxStyle}" Margin="10" FontSize="20"/>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Сайт" FontSize="20" HorizontalContentAlignment="Center"/>
+                                        <TextBox Name="CreateOperatorSiteInOperatorGrid" Style="{DynamicResource TexBoxStyle}" Margin="10" FontSize="20"/>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Документи" FontSize="20" HorizontalContentAlignment="Center"/>
+                                        <Button Background="LightGreen" Name="CreateOperatorDocumentsInOperatorGrid" Style="{DynamicResource ButtonStyle}" Margin="10" FontSize="20" Content="Додати файл" Click="CreateOperatorDocumentsInOperatorGrid_Click"/>
+                                            <Border Height="300" BorderThickness="1" BorderBrush="Pink" Margin="10">
+                                            <ScrollViewer>
+                                                <WrapPanel Name="DocumentsPanelInOperatorsGrid">
+                                                    
+                                                </WrapPanel>
+                                            </ScrollViewer>
+                                        </Border>
+                                        <Button Name="CreateOperatorInOperatorGrid" Style="{DynamicResource ButtonStyle}" Margin="10" FontSize="20" Content="Створити оператора" Click="CreateOperatorInOperatorGrid_Click"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness="1" BorderBrush="Pink">
+                                    <StackPanel>
+
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                    <!--Конец операторам-->
                 </Grid>
             </Border>
         </Grid>
