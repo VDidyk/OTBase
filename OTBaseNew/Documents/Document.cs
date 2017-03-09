@@ -8,7 +8,7 @@ using MySql;
 
 namespace OTBaseNew.Documents
 {
-    class Document
+    public class Document
     {
         /// <summary>
         /// ИД

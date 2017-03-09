@@ -1557,6 +1557,18 @@ namespace OTBaseNew
             CreateOperatorNameInOperatorGrid.Text = "";
             CreateOperatorSiteInOperatorGrid.Text = "";
             DocumentsPanelInOperatorsGrid.Children.Clear();
+            Label l = new Label();
+            l.Content = "Оберіть оператора";
+            l.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
+            l.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+            l.FontSize = 30;
+            l.Foreground = Brushes.Gray;
+            OperatorInfoInOperatorsGrid.Child = l;
+            OperatorsPanelInOperatorGrid.Children.Clear();
+            foreach(var i in Operators.Operator.GetAllOperators)
+            {
+                OperatorsPanelInOperatorGrid.Children.Add(CreateOperatorGrid(i));
+            }
         }
         Border CreateDocumentBorder(string path)
         {
@@ -1584,6 +1596,55 @@ namespace OTBaseNew
             t.Text = System.IO.Path.GetFileName(path);
             sp.Children.Add(t);
             return b;
+        }
+        Border CreateDocumentBorder(Documents.Document doc)
+        {
+            Border b = new Border();
+            b.MouseLeftButtonDown += BorderDocumentDownloadLeftMouseDown;
+            b.Style = Resources["DocumentBorder"] as Style;
+            StackPanel sp = new StackPanel();
+            sp.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            b.Child = sp;
+            Label id = new Label();
+            id.Content = doc.Id;
+            id.Visibility = System.Windows.Visibility.Hidden;
+            sp.Children.Add(id);
+            Label l = new Label();
+            l.Visibility = System.Windows.Visibility.Hidden;
+            l.Content = doc.Name+doc.Extension;
+            sp.Children.Add(l);
+            Image im = new Image();
+            im.Width = 120;
+            im.Height = 120;
+            im.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            im.Margin = new Thickness(0, 10, 0, 0);
+            im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\document.png"));
+            sp.Children.Add(im);
+            TextBlock t = new TextBlock();
+            t.Style = Resources["TextBlockStyle"] as Style;
+            t.TextAlignment = TextAlignment.Center;
+            t.Margin = new Thickness(0, 10, 0, 0);
+            t.Text = doc.Name + doc.Extension;
+            t.ToolTip = doc.Name + doc.Extension;
+            sp.Children.Add(t);
+            return b;
+        }
+
+        void BorderDocumentDownloadLeftMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Border b = sender as Border;
+            Label l = ((StackPanel)b.Child).Children[0] as Label;
+            int id = Convert.ToInt32(l.Content);
+                using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+                {
+                    System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                    if(result==System.Windows.Forms.DialogResult.OK)
+                    {
+                        Documents.Document doc = Documents.Document.FindById(id);
+                        doc.WriteDocument(dialog.SelectedPath);
+                    }
+                }
+            
         }
         private void CreateOperatorDocumentsInOperatorGrid_Click(object sender, RoutedEventArgs e)
         {
@@ -1650,7 +1711,7 @@ namespace OTBaseNew
         }
         private void CreateOperatorInOperatorGrid_Click(object sender, RoutedEventArgs e)
         {
-            if(!MainWindow.Logined.IsAdmin)
+            if (!MainWindow.Logined.IsAdmin)
             {
                 MainWindow.Message("У Вас немає права на створення оператора!");
                 return;
@@ -1679,6 +1740,94 @@ namespace OTBaseNew
             }
             MainWindow.Message("Оператор створений!");
             LoadOperatorGrid();
+        }
+        Border CreateOperatorGrid(Operators.Operator oper)
+        {
+            Border border = new Border();
+            border.MouseLeftButtonDown += OperatorBorderLeftMouseDown;
+            border.Style = Resources["OperatorBorder"] as Style;
+            StackPanel sp = new StackPanel();
+            border.Child = sp;
+            Label l1 = new Label();
+            l1.Content = oper.Id;
+            l1.Visibility = System.Windows.Visibility.Hidden;
+            sp.Children.Add(l1);
+            Image img = new Image();
+            img.Height = 120;
+            img.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Operators\operator.png"));
+            sp.Children.Add(img);
+            Label l = new Label();
+            l.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            l.FontSize = 20;
+            l.FontWeight = FontWeights.Bold;
+            l.Content = oper.Name;
+            sp.Children.Add(l);
+            return border;
+        }
+        void OperatorBorderLeftMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Border b = sender as Border;
+            StackPanel st = b.Child as StackPanel;
+            Label l = st.Children[0] as Label;
+            int id = Convert.ToInt32(l.Content);
+            ShowOperatorInOperatorsGrid(Operators.Operator.FindById(id));
+        }
+        void ShowOperatorInOperatorsGrid(Operators.Operator oper)
+        {
+            StackPanel sp = new StackPanel();
+            OperatorInfoInOperatorsGrid.Child = sp;
+            Label l1 = new Label();
+            l1.Content = oper.Id;
+            l1.Visibility = System.Windows.Visibility.Hidden;
+            sp.Children.Add(l1);
+            Label l = new Label();
+            l.Style = Resources["LabelStyle"] as Style;
+            l.FontSize = 25;
+            l.Content = "Назва";
+            l.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+            sp.Children.Add(l);
+            TextBox tb = new TextBox();
+            tb.IsReadOnly = true;
+            tb.FontSize = 25;
+            tb.Text = oper.Name;
+            tb.TextAlignment = TextAlignment.Center;
+            tb.BorderThickness = new Thickness(0, 0, 0, 1);
+            tb.BorderBrush = Brushes.Gray;
+            tb.Margin = new Thickness(10, 0, 10, 0);
+            sp.Children.Add(tb);
+            l = new Label();
+            l.Style = Resources["LabelStyle"] as Style;
+            l.FontSize = 25;
+            l.Content = "Сайт";
+            l.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+            sp.Children.Add(l);
+            tb = new TextBox();
+            tb.IsReadOnly = true;
+            tb.FontSize = 25;
+            tb.Text = oper.Site;
+            tb.TextAlignment = TextAlignment.Center;
+            tb.BorderThickness = new Thickness(0, 0, 0, 1);
+            tb.BorderBrush = Brushes.Gray;
+            tb.Margin = new Thickness(10, 0, 10, 0);
+            sp.Children.Add(tb);
+            ScrollViewer sv = new ScrollViewer();
+            sv.Height = 250;
+            sv.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+            sp.Children.Add(sv);
+            WrapPanel wp = new WrapPanel();
+            sv.Content = wp;
+            wp.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            foreach(var i in oper.GetDocuments())
+            {
+                Documents.Document d = i;
+                wp.Children.Add(CreateDocumentBorder(d));
+            }
+            Button b = new Button();
+            b.Style = Resources["ButtonStyle"] as Style;
+            b.FontSize = 20;
+            b.Content = "Редагувати";
+            b.Margin = new Thickness(10, 10, 10, 0);
+            sp.Children.Add(b);
         }
         #endregion
         //-----------------
@@ -1722,7 +1871,12 @@ namespace OTBaseNew
             TurnGridMain(UsersGrid);
             CleareAllCheckes();
         }
-
+        private void OperatorsButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LoadOperatorGrid();
+            TurnGridMain(OperatorsGrid);
+            CleareAllCheckes();
+        }
         #endregion
         //-----------------
         #region Проверки в фоновом потоке
@@ -1753,6 +1907,8 @@ namespace OTBaseNew
             }
         }
         #endregion
+
+       
 
 
 

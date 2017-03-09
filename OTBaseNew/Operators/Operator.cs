@@ -175,6 +175,14 @@ namespace OTBaseNew.Operators
 
             }
         }
-
+        public List<Documents.Document> GetDocuments()
+        {
+            //Запрос
+            string query = string.Format("SELECT * FROM `Documents` WHERE operator_id={0}", Id);
+            //База данных
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
+            //Создает запрос и возвращает результат
+            return db.MakeRequest<Documents.Document>(query);
+        }
     }
 }

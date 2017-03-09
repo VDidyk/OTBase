@@ -80,7 +80,7 @@
                                 </StackPanel>
                             </Grid>
                         </Border>
-                        <Border Style="{DynamicResource MenuBorderStyle}" Name="OperatorsButton" >
+                        <Border Style="{DynamicResource MenuBorderStyle}" Name="OperatorsButton" MouseLeftButtonDown="OperatorsButton_MouseLeftButtonDown" >
                             <Grid>
                                 <StackPanel>
                                     <Image Name="OperatorsMenuImages"  Margin="10,0" Height="188"/>
@@ -813,39 +813,55 @@
                     <!--Конец пользователям-->
                     <!--Операторы-->
                     <Grid Name="OperatorsGrid" Visibility="Visible">
-                        <StackPanel>
-                            <Label Style="{DynamicResource LabelStyle}" Content="Оператори" FontSize="30" HorizontalContentAlignment="Center"/>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" BorderThickness="1" BorderBrush="Pink">
-                                    <StackPanel>
-                                        <Label Style="{DynamicResource LabelStyle}" Content="Створити оператора" FontSize="20" HorizontalContentAlignment="Center"/>
-                                        <Label Style="{DynamicResource LabelStyle}" Content="Назва" FontSize="20" HorizontalContentAlignment="Center"/>
-                                        <TextBox Name="CreateOperatorNameInOperatorGrid" Style="{DynamicResource TexBoxStyle}" Margin="10" FontSize="20"/>
-                                        <Label Style="{DynamicResource LabelStyle}" Content="Сайт" FontSize="20" HorizontalContentAlignment="Center"/>
-                                        <TextBox Name="CreateOperatorSiteInOperatorGrid" Style="{DynamicResource TexBoxStyle}" Margin="10" FontSize="20"/>
-                                        <Label Style="{DynamicResource LabelStyle}" Content="Документи" FontSize="20" HorizontalContentAlignment="Center"/>
-                                        <Button Background="LightGreen" Name="CreateOperatorDocumentsInOperatorGrid" Style="{DynamicResource ButtonStyle}" Margin="10" FontSize="20" Content="Додати файл" Click="CreateOperatorDocumentsInOperatorGrid_Click"/>
+                        <ScrollViewer>
+                            <StackPanel>
+                                <Label Style="{DynamicResource LabelStyle}" Content="Оператори" FontSize="30" HorizontalContentAlignment="Center"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0" BorderThickness="1" BorderBrush="Pink">
+                                        <StackPanel>
+                                            <Label Style="{DynamicResource LabelStyle}" Content="Створити оператора" FontSize="20" HorizontalContentAlignment="Center"/>
+                                            <Label Style="{DynamicResource LabelStyle}" Content="Назва" FontSize="20" HorizontalContentAlignment="Center"/>
+                                            <TextBox Name="CreateOperatorNameInOperatorGrid" Style="{DynamicResource TexBoxStyle}" Margin="10" FontSize="20"/>
+                                            <Label Style="{DynamicResource LabelStyle}" Content="Сайт" FontSize="20" HorizontalContentAlignment="Center"/>
+                                            <TextBox Name="CreateOperatorSiteInOperatorGrid" Style="{DynamicResource TexBoxStyle}" Margin="10" FontSize="20"/>
+                                            <Label Style="{DynamicResource LabelStyle}" Content="Документи" FontSize="20" HorizontalContentAlignment="Center"/>
+                                            <Button Background="LightGreen" Name="CreateOperatorDocumentsInOperatorGrid" Style="{DynamicResource ButtonStyle}" Margin="10" FontSize="20" Content="Додати файл" Click="CreateOperatorDocumentsInOperatorGrid_Click"/>
                                             <Border Height="300" BorderThickness="1" BorderBrush="Pink" Margin="10">
-                                            <ScrollViewer>
-                                                <WrapPanel Name="DocumentsPanelInOperatorsGrid">
-                                                    
+                                                <ScrollViewer>
+                                                    <WrapPanel Name="DocumentsPanelInOperatorsGrid">
+
+                                                    </WrapPanel>
+                                                </ScrollViewer>
+                                            </Border>
+                                            <Button Name="CreateOperatorInOperatorGrid" Style="{DynamicResource ButtonStyle}" Margin="10" FontSize="20" Content="Створити оператора" Click="CreateOperatorInOperatorGrid_Click"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Grid.Column="1" BorderThickness="1" BorderBrush="Pink" Name="OperatorInfoInOperatorsGrid">
+
+                                        <StackPanel>
+                                            <Label Content="Назва:" FontSize="25" Style="{DynamicResource LabelStyle}" HorizontalAlignment="Center"/>
+                                            <TextBox IsReadOnly="True" Text="Turtess" FontSize="25" TextAlignment="Center" BorderThickness="0 0 0 1" BorderBrush="Gray" Margin="10 0 10 0"/>
+                                            <ScrollViewer Height="250" VerticalScrollBarVisibility="Visible" >
+                                                <WrapPanel HorizontalAlignment="Center">
+                                                                                                  
                                                 </WrapPanel>
                                             </ScrollViewer>
-                                        </Border>
-                                        <Button Name="CreateOperatorInOperatorGrid" Style="{DynamicResource ButtonStyle}" Margin="10" FontSize="20" Content="Створити оператора" Click="CreateOperatorInOperatorGrid_Click"/>
-                                    </StackPanel>
-                                </Border>
-                                <Border Grid.Column="1" BorderThickness="1" BorderBrush="Pink">
-                                    <StackPanel>
+                                            <Button Style="{DynamicResource ButtonStyle}" FontSize="20" Content="Редагувати" Margin="10 0 10 0"/>
+                                        </StackPanel>
 
-                                    </StackPanel>
-                                </Border>
-                            </Grid>
-                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                                <Grid>
+                                    <WrapPanel Name="OperatorsPanelInOperatorGrid">
+                                       
+                                    </WrapPanel>
+                                </Grid>
+                            </StackPanel>
+                        </ScrollViewer>
                     </Grid>
                     <!--Конец операторам-->
                 </Grid>
