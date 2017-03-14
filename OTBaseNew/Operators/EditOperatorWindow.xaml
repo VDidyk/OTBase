@@ -1,0 +1,48 @@
+﻿<Window x:Class="OTBaseNew.Operators.EditOperatorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="EditOperatorWindow" Height="435" Width="1092.9" WindowStyle="None" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" BorderThickness="1" BorderBrush="LightCoral">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..//MainDictionary.xaml" />
+                <ResourceDictionary Source="..//ScrollBar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>        
+        <StackPanel>           
+            <Label Style="{DynamicResource LabelStyle}" Content="Редагувати оператора" HorizontalContentAlignment="Center"/>
+            <Label Style="{DynamicResource LabelStyle}" Content="Назва" HorizontalContentAlignment="Center"/>
+            <TextBox Name="Name" Style="{DynamicResource TexBoxStyle}" VerticalAlignment="Top"/>
+            <Label Style="{DynamicResource LabelStyle}" Content="Сайт" HorizontalContentAlignment="Center"/>
+            <TextBox Name="Site" Style="{DynamicResource TexBoxStyle}" VerticalAlignment="Top"/>
+            <Grid Margin="0 10 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="607*"/>
+                    <ColumnDefinition Width="174*"/>
+                </Grid.ColumnDefinitions>
+                <ScrollViewer Grid.Column="0">
+                    <WrapPanel Name="DocumentsPanel" Height="250">
+
+                    </WrapPanel>
+                </ScrollViewer>
+                <Border BorderThickness="1 0 0 0" BorderBrush="#FF6161" Grid.Column="1">
+                    <StackPanel>
+                        <Button Style="{DynamicResource ButtonStyle}" Content="Додати" Margin="5" FontSize="20" Click="Button_Click"/>
+                        <Button Style="{DynamicResource ButtonStyle}" Content="Видалити" Margin="5" FontSize="20" Click="Button_Click_1"/>
+                        <Button Style="{DynamicResource ButtonStyle}" Content="Переіменувати" Margin="5" FontSize="20" Click="Button_Click_2"/>
+                        <TextBox Style="{DynamicResource TexBoxStyle}" Margin="5" Name="NameOfDock" Visibility="Hidden"/>
+                        <Button Style="{DynamicResource ButtonStyle}" Content="Зберегти" Name="SaveName" Margin="5" FontSize="20" Background="LightGreen" Visibility="Hidden" Click="SaveName_Click"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+        <Grid Margin="0 0 0 0">
+            <WrapPanel HorizontalAlignment="Right">
+                <Button Name="save" Style="{DynamicResource ButtonStyle}" Background="LightGreen" Content="  ✓  " Margin="5" FontSize="26" HorizontalAlignment="Right" Click="save_Click"/>
+                <Button Name="exit" Style="{DynamicResource ButtonStyle}" Background="LightCoral" Content="  X  " Margin="5" FontSize="26" HorizontalAlignment="Right" Click="exit_Click"/>
+            </WrapPanel>
+        </Grid>
+    </Grid>
+</Window>

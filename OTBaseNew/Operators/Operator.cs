@@ -45,51 +45,9 @@ namespace OTBaseNew.Operators
             if (list.Count != 0)
             {
                 //Строка-запрос
-                query = string.Format("UPDATE Positions SET name='{0}',Site='{1}' WHERE id={2}", Name, Site, Id);
+                query = string.Format("UPDATE Operators SET name='{0}',site='{1}' WHERE id={2}", Name, Site, Id);
                 //Создает запрос и возвращает результат
-                db.MakeRequest(query);
-                #region Работа с документами
-                //Строка-запрос
-                query = string.Format("SELECT * FROM `Documents` WHERE Operator_id='{0}'", Id.ToString());
-                var answer1 = db.MakeRequest<Discounts.Discount>(query);
-                bool exist1 = false;
-                foreach (var j in answer1)
-                {
-                    foreach (var i in Documents_Ides)
-                    {
-                        if (i == j.Id)
-                        {
-                            exist1 = true;
-                            break;
-                        }
-                    }
-                    if (!exist1)
-                    {
-                        j.Delete();
-                    }
-                }
-                #endregion
-                #region Работа с документами
-                //Строка-запрос
-                query = string.Format("SELECT * FROM `Discounts` WHERE Operator_id='{0}'", Id.ToString());
-                answer1 = db.MakeRequest<Discounts.Discount>(query);
-                exist1 = false;
-                foreach (var j in answer1)
-                {
-                    foreach (var i in Discount_Ides)
-                    {
-                        if (i == j.Id || j.Client_id != 0)
-                        {
-                            exist1 = true;
-                            break;
-                        }
-                    }
-                    if (!exist1)
-                    {
-                        j.Delete();
-                    }
-                }
-                #endregion
+                db.MakeRequest(query);           
             }
             //В другом случае создать новую запись, и присвоить должности ID
             else
@@ -183,6 +141,19 @@ namespace OTBaseNew.Operators
             MySqlWorker.DataBase db = SQL.SqlConnect.db;
             //Создает запрос и возвращает результат
             return db.MakeRequest<Documents.Document>(query);
+        }
+        public void Delete()
+        {
+            var docs = GetDocuments();
+            foreach(var i in docs)
+            {
+                i.Delete();
+            }
+            string query = string.Format("Delete FROM `Operators` WHERE id={0}", Id);
+            //База данных
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
+            //Создает запрос и возвращает результат
+            var list = db.MakeRequest(query);
         }
     }
 }

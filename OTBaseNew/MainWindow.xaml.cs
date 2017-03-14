@@ -1552,6 +1552,7 @@ namespace OTBaseNew
         #endregion
         //-----------------
         #region Сетка Операторы
+        int operatoridforedithim = 0;
         void LoadOperatorGrid()
         {
             CreateOperatorNameInOperatorGrid.Text = "";
@@ -1569,6 +1570,7 @@ namespace OTBaseNew
             {
                 OperatorsPanelInOperatorGrid.Children.Add(CreateOperatorGrid(i));
             }
+            operatoridforedithim = 0;
         }
         Border CreateDocumentBorder(string path)
         {
@@ -1614,22 +1616,31 @@ namespace OTBaseNew
             l.Content = doc.Name+doc.Extension;
             sp.Children.Add(l);
             Image im = new Image();
-            im.Width = 120;
-            im.Height = 120;
+            im.Width = 100;
+            im.Height = 100;
             im.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            im.Margin = new Thickness(0, 10, 0, 0);
+            im.Margin = new Thickness(0, -40, 0, 0);
             im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\document.png"));
             sp.Children.Add(im);
             TextBlock t = new TextBlock();
             t.Style = Resources["TextBlockStyle"] as Style;
             t.TextAlignment = TextAlignment.Center;
             t.Margin = new Thickness(0, 10, 0, 0);
-            t.Text = doc.Name + doc.Extension;
+            string name;
+            if ((doc.Name + doc.Extension).Length > 10)
+            {
+                name = (doc.Name + doc.Extension).Substring(0, 10) + "...";
+            }
+            else
+            {
+                name = doc.Name + doc.Extension;
+            }
+            t.Text = name;
+            t.TextWrapping = TextWrapping.Wrap;
             t.ToolTip = doc.Name + doc.Extension;
             sp.Children.Add(t);
             return b;
         }
-
         void BorderDocumentDownloadLeftMouseDown(object sender, MouseButtonEventArgs e)
         {
             Border b = sender as Border;
@@ -1770,6 +1781,7 @@ namespace OTBaseNew
             StackPanel st = b.Child as StackPanel;
             Label l = st.Children[0] as Label;
             int id = Convert.ToInt32(l.Content);
+            operatoridforedithim = id;
             ShowOperatorInOperatorsGrid(Operators.Operator.FindById(id));
         }
         void ShowOperatorInOperatorsGrid(Operators.Operator oper)
@@ -1822,12 +1834,48 @@ namespace OTBaseNew
                 Documents.Document d = i;
                 wp.Children.Add(CreateDocumentBorder(d));
             }
+           
+            Button b1 = new Button();
+            b1.Click += EditOperatorInOperatorGrid_Click;
+            b1.Style = Resources["ButtonStyle"] as Style;
+            b1.FontSize = 20;
+            b1.Content = "Редагувати";
+            b1.Margin = new Thickness(10, 10, 10, 0);
+            sp.Children.Add(b1);
             Button b = new Button();
+            b.Click += deleteoperatorinoperatorsgrid_Click;
             b.Style = Resources["ButtonStyle"] as Style;
             b.FontSize = 20;
-            b.Content = "Редагувати";
+            b.Content = "Видалити";
             b.Margin = new Thickness(10, 10, 10, 0);
             sp.Children.Add(b);
+        }
+
+        void deleteoperatorinoperatorsgrid_Click(object sender, RoutedEventArgs e)
+        {
+            if (operatoridforedithim != 0)
+            {
+                Operators.Operator op = Operators.Operator.FindById(operatoridforedithim);
+                if (op != null)
+                {
+                    op.Delete();
+                    LoadOperatorGrid();
+                }
+            }
+        }
+        private void EditOperatorInOperatorGrid_Click(object sender, RoutedEventArgs e)
+        {
+            if(operatoridforedithim!=0)
+            {
+                Operators.Operator op = Operators.Operator.FindById(operatoridforedithim);
+                if (op != null)
+                {
+                    Operators.EditOperatorWindow eo = new Operators.EditOperatorWindow(op);
+                    eo.Owner = this;
+                    eo.ShowDialog();
+                    LoadOperatorGrid();
+                }
+            }
         }
         #endregion
         //-----------------
@@ -1907,13 +1955,6 @@ namespace OTBaseNew
             }
         }
         #endregion
-
-       
-
-
-
-
-
 
     }
 }

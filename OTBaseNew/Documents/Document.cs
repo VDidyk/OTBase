@@ -53,7 +53,7 @@ namespace OTBaseNew.Documents
             if (list.Count != 0)
             {
                 //Строка-запрос
-                query = string.Format("UPDATE Documents SET name='{0}', Extension='{1}',Bytes='@bytes',Operator_id={2},' WHERE id={3}", Name, Extension, Operator_id.ToString(), Id);
+                query = string.Format("UPDATE Documents SET name='{0}', Extension='{1}',Bytes='@bytes',Operator_id={2} WHERE id={3}", Name, Extension, Operator_id.ToString(), Id);
                 MySql.Data.MySqlClient.MySqlCommand command = new MySql.Data.MySqlClient.MySqlCommand(query);
                 command.Parameters.AddWithValue("@bytes", Bytes);
                 //Создает запрос и возвращает результат

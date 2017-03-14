@@ -16,7 +16,7 @@
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
         <Grid Grid.RowSpan="1">
-            <Border Background="Red" BorderBrush="Black" BorderThickness="0">
+            <Border Background="#FF6161" BorderBrush="Black" BorderThickness="0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="711*"/>
@@ -850,7 +850,7 @@
                                                                                                   
                                                 </WrapPanel>
                                             </ScrollViewer>
-                                            <Button Style="{DynamicResource ButtonStyle}" FontSize="20" Content="Редагувати" Margin="10 0 10 0"/>
+                                            <Button Name="EditOperatorInOperatorGrid" Style="{DynamicResource ButtonStyle}" FontSize="20" Content="Редагувати" Margin="10 0 10 0" Click="EditOperatorInOperatorGrid_Click" />
                                         </StackPanel>
 
                                     </Border>
