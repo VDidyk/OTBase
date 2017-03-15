@@ -21,6 +21,12 @@
         <Setter Property="BorderBrush" Value="#FC9C9C"/>
         <Setter Property="BorderThickness" Value="1"/>
     </Style>
+    <Style x:Key="TexBoxUnderlineStyle" TargetType="TextBox">
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="BorderBrush" Value="#FC9C9C"/>
+        <Setter Property="BorderThickness" Value="0 0 0 1"/>
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
     <Style x:Key="PasswordBoxStyle" TargetType="PasswordBox">
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Effect">

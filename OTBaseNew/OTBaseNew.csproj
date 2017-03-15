@@ -97,6 +97,9 @@
     <Compile Include="Users\AutorizationWindow.xaml.cs">
       <DependentUpon>AutorizationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Users\ChangeUserPassword.xaml.cs">
+      <DependentUpon>ChangeUserPassword.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Users\User.cs" />
     <Page Include="Clients\ShortClientShow.xaml">
       <SubType>Designer</SubType>
@@ -139,6 +142,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Users\AutorizationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Users\ChangeUserPassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

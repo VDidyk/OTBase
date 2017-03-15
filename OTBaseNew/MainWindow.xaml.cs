@@ -1357,6 +1357,32 @@ namespace OTBaseNew
             AddAllUsersInUsersGrid();
 
         }
+        void LoadShowUserGrid(Users.User user)
+        {
+            TurnGridNext(ShowUserInUserGrid);
+            FullNameInShowUserGrid.Content = user.FName + " " + user.LName + " " + user.MName;
+            IdInShowUserGrid.Text = user.Id.ToString();
+            LoginInShowUserGrid.Text = user.Login;
+            BDayInShowUserGrid.Text = user.Bday.ToShortDateString();
+            CreatedDateInShowUserGrid.Text = user.Created.ToShortDateString();
+            PositionInShowUserGrid.Text = user.Position.Name;
+            if(MainWindow.Logined.Id!=user.Id && !MainWindow.Logined.IsAdmin)
+            {
+                ChangePasswordLabelInShowUserGrid.Visibility = System.Windows.Visibility.Hidden;
+                ChangePasswordLabelInShowUserGrid.Height = 0;
+                ChangeNameLabelInShowUserGrid.Visibility = System.Windows.Visibility.Hidden;
+                ChangeNameLabelInShowUserGrid.Height = 0;
+                ChangePhotoLabelInShowUserGrid.Visibility = System.Windows.Visibility.Hidden;
+                ChangePhotoLabelInShowUserGrid.Height = 0;
+            }
+            if (!MainWindow.Logined.IsAdmin)
+            {
+                ChangePositionLabelInShowUserGrid.Visibility = System.Windows.Visibility.Hidden;
+                ChangePositionLabelInShowUserGrid.Height = 0;
+                DeleteLabelInShowUserGrid.Visibility = System.Windows.Visibility.Hidden;
+                DeleteLabelInShowUserGrid.Height = 0;
+            }
+        }
         void AddAllUsersInUsersGrid()
         {
             Border b = UsersPanelInUsers.Children[0] as Border;
@@ -1364,12 +1390,13 @@ namespace OTBaseNew
             UsersPanelInUsers.Children.Add(b);
             foreach (var i in Users.User.GetAllUsers)
             {
-                AddUserUsersGrid(i);
+                UsersPanelInUsers.Children.Add(AddUserUsersGrid(i));
             }
         }
-        void AddUserUsersGrid(Users.User user)
+        Border AddUserUsersGrid(Users.User user)
         {
             Border b = new Border();
+            b.MouseLeftButtonDown += UserBorder_MouseLeftButtonDown;
             b.Width = 250;
             b.Style = Resources["ClientBorderStyle"] as Style;
             StackPanel sp = new StackPanel();
@@ -1393,7 +1420,18 @@ namespace OTBaseNew
             sp.Children.Add(l);
             sp.Children.Add(im);
             sp.Children.Add(l2);
-            UsersPanelInUsers.Children.Add(b);
+            return b;
+        }
+
+        void UserBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Border b = sender as Border;
+            StackPanel sp = b.Child as StackPanel;
+            Label l = sp.Children[0] as Label;
+            int id = Convert.ToInt32(l.Content);
+            Users.User u = Users.User.FindById(id);
+            if(u!=null)
+            LoadShowUserGrid(u);
         }
         private void CreateNewUserInUsersGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -1403,6 +1441,12 @@ namespace OTBaseNew
             {
                 MainWindow.Message("У Вас немає прав доступу!");
             }
+        }
+        private void ChangePasswordLabelInShowUserGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Users.ChangeUserPassword up = new Users.ChangeUserPassword(Users.User.FindById(Convert.ToInt32(IdInShowUserGrid.Text)));
+            up.Owner = this;
+            up.ShowDialog();
         }
         #region Создать пользователя
         private void AddPhonesAddUser_Click(object sender, RoutedEventArgs e)
@@ -1955,6 +1999,8 @@ namespace OTBaseNew
             }
         }
         #endregion
+
+       
 
     }
 }

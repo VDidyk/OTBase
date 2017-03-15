@@ -733,7 +733,7 @@
                         <ScrollViewer>
                             <StackPanel>
                                 <Label BorderThickness="0 0 0 1" BorderBrush="Pink" Style="{DynamicResource LabelStyle}" Content="Користувачі" FontSize="50" HorizontalContentAlignment="Center"></Label>
-                                <Border Margin="10" Height="500" BorderBrush="Pink" BorderThickness="1">
+                                <Border Margin="10" Height="500">
                                     <ScrollViewer>
                                         <WrapPanel Name="UsersPanelInUsers">
                                             <Border Name="CreateNewUserInUsersGrid" Style="{DynamicResource ClientBorderStyle}" Width="250" Margin="10" ToolTip="Додати нового користувача" MouseLeftButtonDown="CreateNewUserInUsersGrid_MouseLeftButtonDown" >
@@ -810,9 +810,48 @@
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>
+                    <Grid Name="ShowUserInUserGrid" Visibility="Hidden">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="361*"/>
+                            <ColumnDefinition Width="1221*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Margin="0 10 0 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="319*"/>
+                                <RowDefinition Height="479*"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\User-Icon.png" Grid.Row="0"/>
+                            <StackPanel Grid.Row="1" Margin="30 10 0 0">
+                                <Label Name="ChangePasswordLabelInShowUserGrid" Style="{DynamicResource LabelStyle}" Cursor="Hand" FontSize="25" HorizontalContentAlignment="Left" Foreground="#FF436ABF" Content="Змінити пароль" MouseLeftButtonDown="ChangePasswordLabelInShowUserGrid_MouseLeftButtonDown"/>
+                                <Label Name="ChangeNameLabelInShowUserGrid" Style="{DynamicResource LabelStyle}" Cursor="Hand" FontSize="25" HorizontalContentAlignment="Left" Foreground="#FF436ABF" Content="Змінити ім'я"/>
+                                <Label Name="ChangePhotoLabelInShowUserGrid" Style="{DynamicResource LabelStyle}" Cursor="Hand" FontSize="25" HorizontalContentAlignment="Left" Foreground="#FF436ABF" Content="Змінити фото"/>
+                                <Label Name="ChangePositionLabelInShowUserGrid" Style="{DynamicResource LabelStyle}" Cursor="Hand" FontSize="25" HorizontalContentAlignment="Left" Foreground="#FF436ABF" Content="Змінити посаду"/>
+                                <Label Name="DeleteLabelInShowUserGrid" Style="{DynamicResource LabelStyle}" Cursor="Hand" FontSize="25" HorizontalContentAlignment="Left" Foreground="#FF436ABF" Content="Видалити"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Border BorderBrush="Pink" BorderThickness="1">
+                                <ScrollViewer>
+                                    <StackPanel>
+                                        <Label Name="FullNameInShowUserGrid" Content="Сорока Ольга Ігорівна" Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" FontSize="40"/>
+                                        <Label Content="ID:" Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Left" FontSize="15"/>
+                                        <TextBox Name="IdInShowUserGrid" Style="{DynamicResource TexBoxUnderlineStyle}" IsReadOnly="True" Margin="10 0 10 0" Text="O.Soroka"/>
+                                        <Label Content="Логін:" Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Left" FontSize="15"/>
+                                        <TextBox Name="LoginInShowUserGrid" Style="{DynamicResource TexBoxUnderlineStyle}" IsReadOnly="True" Margin="10 0 10 0" Text="O.Soroka"/>
+                                        <Label Content="Дата народження:" Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Left" FontSize="20"/>
+                                        <TextBox Name="BDayInShowUserGrid" Style="{DynamicResource TexBoxUnderlineStyle}" IsReadOnly="True" Margin="10 0 10 0"/>
+                                        <Label Content="Користувач створений:" Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Left" FontSize="20"/>
+                                        <TextBox Name="CreatedDateInShowUserGrid" Style="{DynamicResource TexBoxUnderlineStyle}" IsReadOnly="True" Margin="10 0 10 0"/>
+                                        <Label Content="Посада:" Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Left" FontSize="20"/>
+                                        <TextBox Name="PositionInShowUserGrid" Style="{DynamicResource TexBoxUnderlineStyle}" IsReadOnly="True" Margin="10 0 10 0"/>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </Border>
+                        </Grid>
+                    </Grid>
                     <!--Конец пользователям-->
                     <!--Операторы-->
-                    <Grid Name="OperatorsGrid" Visibility="Visible">
+                    <Grid Name="OperatorsGrid" Visibility="Hidden">
                         <ScrollViewer>
                             <StackPanel>
                                 <Label Style="{DynamicResource LabelStyle}" Content="Оператори" FontSize="30" HorizontalContentAlignment="Center"/>
@@ -847,7 +886,7 @@
                                             <TextBox IsReadOnly="True" Text="Turtess" FontSize="25" TextAlignment="Center" BorderThickness="0 0 0 1" BorderBrush="Gray" Margin="10 0 10 0"/>
                                             <ScrollViewer Height="250" VerticalScrollBarVisibility="Visible" >
                                                 <WrapPanel HorizontalAlignment="Center">
-                                                                                                  
+
                                                 </WrapPanel>
                                             </ScrollViewer>
                                             <Button Name="EditOperatorInOperatorGrid" Style="{DynamicResource ButtonStyle}" FontSize="20" Content="Редагувати" Margin="10 0 10 0" Click="EditOperatorInOperatorGrid_Click" />
@@ -857,7 +896,7 @@
                                 </Grid>
                                 <Grid>
                                     <WrapPanel Name="OperatorsPanelInOperatorGrid">
-                                       
+
                                     </WrapPanel>
                                 </Grid>
                             </StackPanel>
