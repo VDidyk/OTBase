@@ -1366,17 +1366,27 @@ namespace OTBaseNew
             BDayInShowUserGrid.Text = user.Bday.ToShortDateString();
             CreatedDateInShowUserGrid.Text = user.Created.ToShortDateString();
             PositionInShowUserGrid.Text = user.Position.Name;
+            ChangePasswordLabelInShowUserGrid.Visibility = System.Windows.Visibility.Visible;
+            ChangePasswordLabelInShowUserGrid.Height = double.NaN;
+            ChangePhotoLabelInShowUserGrid.Visibility = System.Windows.Visibility.Visible;
+            ChangePhotoLabelInShowUserGrid.Height = double.NaN;
+            ChangeNameLabelInShowUserGrid.Visibility = System.Windows.Visibility.Visible;
+            ChangeNameLabelInShowUserGrid.Height = double.NaN;
+            ChangePositionLabelInShowUserGrid.Visibility = System.Windows.Visibility.Visible;
+            ChangePositionLabelInShowUserGrid.Height = double.NaN;
+            DeleteLabelInShowUserGrid.Visibility = System.Windows.Visibility.Visible;
+            DeleteLabelInShowUserGrid.Height = double.NaN;
             if(MainWindow.Logined.Id!=user.Id && !MainWindow.Logined.IsAdmin)
             {
                 ChangePasswordLabelInShowUserGrid.Visibility = System.Windows.Visibility.Hidden;
                 ChangePasswordLabelInShowUserGrid.Height = 0;
-                ChangeNameLabelInShowUserGrid.Visibility = System.Windows.Visibility.Hidden;
-                ChangeNameLabelInShowUserGrid.Height = 0;
                 ChangePhotoLabelInShowUserGrid.Visibility = System.Windows.Visibility.Hidden;
                 ChangePhotoLabelInShowUserGrid.Height = 0;
             }
             if (!MainWindow.Logined.IsAdmin)
             {
+                ChangeNameLabelInShowUserGrid.Visibility = System.Windows.Visibility.Hidden;
+                ChangeNameLabelInShowUserGrid.Height = 0;
                 ChangePositionLabelInShowUserGrid.Visibility = System.Windows.Visibility.Hidden;
                 ChangePositionLabelInShowUserGrid.Height = 0;
                 DeleteLabelInShowUserGrid.Visibility = System.Windows.Visibility.Hidden;
@@ -1447,6 +1457,24 @@ namespace OTBaseNew
             Users.ChangeUserPassword up = new Users.ChangeUserPassword(Users.User.FindById(Convert.ToInt32(IdInShowUserGrid.Text)));
             up.Owner = this;
             up.ShowDialog();
+        }
+        private void ChangeNameLabelInShowUserGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Users.ChangeUserName up = new Users.ChangeUserName(Users.User.FindById(Convert.ToInt32(IdInShowUserGrid.Text)));
+            up.Owner = this;
+            up.ShowDialog();
+            LoadShowUserGrid(Users.User.FindById(Convert.ToInt32(IdInShowUserGrid.Text)));
+        }
+        private void CloseShowUserGridBtn_Click(object sender, RoutedEventArgs e)
+        {
+            TurnGridBack();
+        }
+        private void ChangePositionLabelInShowUserGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Users.ChangePosition up = new Users.ChangePosition(Users.User.FindById(Convert.ToInt32(IdInShowUserGrid.Text)));
+            up.Owner = this;
+            up.ShowDialog();
+            LoadShowUserGrid(Users.User.FindById(Convert.ToInt32(IdInShowUserGrid.Text)));
         }
         #region Создать пользователя
         private void AddPhonesAddUser_Click(object sender, RoutedEventArgs e)
@@ -1999,6 +2027,12 @@ namespace OTBaseNew
             }
         }
         #endregion
+
+        
+
+       
+
+        
 
        
 

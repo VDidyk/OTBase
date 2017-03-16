@@ -97,6 +97,15 @@
     <Compile Include="Users\AutorizationWindow.xaml.cs">
       <DependentUpon>AutorizationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Users\DeleteUser.xaml.cs">
+      <DependentUpon>DeleteUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Users\ChangePosition.xaml.cs">
+      <DependentUpon>ChangePosition.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Users\ChangeUserName.xaml.cs">
+      <DependentUpon>ChangeUserName.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Users\ChangeUserPassword.xaml.cs">
       <DependentUpon>ChangeUserPassword.xaml</DependentUpon>
     </Compile>
@@ -144,6 +153,18 @@
     <Page Include="Users\AutorizationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Users\DeleteUser.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Users\ChangePosition.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Users\ChangeUserName.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Users\ChangeUserPassword.xaml">
       <SubType>Designer</SubType>

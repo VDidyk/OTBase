@@ -42,3 +42,9 @@ D:\OTBase\OTBase\OTBaseNew\obj\Debug\Operators\EditOperatorWindow.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Operators\EditOperatorWindow.g.cs
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Users\ChangeUserPassword.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Users\ChangeUserPassword.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Users\ChangeUserName.baml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Users\ChangeUserName.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Users\ChangePosition.baml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Users\ChangePosition.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Users\DeleteUser.baml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Users\DeleteUser.g.cs

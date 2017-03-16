@@ -1,0 +1,20 @@
+﻿<Window x:Class="OTBaseNew.Users.DeleteUser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="EditOperatorWindow" Height="166" Width="762.9" WindowStyle="None" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" BorderThickness="1" BorderBrush="LightCoral">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..//MainDictionary.xaml" />
+                <ResourceDictionary Source="..//ScrollBar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <StackPanel VerticalAlignment="Center">
+            <Label Style="{DynamicResource LabelStyle}" Content="Ви впевнені?" FontSize="15"/>
+            <Button Name="btn" Style="{DynamicResource ButtonStyle}" Content="Так" Margin="10 10 10 0" Click="btn_Click"/>
+            <Button  Style="{DynamicResource ButtonStyle}" Content="Ні" Margin="10 10 10 0" Click="Button_Click" />
+        </StackPanel>
+    </Grid>
+</Window>
