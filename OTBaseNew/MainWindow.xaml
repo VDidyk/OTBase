@@ -728,6 +728,119 @@
 
                     </Grid>
                     <!--Конец клиетов-->
+                    <!--Заявки-->
+                    <Grid Name="RequestsGrid" Visibility="Hidden">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1255*"/>
+                            <ColumnDefinition Width="327*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0">
+                            <ScrollViewer>
+                                <StackPanel>
+                                    <Label Style="{DynamicResource LabelStyle}" Content="Заявки" HorizontalContentAlignment="Center" FontSize="40" BorderThickness="0 0 0 1" BorderBrush="Pink"/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Border>
+                        <Border Grid.Column="1" BorderThickness="1 0 0 0" BorderBrush="Pink">
+                            <StackPanel>
+                                <Label Style="{DynamicResource LabelStyle}" Content="Фільтр" HorizontalContentAlignment="Center" FontSize="40" BorderThickness="0 0 0 1" BorderBrush="Pink"/>
+                            </StackPanel>
+                        </Border>
+                        <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="Hand" ToolTip="Створити нову заявку">
+                            <Grid>
+                                <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\plus.png" Height="150" Margin="30"/>
+                            </Grid>
+                        </Label>
+                    </Grid>
+                    <Grid Name="RequestsCreateGrid" Visibility="Visible">
+                        <ScrollViewer>
+                            <StackPanel>
+                                <Label Content="Створити заявку" Style="{DynamicResource LabelStyle}" FontSize="40" HorizontalContentAlignment="Center"/>
+                                <Label Content="Туристи" Style="{DynamicResource LabelStyle}" FontSize="30" HorizontalContentAlignment="Center"/>
+                                <Border Margin="10">
+                                    <ScrollViewer>
+                                        <WrapPanel Height="200">
+
+                                        </WrapPanel>
+                                    </ScrollViewer>
+                                </Border>
+                                <Label Content="Напрямок" Style="{DynamicResource LabelStyle}" FontSize="30" HorizontalContentAlignment="Center"/>
+                                <Border BorderBrush="Pink" BorderThickness="1" Height="200">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="197*"/>
+                                            <ColumnDefinition Width="198*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border BorderBrush="Pink" BorderThickness="0 0 1 0" Grid.Column="0">
+                                            <StackPanel>
+                                                <Label Content="Звідки" Style="{DynamicResource LabelStyle}" FontSize="30" HorizontalContentAlignment="Center"/>
+                                                <Grid Margin="0 0 0 20">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="392*"/>
+                                                        <ColumnDefinition Width="395*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Content="Місто(Країна):" Style="{DynamicResource LabelStyle}" FontSize="25" HorizontalContentAlignment="Center"/>
+                                                    <TextBox Grid.Column="1" Style="{DynamicResource TexBoxUnderlineStyle}" Margin="10 0 10 0"/>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="392*"/>
+                                                        <ColumnDefinition Width="395*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Content="Дата виїзду:" Style="{DynamicResource LabelStyle}" FontSize="25" HorizontalContentAlignment="Center"/>
+                                                    <TextBox Grid.Column="1" Style="{DynamicResource TexBoxUnderlineStyle}" Margin="10 0 10 0"/>
+                                                </Grid>
+
+                                            </StackPanel>
+                                        </Border>
+                                        <Border  Grid.Column="1">
+                                            <StackPanel>
+                                                <Label Content="Куди:" Style="{DynamicResource LabelStyle}" FontSize="30" HorizontalContentAlignment="Center"/>
+                                                <Grid Margin="0 0 0 20">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="392*"/>
+                                                        <ColumnDefinition Width="395*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Content="Місто(Країна):" Style="{DynamicResource LabelStyle}" FontSize="25" HorizontalContentAlignment="Center"/>
+                                                    <TextBox Grid.Column="1" Style="{DynamicResource TexBoxUnderlineStyle}" Margin="10 0 10 0"/>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="392*"/>
+                                                        <ColumnDefinition Width="395*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Content="Дата повернення:" Style="{DynamicResource LabelStyle}" FontSize="25" HorizontalContentAlignment="Center"/>
+                                                    <TextBox Grid.Column="1" Style="{DynamicResource TexBoxUnderlineStyle}" Margin="10 0 10 0"/>
+
+                                                </Grid>
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border BorderBrush="Pink" BorderThickness="0 0 0 1" Height="120">
+                                    <StackPanel>
+                                        <Grid Margin="0 10 0 0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="197*"/>
+                                                <ColumnDefinition Width="198*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="Оператор" Style="{DynamicResource LabelStyle}" FontSize="25" HorizontalContentAlignment="Center"/>
+                                            <ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1"/>
+                                        </Grid>
+                                        <Grid Margin="0 10 0 0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="197*"/>
+                                                <ColumnDefinition Width="198*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="Готель" Style="{DynamicResource LabelStyle}" FontSize="25" HorizontalContentAlignment="Center"/>
+                                            <TextBox Style="{DynamicResource TexBoxStyle}" Grid.Column="1"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                    <!--Конец заявкам-->
                     <!--Пользователи-->
                     <Grid Name="UsersGrid" Visibility="Hidden">
                         <ScrollViewer>
