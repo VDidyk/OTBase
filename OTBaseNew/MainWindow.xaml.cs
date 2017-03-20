@@ -51,6 +51,7 @@ namespace OTBaseNew
                 NameLable.Content = Logined.FName;
                 LoadImages();
                 grids.Add(ClientsGrid);
+                LoadAddRequest();
             }
         }
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -1376,7 +1377,7 @@ namespace OTBaseNew
             ChangePositionLabelInShowUserGrid.Height = double.NaN;
             DeleteLabelInShowUserGrid.Visibility = System.Windows.Visibility.Visible;
             DeleteLabelInShowUserGrid.Height = double.NaN;
-            if(MainWindow.Logined.Id!=user.Id && !MainWindow.Logined.IsAdmin)
+            if (MainWindow.Logined.Id != user.Id && !MainWindow.Logined.IsAdmin)
             {
                 ChangePasswordLabelInShowUserGrid.Visibility = System.Windows.Visibility.Hidden;
                 ChangePasswordLabelInShowUserGrid.Height = 0;
@@ -1440,8 +1441,8 @@ namespace OTBaseNew
             Label l = sp.Children[0] as Label;
             int id = Convert.ToInt32(l.Content);
             Users.User u = Users.User.FindById(id);
-            if(u!=null)
-            LoadShowUserGrid(u);
+            if (u != null)
+                LoadShowUserGrid(u);
         }
         private void CreateNewUserInUsersGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -1638,7 +1639,7 @@ namespace OTBaseNew
             l.Foreground = Brushes.Gray;
             OperatorInfoInOperatorsGrid.Child = l;
             OperatorsPanelInOperatorGrid.Children.Clear();
-            foreach(var i in Operators.Operator.GetAllOperators)
+            foreach (var i in Operators.Operator.GetAllOperators)
             {
                 OperatorsPanelInOperatorGrid.Children.Add(CreateOperatorGrid(i));
             }
@@ -1685,7 +1686,7 @@ namespace OTBaseNew
             sp.Children.Add(id);
             Label l = new Label();
             l.Visibility = System.Windows.Visibility.Hidden;
-            l.Content = doc.Name+doc.Extension;
+            l.Content = doc.Name + doc.Extension;
             sp.Children.Add(l);
             Image im = new Image();
             im.Width = 100;
@@ -1718,16 +1719,16 @@ namespace OTBaseNew
             Border b = sender as Border;
             Label l = ((StackPanel)b.Child).Children[0] as Label;
             int id = Convert.ToInt32(l.Content);
-                using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                if (result == System.Windows.Forms.DialogResult.OK)
                 {
-                    System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-                    if(result==System.Windows.Forms.DialogResult.OK)
-                    {
-                        Documents.Document doc = Documents.Document.FindById(id);
-                        doc.WriteDocument(dialog.SelectedPath);
-                    }
+                    Documents.Document doc = Documents.Document.FindById(id);
+                    doc.WriteDocument(dialog.SelectedPath);
                 }
-            
+            }
+
         }
         private void CreateOperatorDocumentsInOperatorGrid_Click(object sender, RoutedEventArgs e)
         {
@@ -1901,12 +1902,12 @@ namespace OTBaseNew
             WrapPanel wp = new WrapPanel();
             sv.Content = wp;
             wp.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-            foreach(var i in oper.GetDocuments())
+            foreach (var i in oper.GetDocuments())
             {
                 Documents.Document d = i;
                 wp.Children.Add(CreateDocumentBorder(d));
             }
-           
+
             Button b1 = new Button();
             b1.Click += EditOperatorInOperatorGrid_Click;
             b1.Style = Resources["ButtonStyle"] as Style;
@@ -1937,7 +1938,7 @@ namespace OTBaseNew
         }
         private void EditOperatorInOperatorGrid_Click(object sender, RoutedEventArgs e)
         {
-            if(operatoridforedithim!=0)
+            if (operatoridforedithim != 0)
             {
                 Operators.Operator op = Operators.Operator.FindById(operatoridforedithim);
                 if (op != null)
@@ -1947,6 +1948,25 @@ namespace OTBaseNew
                     eo.ShowDialog();
                     LoadOperatorGrid();
                 }
+            }
+        }
+        #endregion
+        //-----------------
+        #region Сетка Заявки
+        void LoadAddRequest()
+        {
+            AddClientInAddRequestGridImage.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\add.png"));
+            OperatorsComboInCreateRequestGrid.Items.Clear();
+            var operators = Operators.Operator.GetAllOperators;
+            foreach (var i in operators)
+            {
+                OperatorsComboInCreateRequestGrid.Items.Add(i.Name);
+            }
+            ManagersgridinCreateRequestGrid.Children.Clear();
+            var users = Users.User.GetAllUsers;
+            foreach (var i in users)
+            {
+                ManagersgridinCreateRequestGrid.Children.Add(AddUserUsersGrid(i));
             }
         }
         #endregion
@@ -2028,13 +2048,13 @@ namespace OTBaseNew
         }
         #endregion
 
-        
 
-       
 
-        
 
-       
+
+
+
+
 
     }
 }

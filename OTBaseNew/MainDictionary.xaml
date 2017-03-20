@@ -249,4 +249,16 @@
         </Style.Triggers>
         
     </Style>
+    <Style x:Key="CheckboxStyle" TargetType="CheckBox">
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="BorderBrush" Value="#FC9C9C"/>
+        <Setter Property="BorderThickness" Value="0 0 0 1"/>
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="LayoutTransform">
+            <Setter.Value>
+                <ScaleTransform ScaleX="2" ScaleY="2"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

@@ -759,8 +759,10 @@
                                 <Label Content="Туристи" Style="{DynamicResource LabelStyle}" FontSize="30" HorizontalContentAlignment="Center"/>
                                 <Border Margin="10">
                                     <ScrollViewer>
-                                        <WrapPanel Height="200">
-
+                                        <WrapPanel Height="230">
+                                            <Border Name="AddClientInAddRequestGrid" Style="{DynamicResource ClientBorderStyle}" Width="250" Margin="10" ToolTip="Додати нового користувача" MouseLeftButtonDown="CreateNewUserInUsersGrid_MouseLeftButtonDown" >
+                                                <Image Name="AddClientInAddRequestGridImage" Height="100" Margin="0 50 0 50"/>
+                                            </Border>
                                         </WrapPanel>
                                     </ScrollViewer>
                                 </Border>
@@ -825,7 +827,7 @@
                                                 <ColumnDefinition Width="198*"/>
                                             </Grid.ColumnDefinitions>
                                             <Label Content="Оператор" Style="{DynamicResource LabelStyle}" FontSize="25" HorizontalContentAlignment="Center"/>
-                                            <ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Column="1"/>
+                                            <ComboBox Name="OperatorsComboInCreateRequestGrid" Style="{DynamicResource ComboBoxStyle}" Grid.Column="1"/>
                                         </Grid>
                                         <Grid Margin="0 10 0 0">
                                             <Grid.ColumnDefinitions>
@@ -835,7 +837,31 @@
                                             <Label Content="Готель" Style="{DynamicResource LabelStyle}" FontSize="25" HorizontalContentAlignment="Center"/>
                                             <TextBox Style="{DynamicResource TexBoxStyle}" Grid.Column="1"/>
                                         </Grid>
+                                       
                                     </StackPanel>
+                                </Border>
+                                <Border>
+                                    <Grid>
+                                        <StackPanel>
+                                            <Label Style="{DynamicResource LabelStyle}" Content="Додаткова інформація" FontSize="25"/>
+                                            <CheckBox Content="Віза важлива" Style="{DynamicResource CheckboxStyle}" />
+                                            <Label Style="{DynamicResource LabelStyle}" Content="Ціна туру:"/>
+                                            <TextBox Style="{DynamicResource TexBoxStyle}"/>
+                                            <Label Style="{DynamicResource LabelStyle}" Content="Ціна клієнта:"/>
+                                            <TextBox Style="{DynamicResource TexBoxStyle}"/>
+                                            <CheckBox Content="Переглядається" Style="{DynamicResource CheckboxStyle}" />
+                                            <Label Style="{DynamicResource LabelStyle}" Content="Номер заявки:"/>
+                                            <TextBox Style="{DynamicResource TexBoxStyle}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                                <Label Content="Ведучий менеджер" Style="{DynamicResource LabelStyle}" FontSize="30" HorizontalContentAlignment="Center"/>
+                                <Border Margin="10">
+                                    <ScrollViewer>
+                                        <WrapPanel Name="ManagersgridinCreateRequestGrid" Height="300">
+
+                                        </WrapPanel>
+                                    </ScrollViewer>
                                 </Border>
                             </StackPanel>
                         </ScrollViewer>
