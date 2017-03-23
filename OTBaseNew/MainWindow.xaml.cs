@@ -86,6 +86,7 @@ namespace OTBaseNew
         }
         //-----------------        
         #region Сетка Клиенты
+        bool selectclient = false;
         #region Сетка добавить клиента
         void LoadGridAddClient()
         {
@@ -427,7 +428,19 @@ namespace OTBaseNew
             }
             for (int i = 0; i < clients.Count; i++)
             {
+
                 Border b = CreateClientBorder(clients[i]);
+                if (selectclient)
+                {
+                    for (int j = 0; j < selectedclientsincreaterequest.Count; j++)
+                    {
+                        if (clients[i].Id == selectedclientsincreaterequest[j].Id)
+                        {
+                            b.Style = (Style)Resources["ClientSelectedBorderStyle"];
+                            break;
+                        }
+                    }
+                }
                 ClientsPanelFindClient.Children.Add(b);
             }
         }
@@ -441,6 +454,10 @@ namespace OTBaseNew
         private void CancelFindClient_Click(object sender, RoutedEventArgs e)
         {
             ClientsPanelFindClient.Children.Clear();
+            if (selectclient)
+            {
+                selectclient = false;
+            }
             TurnGridBack();
         }
         #endregion
@@ -1324,13 +1341,29 @@ namespace OTBaseNew
         {
             Border b = new Border();
             b.Width = 300;
-            b.MouseLeftButtonDown += LookClient;
+            if (!selectclient)
+            {
+                b.MouseLeftButtonDown += LookClient;
+            }
+            if (selectclient)
+            {
+                b.MouseLeftButtonDown += selectclienttolist_MouseLeftButtonDown;
+            }
             b.Style = Resources["ClientBorderStyle"] as Style;
             StackPanel sp = new StackPanel();
             b.Child = sp;
             Label lid = new Label();
+            lid.Height = 0;
             lid.Content = client.Id.ToString();
             lid.Visibility = System.Windows.Visibility.Hidden;
+            //----------
+            Button but = new Button();
+            but.Height = 0;
+            but.Width = double.NaN;
+            but.Margin = new Thickness(10);
+            but.Content = "X";
+            but.Visibility = System.Windows.Visibility.Hidden;
+            //----------
             Label l = new Label();
             l.Style = Resources["LabelStyle"] as Style;
             l.Content = client.FName + " " + client.LName;
@@ -1344,6 +1377,7 @@ namespace OTBaseNew
             l2.FontWeight = FontWeights.Normal;
             l2.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
             sp.Children.Add(lid);
+            sp.Children.Add(but);
             sp.Children.Add(l);
             sp.Children.Add(im);
             sp.Children.Add(l2);
@@ -1953,9 +1987,16 @@ namespace OTBaseNew
         #endregion
         //-----------------
         #region Сетка Заявки
+        Border userinrequestadd;
+        List<Clients.Client> selectedclientsincreaterequest = new List<Clients.Client>();
+        void LoadShowRequests()
+        {
+
+        }
         void LoadAddRequest()
         {
             AddClientInAddRequestGridImage.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\add.png"));
+            selectedclientsincreaterequest = new List<Clients.Client>();
             OperatorsComboInCreateRequestGrid.Items.Clear();
             var operators = Operators.Operator.GetAllOperators;
             foreach (var i in operators)
@@ -1966,8 +2007,109 @@ namespace OTBaseNew
             var users = Users.User.GetAllUsers;
             foreach (var i in users)
             {
-                ManagersgridinCreateRequestGrid.Children.Add(AddUserUsersGrid(i));
+                Border grid = AddUserUsersGrid(i);
+                grid.MouseLeftButtonDown -= UserBorder_MouseLeftButtonDown;
+                grid.MouseLeftButtonDown += gridinaddrequest_MouseLeftButtonDown;
+                ManagersgridinCreateRequestGrid.Children.Add(grid);
             }
+        }
+
+        void selectclienttolist_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Border grid = sender as Border;
+            if (grid.Style == (Style)Resources["ClientBorderStyle"])
+            {
+                grid.Style = (Style)Resources["ClientSelectedBorderStyle"];
+                Clients.Client client = Clients.Client.FindById(Convert.ToInt32(((Label)((StackPanel)((Border)sender).Child).Children[0]).Content));
+                if (client != null)
+                    selectedclientsincreaterequest.Add(client);
+                Border b = ClientsInCreateRequestGrid.Children[0] as Border;
+                ClientsInCreateRequestGrid.Children.Clear();
+                ClientsInCreateRequestGrid.Children.Add(b);
+                selectclient = false;
+                foreach (var i in selectedclientsincreaterequest)
+                {
+                    //<Button HorizontalAlignment="Right" VerticalAlignment="Top" Height="30" Width="30" Margin="10"/>
+
+                    Border bor = CreateClientBorder(i);
+                    StackPanel sp = ((StackPanel)bor.Child);
+                    Button but = ((Button)sp.Children[1]);
+                    but.Visibility = System.Windows.Visibility.Visible;
+                    but.Height = 30;
+                    but.Click += clientclosebtninrequestcreategrid_Click;
+                    but.Style = (Style)Resources["ButtonStyle"];
+                    ClientsInCreateRequestGrid.Children.Add(bor);
+                }
+                selectclient = true;
+            }
+            else
+            {
+                grid.Style = (Style)Resources["ClientBorderStyle"];
+                Clients.Client client = Clients.Client.FindById(Convert.ToInt32(((Label)((StackPanel)((Border)sender).Child).Children[0]).Content));
+                for (int i = 0; i < selectedclientsincreaterequest.Count; i++)
+                {
+                    if (selectedclientsincreaterequest[i].Id == client.Id)
+                    {
+                        selectedclientsincreaterequest.RemoveAt(i);
+                    }
+                }
+                Border b = ClientsInCreateRequestGrid.Children[0] as Border;
+                ClientsInCreateRequestGrid.Children.Clear();
+                ClientsInCreateRequestGrid.Children.Add(b);
+                selectclient = false;
+                foreach (var i in selectedclientsincreaterequest)
+                {
+                    ClientsInCreateRequestGrid.Children.Add(CreateClientBorder(i));
+                }
+                selectclient = true;
+            }
+        }
+
+        void clientclosebtninrequestcreategrid_Click(object sender, RoutedEventArgs e)
+        {
+            StackPanel sp = (StackPanel)((Button)sender).Parent;
+            int id = Convert.ToInt32(((Label)sp.Children[0]).Content);
+            for (int i = 0; i < selectedclientsincreaterequest.Count; i++)
+            {
+                if (selectedclientsincreaterequest[i].Id == id)
+                {
+                    selectedclientsincreaterequest.RemoveAt(i);
+                }
+            }
+            Border b = ClientsInCreateRequestGrid.Children[0] as Border;
+            ClientsInCreateRequestGrid.Children.Clear();
+            ClientsInCreateRequestGrid.Children.Add(b);
+            foreach (var i in selectedclientsincreaterequest)
+            {
+                Border bor = CreateClientBorder(i);
+                StackPanel sp1 = ((StackPanel)bor.Child);
+                Button but = ((Button)sp1.Children[1]);
+                but.Visibility = System.Windows.Visibility.Visible;
+                but.Height = 30;
+                but.Click += clientclosebtninrequestcreategrid_Click;
+                but.Style = (Style)Resources["ButtonStyle"];
+                ClientsInCreateRequestGrid.Children.Add(bor);
+            }
+        }
+        void gridinaddrequest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (userinrequestadd != null)
+            {
+                userinrequestadd.Style = Resources["ClientBorderStyle"] as Style;
+            }
+            Border b = (Border)sender;
+            b.Style = Resources["ClientSelectedBorderStyle"] as Style;
+            userinrequestadd = b;
+        }
+        private void AddClientInAddRequestGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            selectclient = true;
+            TurnGridNext(FindClient);
+        }
+        private void CreateRequestLabelInShowRequests_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LoadAddRequest();
+            TurnGridNext(RequestsCreateGrid);
         }
         #endregion
         //-----------------
@@ -1995,6 +2137,7 @@ namespace OTBaseNew
             grids.Add(grid);
             grid.Visibility = System.Windows.Visibility.Visible;
         }
+
         #endregion
         //-----------------
         #region События при нажатии на кнопки меню
@@ -2015,6 +2158,12 @@ namespace OTBaseNew
         {
             LoadOperatorGrid();
             TurnGridMain(OperatorsGrid);
+            CleareAllCheckes();
+        }
+        private void RequestsButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LoadShowRequests();
+            TurnGridMain(RequestsGrid);
             CleareAllCheckes();
         }
         #endregion
@@ -2047,6 +2196,12 @@ namespace OTBaseNew
             }
         }
         #endregion
+
+
+
+
+
+
 
 
 

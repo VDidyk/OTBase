@@ -64,7 +64,7 @@
                                 </StackPanel>
                             </Grid>
                         </Border>
-                        <Border Style="{DynamicResource MenuBorderStyle}" Name="RequestsButton" >
+                        <Border Style="{DynamicResource MenuBorderStyle}" Name="RequestsButton" MouseLeftButtonDown="RequestsButton_MouseLeftButtonDown" >
                             <Grid>
                                 <StackPanel>
                                     <Image Name="RequestsMenuImages"  Margin="10,0" Height="188"/>
@@ -746,21 +746,21 @@
                                 <Label Style="{DynamicResource LabelStyle}" Content="Фільтр" HorizontalContentAlignment="Center" FontSize="40" BorderThickness="0 0 0 1" BorderBrush="Pink"/>
                             </StackPanel>
                         </Border>
-                        <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="Hand" ToolTip="Створити нову заявку">
+                        <Label Name="CreateRequestLabelInShowRequests" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="Hand" ToolTip="Створити нову заявку" MouseLeftButtonDown="CreateRequestLabelInShowRequests_MouseLeftButtonDown">
                             <Grid>
                                 <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\plus.png" Height="150" Margin="30"/>
                             </Grid>
                         </Label>
                     </Grid>
-                    <Grid Name="RequestsCreateGrid" Visibility="Visible">
+                    <Grid Name="RequestsCreateGrid" Visibility="Hidden">
                         <ScrollViewer>
                             <StackPanel>
                                 <Label Content="Створити заявку" Style="{DynamicResource LabelStyle}" FontSize="40" HorizontalContentAlignment="Center"/>
                                 <Label Content="Туристи" Style="{DynamicResource LabelStyle}" FontSize="30" HorizontalContentAlignment="Center"/>
                                 <Border Margin="10">
-                                    <ScrollViewer>
-                                        <WrapPanel Height="230">
-                                            <Border Name="AddClientInAddRequestGrid" Style="{DynamicResource ClientBorderStyle}" Width="250" Margin="10" ToolTip="Додати нового користувача" MouseLeftButtonDown="CreateNewUserInUsersGrid_MouseLeftButtonDown" >
+                                    <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                        <WrapPanel Name="ClientsInCreateRequestGrid" Height="300">
+                                            <Border Name="AddClientInAddRequestGrid" Style="{DynamicResource ClientBorderStyle}" Width="250" Margin="10" ToolTip="Додати нового користувача" MouseLeftButtonDown="AddClientInAddRequestGrid_MouseLeftButtonDown" >
                                                 <Image Name="AddClientInAddRequestGridImage" Height="100" Margin="0 50 0 50"/>
                                             </Border>
                                         </WrapPanel>
