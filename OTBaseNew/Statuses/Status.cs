@@ -16,6 +16,9 @@ namespace OTBaseNew.Statuses
         /// Имя
         /// </summary>
         public string Name { set; get; }
+
+        public bool main { set; get; }
+
         /// <summary>
         /// Поиск статуса по ИД
         /// </summary>
@@ -24,7 +27,7 @@ namespace OTBaseNew.Statuses
         public static Status FindById(int id)
         {
             //Запрос
-            string query = string.Format("SELECT * FROM `Positions` WHERE id={0}", id);
+            string query = string.Format("SELECT * FROM `Statuses` WHERE id={0}", id);
             //База данных
             MySqlWorker.DataBase db = SQL.SqlConnect.db;
             //Создает запрос и возвращает результат
@@ -66,7 +69,7 @@ namespace OTBaseNew.Statuses
         public static Status FindByName(string name)
         {
             //Запрос
-            string query = string.Format("SELECT * FROM `Positions` WHERE name='{0}'", name);
+            string query = string.Format("SELECT * FROM `Statuses` WHERE name='{0}'", name);
             //База данных
             MySqlWorker.DataBase db = SQL.SqlConnect.db;
             //Создает запрос и возвращает результат
@@ -85,5 +88,20 @@ namespace OTBaseNew.Statuses
             }
         }
 
+        public static Status GetMainStatus()
+        {
+            string query = string.Format("SELECT * FROM `Statuses` WHERE main=1");
+            //База данных
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
+            var list = db.MakeRequest<Status>(query);
+            if(list.Count>0)
+            {
+                return list[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

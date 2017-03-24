@@ -1995,6 +1995,21 @@ namespace OTBaseNew
         }
         void LoadAddRequest()
         {
+            Border bor = ClientsInCreateRequestGrid.Children[0] as Border;
+            ClientsInCreateRequestGrid.Children.Clear();
+            ClientsInCreateRequestGrid.Children.Add(bor);
+            DurationLocationInAddRequest.Text = "";
+            DurationDateInAddRequest.Text = "";
+            FromDateInAddRequest.Text = "";
+            FromLocationInAddRequest.Text = "";
+            OperatorsComboInCreateRequestGrid.SelectedIndex = -1;
+            HotelInAddRequest.Text = "";
+            VisaIsImporatnInAddRequest.IsChecked = false;
+            PriceInAddRequest.Text = "";
+            ClientPriceInAddRequest.Text = "";
+            LoockedInAddRequest.IsChecked = false;
+            RequestNumberInAddRequest.Text = "";
+
             AddClientInAddRequestGridImage.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\add.png"));
             selectedclientsincreaterequest = new List<Clients.Client>();
             OperatorsComboInCreateRequestGrid.Items.Clear();
@@ -2111,6 +2126,104 @@ namespace OTBaseNew
             LoadAddRequest();
             TurnGridNext(RequestsCreateGrid);
         }
+        private void CancelRequestInAddRequest_Click(object sender, RoutedEventArgs e)
+        {
+            TurnGridBack();
+        }
+        private void SaveRequestInAddRequest_Click(object sender, RoutedEventArgs e)
+        {
+            DateTime? datewhengoin = null;
+            DateTime? datewhenсomein = null;
+            if (FromDateInAddRequest.Text != "")
+            {
+                datewhengoin = Other.Utility.ConvertStringToDateTime(FromDateInAddRequest.Text);
+                if (datewhengoin == null)
+                {
+                    MainWindow.Message("Не вірно введена дата вильоту.(дд.мм.рррр)");
+                    return;
+                }
+            }
+            if (DurationDateInAddRequest.Text != "")
+            {
+                datewhenсomein = Other.Utility.ConvertStringToDateTime(DurationDateInAddRequest.Text);
+                if (datewhenсomein == null)
+                {
+                    MainWindow.Message("Не вірно введена дата вильоту.(дд.мм.рррр)");
+                    return;
+                }
+            }
+            Requests.Request req = new Requests.Request();
+            if (datewhengoin != null)
+                req.Date_to_go = Convert.ToDateTime(datewhengoin.Value.ToShortDateString());
+            if (datewhenсomein != null)
+                req.Date_to_arrive = Convert.ToDateTime(datewhenсomein.Value.ToShortDateString());
+
+            req.From_where_to_fly = FromLocationInAddRequest.Text;
+            req.Where_to_fly = DurationLocationInAddRequest.Text;
+            if(OperatorsComboInCreateRequestGrid.SelectedIndex!=-1)
+            {
+                Operators.Operator oper = Operators.Operator.FindByName(OperatorsComboInCreateRequestGrid.SelectedItem.ToString());
+                if (oper != null) ;
+                req.Operator_id = oper.Id;
+            }
+            req.Hotel = HotelInAddRequest.Text;
+            if(VisaIsImporatnInAddRequest.IsChecked==true)
+                req.Visa_is_important = true;
+            else
+                req.Visa_is_important = false;
+            if (PriceInAddRequest.Text!="")
+            try
+            {
+                req.Price_of_tour = Convert.ToDouble(PriceInAddRequest.Text);
+            }
+            catch
+            {
+                MainWindow.Message("Не вірний формат суми.(грн.коп)");
+                return;
+            }
+            if (ClientPriceInAddRequest.Text != "")
+            try
+            {
+                req.Price_of_tour = Convert.ToDouble(ClientPriceInAddRequest.Text);
+            }
+            catch
+            {
+                MainWindow.Message("Не вірний формат суми клієнта.(грн.коп)");
+                return;
+            }
+            if (LoockedInAddRequest.IsChecked == true)
+                req.Look = true;
+            else
+                req.Look = false;
+            req.Serial_number = RequestNumberInAddRequest.Text;
+
+            if(userinrequestadd!=null)
+            {
+                int id = Convert.ToInt32(((Label)((StackPanel)userinrequestadd.Child).Children[0]).Content);
+                req.working_user_id = id;
+            }
+            else
+            {
+                req.working_user_id = MainWindow.Logined.Id;
+            }
+            req.Status_id = Statuses.Status.GetMainStatus().Id;
+            req.Created_user_id = MainWindow.Logined.Id;
+            foreach(var i in selectedclientsincreaterequest)
+            {
+                req.Clients_Ides.Add(i.Id);
+            }
+            req.notice = NoticeInAddRequest.Text;
+            req.Save();
+            TurnGridBack();
+        }
+        private void RequestsGrid_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Grid grid = sender as Grid;
+            if (grid.Visibility == System.Windows.Visibility.Visible)
+            {
+                LoadShowRequests();
+            }
+        }
         #endregion
         //-----------------
         #region Навигация
@@ -2196,20 +2309,5 @@ namespace OTBaseNew
             }
         }
         #endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

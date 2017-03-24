@@ -9,6 +9,7 @@ namespace OTBaseNew.Requests
     public class Request
     {
         public int Id { set; get; }
+        public string notice { set; get; }
         /// <summary>
         /// Получен ли пасспорт
         /// </summary>
@@ -99,10 +100,10 @@ namespace OTBaseNew.Requests
             if (list.Count != 0)
             {
                 //Строка-запрос
-                query = string.Format("UPDATE Request SET Get_passport='{0}',Visa_is_important='{1}',Get_visa='{2}',Price_of_tour='{3}',Price_of_client='{4}',Paid_sum='{5}',Where_to_fly='{6}',From_where_to_fly='{7}',Date_to_go='{8}',Date_to_arrive='{9}',Hotel='{10}',Created='{11}',Operator_id='{12}',Created_user_id='{13}',Look='{14}',Status_id='{15}',Serial_number='{16}',working_user_id='{17}' WHERE id={18}",
+                query = string.Format("UPDATE Request SET Get_passport='{0}',Visa_is_important='{1}',Get_visa='{2}',Price_of_tour='{3}',Price_of_client='{4}',Paid_sum='{5}',Where_to_fly='{6}',From_where_to_fly='{7}',Date_to_go='{8}',Date_to_arrive='{9}',Hotel='{10}',Created='{11}',Operator_id='{12}',Created_user_id='{13}',Look='{14}',Status_id='{15}',Serial_number='{16}',working_user_id='{17}',notice={18} WHERE id={19}",
                     MySqlWorker.DataBase.ConvertBoolToInt(Get_passport), MySqlWorker.DataBase.ConvertBoolToInt(Visa_is_important), MySqlWorker.DataBase.ConvertBoolToInt(Get_visa), Price_of_tour.ToString(), Price_of_client.ToString(), Paid_sum.ToString(), Where_to_fly, From_where_to_fly, MySqlWorker.DataBase.ConvertDateToMySqlString(Date_to_go), MySqlWorker.DataBase.ConvertDateToMySqlString(Date_to_arrive),
                     Hotel, MySqlWorker.DataBase.ConvertDateToMySqlString(Created),
-                    Operator_id.ToString(), Created_user_id.ToString(), MySqlWorker.DataBase.ConvertBoolToInt(Look), Status_id.ToString(), Serial_number, working_user_id, Id);
+                    Operator_id.ToString(), Created_user_id.ToString(), MySqlWorker.DataBase.ConvertBoolToInt(Look), Status_id.ToString(), Serial_number, working_user_id, notice,Id);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
                 #region Работа с клиентами
@@ -158,7 +159,7 @@ namespace OTBaseNew.Requests
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Request`(`get_passport`, `get_visa`, `visa_is_important`, `price_of_tour`, `price_of_client`, `paid_sum`, `where_to_fly`, `from_where_to_fly`, `date_to_go`, `date_to_arrive`, `hotel`, `created`, `operator_id`, `created_user_id`, `look`, `Status_id`, `serial_number`,`working_user_id`) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}','{16}','{17}'); SELECT * FROM `Request` order by id desc LIMIT 0 , 1;", MySqlWorker.DataBase.ConvertBoolToInt(Get_passport), MySqlWorker.DataBase.ConvertBoolToInt(Get_visa), MySqlWorker.DataBase.ConvertBoolToInt(Visa_is_important), Price_of_tour.ToString(), Price_of_client.ToString(), Paid_sum.ToString(), Where_to_fly, From_where_to_fly, MySqlWorker.DataBase.ConvertDateToMySqlString(Date_to_go), MySqlWorker.DataBase.ConvertDateToMySqlString(Date_to_arrive), Hotel, MySqlWorker.DataBase.ConvertDateToMySqlString(Created), Operator_id.ToString(), Created_user_id.ToString(), MySqlWorker.DataBase.ConvertBoolToInt(Look), Status_id.ToString(), Serial_number, working_user_id);
+                query = string.Format("INSERT INTO `Request`(`get_passport`, `get_visa`, `visa_is_important`, `price_of_tour`, `price_of_client`, `paid_sum`, `where_to_fly`, `from_where_to_fly`, `date_to_go`, `date_to_arrive`, `hotel`, `created`, `operator_id`, `created_user_id`, `look`, `Status_id`, `serial_number`,`working_user_id`) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}','{16}','{17}',{18}); SELECT * FROM `Request` order by id desc LIMIT 0 , 1;", MySqlWorker.DataBase.ConvertBoolToInt(Get_passport), MySqlWorker.DataBase.ConvertBoolToInt(Get_visa), MySqlWorker.DataBase.ConvertBoolToInt(Visa_is_important), Price_of_tour.ToString(), Price_of_client.ToString(), Paid_sum.ToString(), Where_to_fly, From_where_to_fly, MySqlWorker.DataBase.ConvertDateToMySqlString(Date_to_go), MySqlWorker.DataBase.ConvertDateToMySqlString(Date_to_arrive), Hotel, MySqlWorker.DataBase.ConvertDateToMySqlString(Created), Operator_id.ToString(), Created_user_id.ToString(), MySqlWorker.DataBase.ConvertBoolToInt(Look), Status_id.ToString(), Serial_number, working_user_id,notice);
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id
