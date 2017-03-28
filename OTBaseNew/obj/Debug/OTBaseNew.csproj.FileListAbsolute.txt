@@ -48,3 +48,7 @@ D:\OTBase\OTBase\OTBaseNew\obj\Debug\Users\ChangePosition.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Users\ChangePosition.g.cs
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Users\DeleteUser.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Users\DeleteUser.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\Loading.baml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\Loading.g.cs
+D:\OTBase\OTBase\OTBaseNew\bin\Debug\WpfAnimatedGif.dll
+D:\OTBase\OTBase\OTBaseNew\bin\Debug\WpfAnimatedGif.xml

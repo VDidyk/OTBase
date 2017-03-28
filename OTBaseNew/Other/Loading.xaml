@@ -1,0 +1,12 @@
+﻿<Window x:Class="OTBaseNew.Other.Loading"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        Title="Loading" Height="300" Width="300" Topmost="True" WindowStyle="None" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Window.Background>
+        <SolidColorBrush Color="White"/>
+    </Window.Background>
+    <Grid>
+        <Image Name="img"/>
+    </Grid>
+</Window>

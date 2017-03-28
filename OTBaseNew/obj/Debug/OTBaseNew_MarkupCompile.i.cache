@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\OTBase\OTBase\OTBaseNew\App.xaml
-13-992211039
+14-1648222334
 
-37328204519
-16-1211717399
-Clients\ShortClientShow.xaml;MainDictionary.xaml;MainWindow.xaml;Operators\EditOperatorWindow.xaml;Other\AddList.xaml;Other\Alarm.xaml;Other\YesOrNo.xaml;ScrollBar.xaml;Users\AutorizationWindow.xaml;Users\DeleteUser.xaml;Users\ChangePosition.xaml;Users\ChangeUserName.xaml;Users\ChangeUserPassword.xaml;
+38497223496
+1792019460
+Clients\ShortClientShow.xaml;MainDictionary.xaml;MainWindow.xaml;Operators\EditOperatorWindow.xaml;Other\AddList.xaml;Other\Alarm.xaml;Other\Loading.xaml;Other\YesOrNo.xaml;ScrollBar.xaml;Users\AutorizationWindow.xaml;Users\DeleteUser.xaml;Users\ChangePosition.xaml;Users\ChangeUserName.xaml;Users\ChangeUserPassword.xaml;
 
 False
 

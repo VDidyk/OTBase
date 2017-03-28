@@ -729,23 +729,15 @@
                     </Grid>
                     <!--Конец клиетов-->
                     <!--Заявки-->
-                    <Grid Name="RequestsGrid" Visibility="Visible" IsVisibleChanged="RequestsGrid_IsVisibleChanged">
+                    <Grid Name="RequestsGrid" Visibility="Hidden" IsVisibleChanged="RequestsGrid_IsVisibleChanged">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1255*"/>
                             <ColumnDefinition Width="327*"/>
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="0">
                             <ScrollViewer>
-                                <StackPanel>
+                                <StackPanel Name="RequestsStackInShowRequestsPanel">
                                     <Label Style="{DynamicResource LabelStyle}" Content="Заявки" HorizontalContentAlignment="Center" FontSize="40" BorderThickness="0 0 0 1" BorderBrush="Pink" Margin="0 0 0 10"/>
-                                    <Border BorderThickness="2" BorderBrush="#FC9C9C" Margin="10 0 10 0">
-                                        <StackPanel Height="150">
-                                            <Grid>
-                                                <Label Content="19.02.17" FontSize="35"/>
-                                                <Label HorizontalAlignment="Right" Content="Львів -> Хургада" FontSize="35"/>
-                                            </Grid>
-                                        </StackPanel>
-                                    </Border>
                                 </StackPanel>
                             </ScrollViewer>
                         </Border>

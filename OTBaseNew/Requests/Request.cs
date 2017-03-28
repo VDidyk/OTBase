@@ -326,6 +326,12 @@ namespace OTBaseNew.Requests
                 return list;
             }
         }
-
+        public static List<Request> GetAllRequests(int number)
+        {
+            string request = string.Format("SELECT * FROM Request LIMIT {0},{1}", number, number + 20);
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
+            var list = db.MakeRequest<Request>(request);
+            return list;
+        }
     }
 }

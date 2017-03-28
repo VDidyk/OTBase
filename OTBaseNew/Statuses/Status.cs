@@ -18,6 +18,8 @@ namespace OTBaseNew.Statuses
         public string Name { set; get; }
 
         public bool main { set; get; }
+        public string forground { set; get; }
+        public string background { set; get; }
 
         /// <summary>
         /// Поиск статуса по ИД

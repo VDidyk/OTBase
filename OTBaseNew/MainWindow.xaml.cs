@@ -519,6 +519,7 @@ namespace OTBaseNew
         #region Сетка показать клиента
         void LoadShowClient(Clients.Client client)
         {
+            Window l = Other.Loading.Load(this);
             if (client == null)
             {
                 TurnGridBack();
@@ -675,6 +676,7 @@ namespace OTBaseNew
                 t.Text = i.Tour + ": " + i.discount;
                 DicsountsWrapPanelShowClient.Children.Add(t);
             }
+            l.Close();
         }
         private void CloseShowClient_Click(object sender, RoutedEventArgs e)
         {
@@ -1991,7 +1993,14 @@ namespace OTBaseNew
         List<Clients.Client> selectedclientsincreaterequest = new List<Clients.Client>();
         void LoadShowRequests()
         {
-
+            Window l = Other.Loading.Load(this);
+            RequestsStackInShowRequestsPanel.Children.Clear();
+            var tmp=Requests.Request.GetAllRequests(0);
+            foreach(var i in tmp)
+            {
+                RequestsStackInShowRequestsPanel.Children.Add(CreateRequestBorder(i));
+            }
+            l.Close();
         }
         void LoadAddRequest()
         {
@@ -2028,7 +2037,6 @@ namespace OTBaseNew
                 ManagersgridinCreateRequestGrid.Children.Add(grid);
             }
         }
-
         void selectclienttolist_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Border grid = sender as Border;
@@ -2079,7 +2087,6 @@ namespace OTBaseNew
                 selectclient = true;
             }
         }
-
         void clientclosebtninrequestcreategrid_Click(object sender, RoutedEventArgs e)
         {
             StackPanel sp = (StackPanel)((Button)sender).Parent;
@@ -2224,6 +2231,84 @@ namespace OTBaseNew
                 LoadShowRequests();
             }
         }
+
+        Border CreateRequestBorder(Requests.Request requset)
+        {
+            Border border = new Border();
+            border.Style = Resources["RequestBorderStyle"] as Style;
+            SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(requset.GetStatus.background));
+            border.Background = brush;
+            StackPanel sp = new StackPanel();
+            sp.Height = 180;
+            border.Child = sp;
+
+            Grid grid = new Grid();
+            sp.Children.Add(grid);
+            Label lab = new Label();
+            lab.Content = requset.Date_to_go.ToShortDateString();
+            lab.FontSize = 45;
+            brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(requset.GetStatus.forground));
+            lab.Foreground = brush;
+            grid.Children.Add(lab);
+            lab = new Label();
+            lab.Content = requset.From_where_to_fly + " -> " + requset.Where_to_fly;
+            lab.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+            lab.FontSize = 45;
+            brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(requset.GetStatus.forground));
+            lab.Foreground = brush;
+            grid.Children.Add(lab);
+            Border b = new Border();
+            sp.Children.Add(b);
+            b.BorderThickness=new Thickness(0,1,0,0);
+            b.BorderBrush = Brushes.Azure;
+            grid = new Grid();
+            b.Child = grid;
+            lab = new Label();
+            string operat = "-";
+            if (requset.GetOperator != null)
+            {
+                operat = requset.GetOperator.Name;
+            }
+            lab.Content = "Оператор: "+operat;
+            lab.FontSize = 35;
+            brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(requset.GetStatus.forground));
+            lab.Foreground = brush;
+            grid.Children.Add(lab);
+            lab = new Label();
+            string hotel = "-";
+            if (requset.Hotel != "")
+            {
+                operat = requset.Hotel;
+            }
+            lab.Content = "Готель: " + hotel;
+            lab.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+            lab.FontSize = 35;
+            brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(requset.GetStatus.forground));
+            lab.Foreground = brush;
+            grid.Children.Add(lab);
+
+            b = new Border();
+            sp.Children.Add(b);
+            b.BorderThickness = new Thickness(0, 1, 0, 0);
+            b.BorderBrush = Brushes.Azure;
+            grid = new Grid();
+            b.Child = grid;
+            lab = new Label();
+            lab.Content = "Стутас:";
+            lab.FontSize = 35;
+            brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(requset.GetStatus.forground));
+            lab.Foreground = brush;
+            grid.Children.Add(lab);
+            lab = new Label();
+            lab.Content = requset.GetStatus.Name;
+            lab.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+            lab.FontSize = 35;
+            brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(requset.GetStatus.forground));
+            lab.Foreground = brush;
+            grid.Children.Add(lab);
+            return border;
+
+        }
         #endregion
         //-----------------
         #region Навигация
@@ -2275,7 +2360,6 @@ namespace OTBaseNew
         }
         private void RequestsButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            LoadShowRequests();
             TurnGridMain(RequestsGrid);
             CleareAllCheckes();
         }

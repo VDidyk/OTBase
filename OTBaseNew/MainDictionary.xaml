@@ -261,4 +261,16 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="RequestBorderStyle" TargetType="Border">
+        <Setter Property="Margin" Value="10 0 10 0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="BorderBrush" Value="Pink"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="BorderBrush" Value="Red"/>
+                <Setter Property="Background" Value="Pink"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>
