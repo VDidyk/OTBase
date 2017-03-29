@@ -419,6 +419,7 @@ namespace OTBaseNew
         #region Сетка поиск клиента
         void AddFindedClientsFindClient(string word)
         {
+            Window l = Other.Loading.Load(this);
             ClientsPanelFindClient.Children.Clear();
             List<Clients.Client> clients = Clients.Client.FindByWord(word);
             if (clients == null)
@@ -442,6 +443,7 @@ namespace OTBaseNew
                     }
                 }
                 ClientsPanelFindClient.Children.Add(b);
+                l.Close();
             }
         }
         private void FindClientBtnFindClient_Click(object sender, RoutedEventArgs e)
@@ -475,6 +477,7 @@ namespace OTBaseNew
         }
         private void ShowClientsBtnShowClientsGrid_Click(object sender, RoutedEventArgs e)
         {
+            Window l = Other.Loading.Load(this);
             string date = "";
             string working = "";
             string created = "";
@@ -494,6 +497,7 @@ namespace OTBaseNew
             {
                 AddClientInShowClientsGrid(Clients.Client.FindById(Convert.ToInt32(i["id"])));
             }
+            l.Close();
         }
         private void CloseShowClients_Click(object sender, RoutedEventArgs e)
         {
@@ -2239,21 +2243,21 @@ namespace OTBaseNew
             SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(requset.GetStatus.background));
             border.Background = brush;
             StackPanel sp = new StackPanel();
-            sp.Height = 180;
+            sp.Height = 110;
             border.Child = sp;
 
             Grid grid = new Grid();
             sp.Children.Add(grid);
             Label lab = new Label();
             lab.Content = requset.Date_to_go.ToShortDateString();
-            lab.FontSize = 45;
+            lab.FontSize = 25;
             brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(requset.GetStatus.forground));
             lab.Foreground = brush;
             grid.Children.Add(lab);
             lab = new Label();
             lab.Content = requset.From_where_to_fly + " -> " + requset.Where_to_fly;
             lab.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
-            lab.FontSize = 45;
+            lab.FontSize = 25;
             brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(requset.GetStatus.forground));
             lab.Foreground = brush;
             grid.Children.Add(lab);
@@ -2270,7 +2274,7 @@ namespace OTBaseNew
                 operat = requset.GetOperator.Name;
             }
             lab.Content = "Оператор: "+operat;
-            lab.FontSize = 35;
+            lab.FontSize = 15;
             brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(requset.GetStatus.forground));
             lab.Foreground = brush;
             grid.Children.Add(lab);
@@ -2282,7 +2286,7 @@ namespace OTBaseNew
             }
             lab.Content = "Готель: " + hotel;
             lab.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
-            lab.FontSize = 35;
+            lab.FontSize = 15;
             brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(requset.GetStatus.forground));
             lab.Foreground = brush;
             grid.Children.Add(lab);
@@ -2295,14 +2299,14 @@ namespace OTBaseNew
             b.Child = grid;
             lab = new Label();
             lab.Content = "Стутас:";
-            lab.FontSize = 35;
+            lab.FontSize = 15;
             brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(requset.GetStatus.forground));
             lab.Foreground = brush;
             grid.Children.Add(lab);
             lab = new Label();
             lab.Content = requset.GetStatus.Name;
             lab.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
-            lab.FontSize = 35;
+            lab.FontSize = 15;
             brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(requset.GetStatus.forground));
             lab.Foreground = brush;
             grid.Children.Add(lab);

@@ -754,7 +754,7 @@
                     </Grid>
                     <Grid Name="RequestsCreateGrid" Visibility="Hidden">
                         <ScrollViewer>
-                            <Grid>                               
+                            <Grid>
                                 <StackPanel>
                                     <Label Content="Створити заявку" Style="{DynamicResource LabelStyle}" FontSize="40" HorizontalContentAlignment="Center"/>
                                     <Label Content="Туристи" Style="{DynamicResource LabelStyle}" FontSize="30" HorizontalContentAlignment="Center"/>
@@ -870,10 +870,116 @@
                                 <WrapPanel VerticalAlignment="Top" HorizontalAlignment="Right">
                                     <Button Name="SaveRequestInAddRequest" Style="{DynamicResource ButtonStyle}" Content="✓" Width="50" Height="50" FontSize="40" Background="#FF6FDE5D" Margin="10" Click="SaveRequestInAddRequest_Click"/>
                                     <Button Name="CancelRequestInAddRequest"  Style="{DynamicResource ButtonStyle}" Content="X" Width="50" Height="50" FontSize="40" Margin="10" Click="CancelRequestInAddRequest_Click"/>
-                                </WrapPanel>                             
+                                </WrapPanel>
                             </Grid>
-                            
+
                         </ScrollViewer>
+                    </Grid>
+                    <Grid Name="RequestWork" Visibility="Visible">
+                        <TabControl >
+                            <TabItem Style="{DynamicResource TabItemStyle}" FontSize="25" Header="Виїзд" >
+                                <Grid Background="White">
+                                    <Grid.ColumnDefinitions>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="230*"/>
+                                        <RowDefinition Height="263*"/>
+                                        <RowDefinition Height="254*"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Style="{DynamicResource HoverRequestBorderStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="617*"/>
+                                                <ColumnDefinition Width="337*"/>
+                                                <ColumnDefinition Width="618*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel VerticalAlignment="Center">
+                                                <Label Style="{DynamicResource LabelStyle}" FontSize="75" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="Львів" />
+                                                <Label Style="{DynamicResource LabelStyle}" FontSize="35" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="29.03.2017"/>
+                                            </StackPanel>
+                                            <StackPanel VerticalAlignment="Center" Grid.Column="1">
+                                                <Image  Grid.Column="1" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\arrows.png"/>
+                                            </StackPanel>
+                                            <StackPanel VerticalAlignment="Center" Grid.Column="2">
+                                                <Label Style="{DynamicResource LabelStyle}" FontSize="75" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="Хургада" />
+                                                <Label Style="{DynamicResource LabelStyle}" FontSize="35" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="Повернення: 07.04.2017"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                    <Border Style="{DynamicResource HoverRequestBorderStyle}" Grid.Row="1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="617*"/>
+                                                <ColumnDefinition Width="337*"/>
+                                                <ColumnDefinition Width="618*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image  Grid.Column="0" Grid.Row="1" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\hotel.png"/>
+                                            <Label Style="{DynamicResource LabelStyle}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" FontSize="75" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="Готель: Hilton" Height="100" Margin="0,81,0,82"  />
+                                        </Grid>
+                                    </Border>
+                                    <Border Style="{DynamicResource HoverRequestBorderStyle}" Grid.Row="2">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="617*"/>
+                                                <ColumnDefinition Width="337*"/>
+                                                <ColumnDefinition Width="618*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image  Grid.Column="0" Grid.Row="2" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\operator.png"/>
+                                            <Label Style="{DynamicResource LabelStyle}" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" FontSize="75" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="Оператор: TUI" Height="100" Margin="0,81,0,82"  />
+                                        </Grid>
+                                    </Border>
+                                    
+                                </Grid>
+                            </TabItem>
+                            <TabItem Style="{DynamicResource TabItemStyle}" FontSize="25"  Header="Документи">
+                                <Grid Background="White">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel>
+                                        <Label Style="{DynamicResource LabelStyle}" Content="Паспорти:"/>
+                                        <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Border Height="300" Width="300" Style="{DynamicResource ClientBorderStyle}">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Style="{DynamicResource TextBlockStyle}" FontSize="35" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Text="Понос Ірина" />
+                                                    <Image Grid.Row="1" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\yes.png" />
+                                                </Grid>
+                                            </Border>
+                                            <Border Height="300" Width="300" Style="{DynamicResource ClientBorderStyle}">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Style="{DynamicResource TextBlockStyle}" FontSize="35" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Text="Понос Ігор" />
+                                                    <Image Grid.Row="1" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\no.png" />
+                                                </Grid>
+                                            </Border>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Style="{DynamicResource TabItemStyle}" FontSize="25"  Header="Туристи">
+                                <Grid Background="White">
+
+                                </Grid>
+                            </TabItem>
+                            <TabItem Style="{DynamicResource TabItemStyle}" FontSize="25"  Header="Дії">
+                                <Grid Background="White">
+
+                                </Grid>
+                            </TabItem>
+                            <TabItem Style="{DynamicResource TabItemStyle}" FontSize="25"  Header="Історія">
+                                <Grid Background="White">
+
+                                </Grid>
+                            </TabItem>
+                        </TabControl>
                     </Grid>
                     <!--Конец заявкам-->
                     <!--Пользователи-->
