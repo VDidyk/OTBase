@@ -285,4 +285,14 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    <Style x:Key="ActionBorder" TargetType="Border">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="#FC9C9C"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="BorderBrush" Value="LightCoral"/>
+                <Setter Property="Background" Value="LightCoral"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

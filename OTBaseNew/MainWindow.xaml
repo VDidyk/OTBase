@@ -875,7 +875,7 @@
 
                         </ScrollViewer>
                     </Grid>
-                    <Grid Name="RequestWork" Visibility="Visible">
+                    <Grid Name="RequestWork" Visibility="Hidden">
                         <TabControl >
                             <TabItem Style="{DynamicResource TabItemStyle}" FontSize="25" Header="Виїзд" >
                                 <Grid Background="White">
@@ -1061,14 +1061,14 @@
                                                         <RowDefinition Height="104*"/>
                                                     </Grid.RowDefinitions>
                                                     <TextBlock Grid.Column="0" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Автор" Margin="0 10 0 0" TextAlignment="Center" FontSize="35" Foreground="#FC9C9C"/>
-                                                        <Grid Grid.Row="1">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="71*"/>
-                                                                <ColumnDefinition Width="114*"/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\user.png"/>
-                                                            <TextBlock Grid.Column="1" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Text="Сорока Ольга" Margin="0 10 0 0" TextAlignment="Center" FontSize="35" Foreground="Gray"/>
-                                                        </Grid>
+                                                    <Grid Grid.Row="1">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="71*"/>
+                                                            <ColumnDefinition Width="114*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\user.png"/>
+                                                        <TextBlock Grid.Column="1" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Text="Сорока Ольга" Margin="0 10 0 0" TextAlignment="Center" FontSize="35" Foreground="Gray"/>
+                                                    </Grid>
                                                 </Grid>
                                             </Border>
                                             <Border Grid.Column="1" BorderBrush="LightGray" BorderThickness="0 0 1 0" Padding="10">
@@ -1133,9 +1133,9 @@
                                             <Border BorderThickness="0 0 0 5" BorderBrush="Pink"  Visibility="Visible" Height="0">
                                                 <Grid>
                                                     <StackPanel Visibility="Hidden">
-                                                    
+
                                                     </StackPanel>
-                                                  
+
                                                 </Grid>
                                             </Border>
                                             <WrapPanel HorizontalAlignment="Center">
@@ -1206,7 +1206,119 @@
                             </TabItem>
                             <TabItem Style="{DynamicResource TabItemStyle}" FontSize="25"  Header="Історія">
                                 <Grid Background="White">
-
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="427*"/>
+                                        <ColumnDefinition Width="97*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Border>
+                                            <ScrollViewer>
+                                                <StackPanel>
+                                                    <Border Style="{DynamicResource ActionBorder}">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="162*"/>
+                                                                <ColumnDefinition Width="1081*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Border BorderBrush="#FC9C9C" BorderThickness="0 0 1 0" Margin="10">
+                                                                <Image Height="100" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\tourist.png"/>
+                                                            </Border>
+                                                            <StackPanel Grid.Column="1" Margin="0,0,0,48">
+                                                                <WrapPanel>
+                                                                    <TextBlock Style="{DynamicResource TextBlockStyle}" Text="Сорока Ольга:" FontSize="30"/>
+                                                                    <TextBlock Style="{DynamicResource TextBlockStyle}" Text="03.04.2017 15:11" FontSize="30" Margin="20 0 0 0" Foreground="Gray"/>
+                                                                </WrapPanel>
+                                                                <TextBlock Style="{DynamicResource TextBlockStyle}" Text="Додано туристів: Понос Ігор, Понос Ірина."/>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </Border>
+                                                    <Border Style="{DynamicResource ActionBorder}">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="162*"/>
+                                                                <ColumnDefinition Width="1081*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Border BorderBrush="#FC9C9C" BorderThickness="0 0 1 0" Margin="10">
+                                                                <Image Height="100" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\money.png"/>
+                                                            </Border>
+                                                            <StackPanel Grid.Column="1" Margin="0,0,0,48">
+                                                                <WrapPanel>
+                                                                    <TextBlock Style="{DynamicResource TextBlockStyle}" Text="Сорока Ольга:" FontSize="30"/>
+                                                                    <TextBlock Style="{DynamicResource TextBlockStyle}" Text="06.04.2017 15:11" FontSize="30" Margin="20 0 0 0" Foreground="Gray"/>
+                                                                </WrapPanel>
+                                                                <WrapPanel>
+                                                                    <TextBlock Style="{DynamicResource TextBlockStyle}" Text="Клієнт приніс кошти: "/>
+                                                                    <TextBlock Style="{DynamicResource TextBlockStyle}" Text="200$ по курсу 27." Foreground="LightGreen"/>
+                                                                </WrapPanel>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </Border>
+                                                    <Border Style="{DynamicResource ActionBorder}">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="162*"/>
+                                                                <ColumnDefinition Width="1081*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Border BorderBrush="#FC9C9C" BorderThickness="0 0 1 0" Margin="10">
+                                                                <Image Height="100" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\visa.png"/>
+                                                            </Border>
+                                                            <StackPanel Grid.Column="1" Margin="0,0,0,48">
+                                                                <WrapPanel>
+                                                                    <TextBlock Style="{DynamicResource TextBlockStyle}" Text="Сорока Ольга:" FontSize="30"/>
+                                                                    <TextBlock Style="{DynamicResource TextBlockStyle}" Text="06.04.2017 15:11" FontSize="30" Margin="20 0 0 0" Foreground="Gray"/>
+                                                                </WrapPanel>
+                                                                <TextBlock Style="{DynamicResource TextBlockStyle}" Text="Клієнт отримав візу."/>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </Border>
+                                                    <Border Style="{DynamicResource ActionBorder}">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="162*"/>
+                                                                <ColumnDefinition Width="1081*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Border BorderBrush="#FC9C9C" BorderThickness="0 0 1 0" Margin="10">
+                                                                <Image Height="100" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\note.png"/>
+                                                            </Border>
+                                                            <StackPanel Grid.Column="1" Margin="0,0,0,48">
+                                                                <WrapPanel>
+                                                                    <TextBlock Style="{DynamicResource TextBlockStyle}" Text="Сорока Ольга:" FontSize="30"/>
+                                                                    <TextBlock Style="{DynamicResource TextBlockStyle}" Text="06.04.2017 15:11" FontSize="30" Margin="20 0 0 0" Foreground="Gray"/>
+                                                                </WrapPanel>
+                                                                <TextBlock Style="{DynamicResource TextBlockStyle}" Text="Документи видала."/>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </Border>
+                                                    <Border Style="{DynamicResource ActionBorder}">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="162*"/>
+                                                                <ColumnDefinition Width="1081*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Border BorderBrush="#FC9C9C" BorderThickness="0 0 1 0" Margin="10">
+                                                                <Image Height="100" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\progress.png"/>
+                                                            </Border>
+                                                            <StackPanel Grid.Column="1" Margin="0,0,0,48">
+                                                                <WrapPanel>
+                                                                    <TextBlock Style="{DynamicResource TextBlockStyle}" Text="Сорока Ольга:" FontSize="30"/>
+                                                                    <TextBlock Style="{DynamicResource TextBlockStyle}" Text="06.04.2017 15:11" FontSize="30" Margin="20 0 0 0" Foreground="Gray"/>
+                                                                </WrapPanel>
+                                                                <WrapPanel>
+                                                                    <TextBlock Style="{DynamicResource TextBlockStyle}" Text="Статус змінено на: "/>
+                                                                    <TextBlock Style="{DynamicResource TextBlockStyle}" Text="В очікуванні на виліт" Foreground="Gold"/>
+                                                                </WrapPanel>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </Border>
+                                                </StackPanel>
+                                            </ScrollViewer>
+                                        </Border>
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <StackPanel>
+                                            <Button Style="{DynamicResource ButtonStyle}" Content="+ Додати подію"/>
+                                        </StackPanel>
+                                    </Grid>
                                 </Grid>
                             </TabItem>
                         </TabControl>

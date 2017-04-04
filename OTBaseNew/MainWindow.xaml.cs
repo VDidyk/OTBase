@@ -30,6 +30,7 @@ namespace OTBaseNew
         StackPanel ActualEditClientPanel;
         public List<Grid> grids = new List<Grid>();
         public static string Exepath = Environment.CurrentDirectory;
+        public static bool doneload = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -83,6 +84,28 @@ namespace OTBaseNew
         void CleareAllCheckes()
         {
             CheckToLastFiveClients = false;
+        }
+        System.Threading.Thread Load()
+        {
+            Other.Loading tempWindow;
+            // Create a thread
+            System.Threading.Thread newWindowThread = new System.Threading.Thread(new System.Threading.ThreadStart(() =>
+            {
+                // Create and show the Window
+                tempWindow = new Other.Loading();
+                Other.Loading.loaded = true;
+                //tempWindow.Owner = this;
+                tempWindow.Show();
+                // Start the Dispatcher Processing
+                System.Windows.Threading.Dispatcher.Run();
+            }));
+            // Set the apartment state
+            newWindowThread.SetApartmentState(System.Threading.ApartmentState.STA);
+            // Make the thread a background thread
+            newWindowThread.IsBackground = true;
+            // Start the thread
+            newWindowThread.Start();
+            return newWindowThread;
         }
         //-----------------        
         #region Сетка Клиенты
@@ -419,7 +442,7 @@ namespace OTBaseNew
         #region Сетка поиск клиента
         void AddFindedClientsFindClient(string word)
         {
-            Window l = Other.Loading.Load(this);
+            System.Threading.Thread newWindowThread = Load();
             ClientsPanelFindClient.Children.Clear();
             List<Clients.Client> clients = Clients.Client.FindByWord(word);
             if (clients == null)
@@ -443,7 +466,7 @@ namespace OTBaseNew
                     }
                 }
                 ClientsPanelFindClient.Children.Add(b);
-                l.Close();
+                newWindowThread.Abort();
             }
         }
         private void FindClientBtnFindClient_Click(object sender, RoutedEventArgs e)
@@ -477,7 +500,7 @@ namespace OTBaseNew
         }
         private void ShowClientsBtnShowClientsGrid_Click(object sender, RoutedEventArgs e)
         {
-            Window l = Other.Loading.Load(this);
+            Other.Loading.Load(this);
             string date = "";
             string working = "";
             string created = "";
@@ -497,7 +520,7 @@ namespace OTBaseNew
             {
                 AddClientInShowClientsGrid(Clients.Client.FindById(Convert.ToInt32(i["id"])));
             }
-            l.Close();
+           // l.Close();
         }
         private void CloseShowClients_Click(object sender, RoutedEventArgs e)
         {
@@ -523,7 +546,7 @@ namespace OTBaseNew
         #region Сетка показать клиента
         void LoadShowClient(Clients.Client client)
         {
-            Window l = Other.Loading.Load(this);
+            System.Threading.Thread newWindowThread = Load();
             if (client == null)
             {
                 TurnGridBack();
@@ -680,7 +703,7 @@ namespace OTBaseNew
                 t.Text = i.Tour + ": " + i.discount;
                 DicsountsWrapPanelShowClient.Children.Add(t);
             }
-            l.Close();
+            newWindowThread.Abort();
         }
         private void CloseShowClient_Click(object sender, RoutedEventArgs e)
         {
@@ -1995,16 +2018,18 @@ namespace OTBaseNew
         #region Сетка Заявки
         Border userinrequestadd;
         List<Clients.Client> selectedclientsincreaterequest = new List<Clients.Client>();
+        public delegate void Show();
         void LoadShowRequests()
         {
-            Window l = Other.Loading.Load(this);
+            System.Threading.Thread newWindowThread = Load();
+           
             RequestsStackInShowRequestsPanel.Children.Clear();
             var tmp=Requests.Request.GetAllRequests(0);
             foreach(var i in tmp)
             {
                 RequestsStackInShowRequestsPanel.Children.Add(CreateRequestBorder(i));
             }
-            l.Close();
+            newWindowThread.Abort();
         }
         void LoadAddRequest()
         {

@@ -20,48 +20,45 @@ namespace OTBaseNew.Other
     /// </summary>
     public partial class Loading : Window
     {
+        public static bool loaded = false;
+        int rotate = 0;
         public Loading()
         {
             InitializeComponent();
-            var image = new BitmapImage();
-            image.BeginInit();
-            image.UriSource = new Uri(MainWindow.Exepath + @"\Data\Images\Other\wait.png");
-            image.EndInit();
-            ImageBehavior.SetAnimatedSource(img, image);
-        }
+            //img.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\wait.png"));
+            //  DispatcherTimer setup
+           var  dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(10000);
+            dispatcherTimer.Start();
+            //img.RenderTransformOrigin = new Point(1, 1);
 
+            
+        }
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+          
+            rotate+=5;
+            RotateTransform rotateTransform = new RotateTransform(rotate);
+            can.RenderTransform = rotateTransform;
+            //img.RenderTransform = rotateTransform;
+        }
         public static Window Load(Window window)
         {
-            Thread t = new Thread(ThreadProc);
-
-
-            t.SetApartmentState(ApartmentState.STA);
-
-
-            bool result = t.TrySetApartmentState(ApartmentState.MTA);
-
-            t.Start();
-
-            Thread.Sleep(500);
             Loading wi = null;
-            try
-            {
-                wi = new Loading();
-                wi.Owner = window;
-                wi.Show();
-                return wi;
-            }
-            catch (ThreadStateException)
-            {
-                return wi;
-            }
-
-            t.Join();
-
+            wi = new Loading();
+            wi.Owner = window;
+            //wi.Show();
+            return wi;
         }
-        public static void ThreadProc()
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Thread.Sleep(2000);
+
         }
+
+        
+
+
     }
 }
