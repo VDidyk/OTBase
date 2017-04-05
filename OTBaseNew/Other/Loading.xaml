@@ -9,10 +9,10 @@
     <Grid>
         <Image Name="img" RenderTransformOrigin="0.5,0.5"/>
         <Canvas Name="can" RenderTransformOrigin="0.5,0.5">
-            <Ellipse Name="pink" Margin="0 100 0 0" Height="100" Width="100" Fill="#FFFF015D"/>
-            <Ellipse Name="blue" Margin="100 0 200 200" Height="100" Width="100" Fill="#FF4148D3"/>
-            <Ellipse Name="yellow" Margin="100 200 100 100" Height="100" Width="100" Fill="#FFF0BE3A"/>
-            <Ellipse Name="green" Margin="200 100 100 100" Height="100" Width="100" Fill="#FF5ECF34"/>
+            <Ellipse Name="pink" Margin="0 100 0 0" Height="100" Width="100" Fill="#FFFF015D" RenderTransformOrigin="0.5,0.5"/>
+            <Ellipse Name="blue" Margin="100 0 200 200" Height="100" Width="100" Fill="#FF4148D3" RenderTransformOrigin="0.5,0.5"/>
+            <Ellipse Name="yellow" Margin="100 200 100 100" Height="100" Width="100" Fill="#FFF0BE3A" RenderTransformOrigin="0.5,0.5"/>
+            <Ellipse Name="green" Margin="200 100 100 100" Height="100" Width="100" Fill="#FF5ECF34" RenderTransformOrigin="0.5,0.5"/>
         </Canvas>
     </Grid>
 </Window>

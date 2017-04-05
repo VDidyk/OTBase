@@ -27,7 +27,6 @@ D:\OTBase\OTBase\OTBaseNew\bin\Debug\MySqlWorker.dll
 D:\OTBase\OTBase\OTBaseNew\bin\Debug\MySqlWorker.pdb
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Users\AutorizationWindow.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Users\AutorizationWindow.g.cs
-D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew.csprojResolveAssemblyReference.cache
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\MainDictionary.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\Alarm.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\Alarm.g.cs
@@ -52,3 +51,4 @@ D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\Loading.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\Loading.g.cs
 D:\OTBase\OTBase\OTBaseNew\bin\Debug\WpfAnimatedGif.dll
 D:\OTBase\OTBase\OTBaseNew\bin\Debug\WpfAnimatedGif.xml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew.csprojResolveAssemblyReference.cache

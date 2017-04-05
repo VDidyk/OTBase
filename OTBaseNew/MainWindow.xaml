@@ -875,7 +875,7 @@
 
                         </ScrollViewer>
                     </Grid>
-                    <Grid Name="RequestWork" Visibility="Hidden">
+                    <Grid Name="RequestWork" Visibility="Visible">
                         <TabControl >
                             <TabItem Style="{DynamicResource TabItemStyle}" FontSize="25" Header="Виїзд" >
                                 <Grid Background="White">
@@ -894,15 +894,15 @@
                                                 <ColumnDefinition Width="618*"/>
                                             </Grid.ColumnDefinitions>
                                             <StackPanel VerticalAlignment="Center">
-                                                <Label Style="{DynamicResource LabelStyle}" FontSize="75" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="Львів" />
-                                                <Label Style="{DynamicResource LabelStyle}" FontSize="35" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="29.03.2017"/>
+                                                <Label Name="FromWhereInShowRequest" Style="{DynamicResource LabelStyle}" FontSize="75" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="Львів" />
+                                                <Label Name="DateToFlyInShowRequest" Style="{DynamicResource LabelStyle}" FontSize="35" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="29.03.2017"/>
                                             </StackPanel>
                                             <StackPanel VerticalAlignment="Center" Grid.Column="1">
                                                 <Image  Grid.Column="1" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\arrows.png"/>
                                             </StackPanel>
                                             <StackPanel VerticalAlignment="Center" Grid.Column="2">
-                                                <Label Style="{DynamicResource LabelStyle}" FontSize="75" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="Хургада" />
-                                                <Label Style="{DynamicResource LabelStyle}" FontSize="35" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="Повернення: 07.04.2017"/>
+                                                <Label Name="WhereToFlyInShowRequest" Style="{DynamicResource LabelStyle}" FontSize="75" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="Хургада" />
+                                                <Label Name="DateToArriveInShowRequest" Style="{DynamicResource LabelStyle}" FontSize="35" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="Повернення: 07.04.2017"/>
                                             </StackPanel>
                                         </Grid>
                                     </Border>
@@ -914,7 +914,7 @@
                                                 <ColumnDefinition Width="618*"/>
                                             </Grid.ColumnDefinitions>
                                             <Image  Grid.Column="0" Grid.Row="1" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\hotel.png"/>
-                                            <Label Style="{DynamicResource LabelStyle}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" FontSize="75" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="Готель: Hilton" Height="100" Margin="0,81,0,82"  />
+                                            <Label Name="HotelInShowRequest" Style="{DynamicResource LabelStyle}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" FontSize="75" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="Готель: Hilton" Height="100" Margin="0,81,0,82"  />
                                         </Grid>
                                     </Border>
                                     <Border Style="{DynamicResource HoverRequestBorderStyle}" Grid.Row="2">
@@ -925,10 +925,9 @@
                                                 <ColumnDefinition Width="618*"/>
                                             </Grid.ColumnDefinitions>
                                             <Image  Grid.Column="0" Grid.Row="2" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\operator.png"/>
-                                            <Label Style="{DynamicResource LabelStyle}" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" FontSize="75" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="Оператор: TUI" Height="100" Margin="0,81,0,82"  />
+                                            <Label Name="OperatorInShowRequest" Style="{DynamicResource LabelStyle}" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" FontSize="75" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="Оператор: TUI" Height="100" Margin="0,81,0,82"  />
                                         </Grid>
                                     </Border>
-
                                 </Grid>
                             </TabItem>
                             <TabItem Style="{DynamicResource TabItemStyle}" FontSize="25"  Header="Документи">
@@ -940,7 +939,7 @@
                                     <StackPanel>
                                         <Label Style="{DynamicResource LabelStyle}" Content="Паспорти:" HorizontalContentAlignment="Center" FontSize="35"/>
                                         <Border BorderBrush="LightGray" BorderThickness="0 0 0 1">
-                                            <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <WrapPanel Name="PassportsPanelInShowRequest" VerticalAlignment="Center" HorizontalAlignment="Center">
                                                 <Border Height="300" Width="300" Style="{DynamicResource ClientBorderStyle}">
                                                     <Grid>
                                                         <Grid.RowDefinitions>
@@ -995,14 +994,14 @@
                                             <ColumnDefinition Width="262*"/>
                                         </Grid.ColumnDefinitions>
                                         <Image Grid.Column="1" Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\visa.png" />
-                                        <TextBlock Grid.Column="2" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Не потрібна" VerticalAlignment="Center" TextAlignment="Center" FontSize="45" Foreground="LightGray"/>
+                                        <TextBlock Name="VisaInShowRequest" Grid.Column="2" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Не потрібна" VerticalAlignment="Center" TextAlignment="Center" FontSize="45" Foreground="LightGray"/>
                                     </Grid>
                                 </Grid>
                             </TabItem>
                             <TabItem Style="{DynamicResource TabItemStyle}" FontSize="25"  Header="Туристи">
                                 <Grid Background="White">
                                     <ScrollViewer>
-                                        <WrapPanel>
+                                        <WrapPanel Name="ClientsPanelInShowRequest">
 
                                         </WrapPanel>
                                     </ScrollViewer>
@@ -1023,7 +1022,7 @@
                                                 <ColumnDefinition Width="1205*"/>
                                             </Grid.ColumnDefinitions>
                                             <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\money.png"/>
-                                            <TextBlock Grid.Column="2" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Сумма поїздки: 8900$." VerticalAlignment="Center" TextAlignment="Center" FontSize="45" Foreground="Gray"/>
+                                            <TextBlock Name="TotalSumInShowRequest" Grid.Column="2" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Сумма поїздки: 8900$." VerticalAlignment="Center" TextAlignment="Center" FontSize="45" Foreground="Gray"/>
                                         </Grid>
                                     </Border>
                                     <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="0 0 0 1">
@@ -1033,7 +1032,7 @@
                                                 <ColumnDefinition Width="1205*"/>
                                             </Grid.ColumnDefinitions>
                                             <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\clientsmoney.png"/>
-                                            <TextBlock Grid.Column="2" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Сумма зі знижкою: 7900$." VerticalAlignment="Center" TextAlignment="Center" FontSize="45" Foreground="Gray"/>
+                                            <TextBlock Name="ClientSumInShowRequest" Grid.Column="2" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Сумма зі знижкою: 7900$." VerticalAlignment="Center" TextAlignment="Center" FontSize="45" Foreground="Gray"/>
                                         </Grid>
                                     </Border>
                                     <Border Grid.Row="2" BorderBrush="LightGray" BorderThickness="0 0 0 1">
@@ -1043,7 +1042,7 @@
                                                 <ColumnDefinition Width="1205*"/>
                                             </Grid.ColumnDefinitions>
                                             <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\payed.png"/>
-                                            <TextBlock Grid.Column="2" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Не заплачено" VerticalAlignment="Center" TextAlignment="Center" FontSize="45" Foreground="Gray"/>
+                                            <TextBlock Name="PaidSumInShowRequest" Grid.Column="2" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" Text="Не заплачено" VerticalAlignment="Center" TextAlignment="Center" FontSize="45" Foreground="Gray"/>
                                         </Grid>
                                     </Border>
                                     <Border Grid.Row="3" BorderBrush="LightGray" BorderThickness="0 0 0 1">
@@ -1067,7 +1066,7 @@
                                                             <ColumnDefinition Width="114*"/>
                                                         </Grid.ColumnDefinitions>
                                                         <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\user.png"/>
-                                                        <TextBlock Grid.Column="1" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Text="Сорока Ольга" Margin="0 10 0 0" TextAlignment="Center" FontSize="35" Foreground="Gray"/>
+                                                        <TextBlock Name="AuthorInShowRequest" Grid.Column="1" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Text="Сорока Ольга" Margin="0 10 0 0" TextAlignment="Center" FontSize="35" Foreground="Gray"/>
                                                     </Grid>
                                                 </Grid>
                                             </Border>
@@ -1084,7 +1083,7 @@
                                                             <ColumnDefinition Width="114*"/>
                                                         </Grid.ColumnDefinitions>
                                                         <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\user.png"/>
-                                                        <TextBlock Grid.Column="1" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Text="Сорока Ольга" Margin="0 10 0 0" TextAlignment="Center" FontSize="35" Foreground="Gray"/>
+                                                        <TextBlock Name="WorkingUserInShowRequest" Grid.Column="1" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Text="Сорока Ольга" Margin="0 10 0 0" TextAlignment="Center" FontSize="35" Foreground="Gray"/>
                                                     </Grid>
                                                 </Grid>
                                             </Border>
@@ -1101,7 +1100,7 @@
                                                             <ColumnDefinition Width="114*"/>
                                                         </Grid.ColumnDefinitions>
                                                         <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\progress.png"/>
-                                                        <TextBlock Grid.Column="1" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Text="В очікуванні" Margin="0 10 0 0" TextAlignment="Center" FontSize="35" Foreground="#FF99D16B"/>
+                                                        <TextBlock Name="StatusInShowRequest" Grid.Column="1" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Text="В очікуванні" Margin="0 10 0 0" TextAlignment="Center" FontSize="35" Foreground="#FF99D16B"/>
                                                     </Grid>
                                                 </Grid>
                                             </Border>
@@ -1118,7 +1117,7 @@
                                                             <ColumnDefinition Width="114*"/>
                                                         </Grid.ColumnDefinitions>
                                                         <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\number.png"/>
-                                                        <TextBox Grid.Column="1" Style="{DynamicResource TexBoxUnderlineStyle}" IsReadOnly="True" TextWrapping="Wrap" VerticalAlignment="Center" Text="СР4345123" Margin="0 10 0 0" TextAlignment="Center" FontSize="35" Foreground="#FFC91E1E"/>
+                                                        <TextBox Name="SerialNumberInShowRequest" Grid.Column="1" Style="{DynamicResource TexBoxUnderlineStyle}" IsReadOnly="True" TextWrapping="Wrap" VerticalAlignment="Center" Text="СР4345123" Margin="0 10 0 0" TextAlignment="Center" FontSize="35" Foreground="#FFC91E1E"/>
                                                     </Grid>
                                                 </Grid>
                                             </Border>

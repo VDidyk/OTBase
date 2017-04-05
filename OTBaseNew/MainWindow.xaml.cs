@@ -54,6 +54,8 @@ namespace OTBaseNew
                 grids.Add(ClientsGrid);
                 LoadAddRequest();
             }
+
+            LoadShowRequest(Requests.Request.FindById(2));
         }
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
@@ -520,7 +522,7 @@ namespace OTBaseNew
             {
                 AddClientInShowClientsGrid(Clients.Client.FindById(Convert.ToInt32(i["id"])));
             }
-           // l.Close();
+            // l.Close();
         }
         private void CloseShowClients_Click(object sender, RoutedEventArgs e)
         {
@@ -2018,14 +2020,15 @@ namespace OTBaseNew
         #region Сетка Заявки
         Border userinrequestadd;
         List<Clients.Client> selectedclientsincreaterequest = new List<Clients.Client>();
+        Requests.Request requestforshow = null;
         public delegate void Show();
         void LoadShowRequests()
         {
             System.Threading.Thread newWindowThread = Load();
-           
+
             RequestsStackInShowRequestsPanel.Children.Clear();
-            var tmp=Requests.Request.GetAllRequests(0);
-            foreach(var i in tmp)
+            var tmp = Requests.Request.GetAllRequests(0);
+            foreach (var i in tmp)
             {
                 RequestsStackInShowRequestsPanel.Children.Add(CreateRequestBorder(i));
             }
@@ -2033,6 +2036,8 @@ namespace OTBaseNew
         }
         void LoadAddRequest()
         {
+
+
             Border bor = ClientsInCreateRequestGrid.Children[0] as Border;
             ClientsInCreateRequestGrid.Children.Clear();
             ClientsInCreateRequestGrid.Children.Add(bor);
@@ -2064,6 +2069,143 @@ namespace OTBaseNew
                 grid.MouseLeftButtonDown -= UserBorder_MouseLeftButtonDown;
                 grid.MouseLeftButtonDown += gridinaddrequest_MouseLeftButtonDown;
                 ManagersgridinCreateRequestGrid.Children.Add(grid);
+            }
+
+
+        }
+        void LoadShowRequest(Requests.Request request)
+        {
+            System.Threading.Thread newWindowThread = Load();
+
+
+            requestforshow = request;
+            if (request.From_where_to_fly != "")
+                FromWhereInShowRequest.Content = request.From_where_to_fly;
+            else
+                FromWhereInShowRequest.Content = "Не вказано звідки";
+            if (request.Date_to_go.Year != 1)
+                DateToFlyInShowRequest.Content = request.Date_to_go.ToShortDateString();
+            else
+                DateToFlyInShowRequest.Content = "Не вказано коли виїзд";
+
+            if (request.Where_to_fly != "")
+                WhereToFlyInShowRequest.Content = request.Where_to_fly;
+            else
+                WhereToFlyInShowRequest.Content = "Не вказано куди";
+            if (request.Date_to_arrive.Year != 1)
+                DateToArriveInShowRequest.Content = request.Date_to_arrive.ToShortDateString();
+            else
+                DateToArriveInShowRequest.Content = "Не вказано коли виїзд";
+
+            if (request.Hotel != "")
+                HotelInShowRequest.Content = request.Hotel;
+            else
+                HotelInShowRequest.Content = "Готель не вказаний";
+            if (request.GetOperator != null)
+                OperatorInShowRequest.Content = request.GetOperator.Name;
+            else
+                OperatorInShowRequest.Content = "Оператор не вказаний";
+
+
+
+            if (request.Visa_is_important)
+            {
+                if (request.Get_visa)
+                {
+                    VisaInShowRequest.Text = "Отримана";
+                    VisaInShowRequest.Foreground = Brushes.Green;
+                }
+                else
+                {
+                    VisaInShowRequest.Text = "Не отримана";
+                    VisaInShowRequest.Foreground = Brushes.Red;
+                }
+            }
+            else
+            {
+                VisaInShowRequest.Text = "Не потрібна";
+            }
+
+
+            CheckPassports(request);
+
+            foreach (var i in request.GetClients)
+            {
+                ClientsPanelInShowRequest.Children.Add(CreateClientBorder(i));
+            }
+
+            TotalSumInShowRequest.Text = "Сума поїздки: " + request.Price_of_tour.ToString();
+            ClientSumInShowRequest.Text = "Сума клієнта: " + request.Price_of_client.ToString();
+            PaidSumInShowRequest.Text = "Заплачено: " + request.Paid_sum.ToString();
+            AuthorInShowRequest.Text = request.GetCreated_user.FName + " " + request.GetCreated_user.LName;
+            if (request.working_user_id != 0)
+                WorkingUserInShowRequest.Text = request.GetWorking_user.FName + " " + request.GetWorking_user.LName;
+            else
+            {
+                WorkingUserInShowRequest.Text = "Вакантно";
+            }
+            StatusInShowRequest.Text = request.GetStatus.Name;
+            SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(request.GetStatus.forground));
+            StatusInShowRequest.Foreground = brush;
+            SerialNumberInShowRequest.Text = request.Serial_number;
+            newWindowThread.Abort();
+        }
+        void CheckPassports(Requests.Request request)
+        {
+            PassportsPanelInShowRequest.Children.Clear();
+            foreach (var i in request.GetClients)
+            {
+                Border b = new Border();
+                b.Style = Resources["ClientBorderStyle"] as Style;
+                b.Height = 300;
+                b.Width = 300;
+                Grid g = new Grid();
+                b.Child = g;
+                g.RowDefinitions.Add(new RowDefinition());
+                g.RowDefinitions.Add(new RowDefinition());
+
+
+                Border b1 = new Border();
+                g.Children.Add(b1);
+                b1.BorderBrush = Brushes.LightGray;
+                b1.Margin = new Thickness(0, 0, 0, 1);
+                Grid g1 = new Grid();
+                b1.Child = g1;
+                ColumnDefinition cd = new ColumnDefinition();
+                cd.Width = new GridLength(57, GridUnitType.Star);
+                g1.ColumnDefinitions.Add(cd);
+                cd = new ColumnDefinition();
+                cd.Width = new GridLength(92, GridUnitType.Star);
+                g1.ColumnDefinitions.Add(cd);
+                Image im = new Image();
+                im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Clients\client.png"));
+                g1.Children.Add(im);
+                TextBlock tb = new TextBlock();
+                tb.SetValue(Grid.ColumnProperty, 1);
+                tb.Style = Resources["TextBlockStyle"] as Style;
+                tb.FontSize = 35;
+                tb.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+                tb.TextWrapping = TextWrapping.Wrap;
+                tb.TextAlignment = TextAlignment.Center;
+                tb.Text = i.FName + " " + i.LName;
+                g1.Children.Add(tb);
+
+                Border b2 = new Border();
+                b2.SetValue(Grid.RowProperty, 1);
+                b2.Background = Brushes.LightGoldenrodYellow;
+                g.Children.Add(b2);
+                Image im1 = new Image();
+                b2.Child = im1;
+                if (i.GetPassport != null && i.GetPassport.CheckExist())
+                {
+                    im1.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\passportyes.png"));
+                }
+                else
+                {
+                    im1.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\passportno.png"));
+                }
+
+                PassportsPanelInShowRequest.Children.Add(b);
             }
         }
         void selectclienttolist_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -2196,44 +2338,44 @@ namespace OTBaseNew
 
             req.From_where_to_fly = FromLocationInAddRequest.Text;
             req.Where_to_fly = DurationLocationInAddRequest.Text;
-            if(OperatorsComboInCreateRequestGrid.SelectedIndex!=-1)
+            if (OperatorsComboInCreateRequestGrid.SelectedIndex != -1)
             {
                 Operators.Operator oper = Operators.Operator.FindByName(OperatorsComboInCreateRequestGrid.SelectedItem.ToString());
                 if (oper != null) ;
                 req.Operator_id = oper.Id;
             }
             req.Hotel = HotelInAddRequest.Text;
-            if(VisaIsImporatnInAddRequest.IsChecked==true)
+            if (VisaIsImporatnInAddRequest.IsChecked == true)
                 req.Visa_is_important = true;
             else
                 req.Visa_is_important = false;
-            if (PriceInAddRequest.Text!="")
-            try
-            {
-                req.Price_of_tour = Convert.ToDouble(PriceInAddRequest.Text);
-            }
-            catch
-            {
-                MainWindow.Message("Не вірний формат суми.(грн.коп)");
-                return;
-            }
+            if (PriceInAddRequest.Text != "")
+                try
+                {
+                    req.Price_of_tour = Convert.ToDouble(PriceInAddRequest.Text);
+                }
+                catch
+                {
+                    MainWindow.Message("Не вірний формат суми.(грн.коп)");
+                    return;
+                }
             if (ClientPriceInAddRequest.Text != "")
-            try
-            {
-                req.Price_of_tour = Convert.ToDouble(ClientPriceInAddRequest.Text);
-            }
-            catch
-            {
-                MainWindow.Message("Не вірний формат суми клієнта.(грн.коп)");
-                return;
-            }
+                try
+                {
+                    req.Price_of_tour = Convert.ToDouble(ClientPriceInAddRequest.Text);
+                }
+                catch
+                {
+                    MainWindow.Message("Не вірний формат суми клієнта.(грн.коп)");
+                    return;
+                }
             if (LoockedInAddRequest.IsChecked == true)
                 req.Look = true;
             else
                 req.Look = false;
             req.Serial_number = RequestNumberInAddRequest.Text;
 
-            if(userinrequestadd!=null)
+            if (userinrequestadd != null)
             {
                 int id = Convert.ToInt32(((Label)((StackPanel)userinrequestadd.Child).Children[0]).Content);
                 req.working_user_id = id;
@@ -2244,7 +2386,7 @@ namespace OTBaseNew
             }
             req.Status_id = Statuses.Status.GetMainStatus().Id;
             req.Created_user_id = MainWindow.Logined.Id;
-            foreach(var i in selectedclientsincreaterequest)
+            foreach (var i in selectedclientsincreaterequest)
             {
                 req.Clients_Ides.Add(i.Id);
             }
@@ -2288,7 +2430,7 @@ namespace OTBaseNew
             grid.Children.Add(lab);
             Border b = new Border();
             sp.Children.Add(b);
-            b.BorderThickness=new Thickness(0,1,0,0);
+            b.BorderThickness = new Thickness(0, 1, 0, 0);
             b.BorderBrush = Brushes.Azure;
             grid = new Grid();
             b.Child = grid;
@@ -2298,7 +2440,7 @@ namespace OTBaseNew
             {
                 operat = requset.GetOperator.Name;
             }
-            lab.Content = "Оператор: "+operat;
+            lab.Content = "Оператор: " + operat;
             lab.FontSize = 15;
             brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(requset.GetStatus.forground));
             lab.Foreground = brush;

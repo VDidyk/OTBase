@@ -22,26 +22,28 @@ namespace OTBaseNew.Other
     {
         public static bool loaded = false;
         int rotate = 0;
+        int rotate1 = 0;
+        bool min = false;
         public Loading()
         {
             InitializeComponent();
             //img.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\wait.png"));
             //  DispatcherTimer setup
-           var  dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            var dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(10000);
             dispatcherTimer.Start();
             //img.RenderTransformOrigin = new Point(1, 1);
 
-            
+
         }
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-          
-            rotate+=5;
+
+            rotate += 5;
             RotateTransform rotateTransform = new RotateTransform(rotate);
             can.RenderTransform = rotateTransform;
-            //img.RenderTransform = rotateTransform;
+
         }
         public static Window Load(Window window)
         {
@@ -57,7 +59,7 @@ namespace OTBaseNew.Other
 
         }
 
-        
+
 
 
     }

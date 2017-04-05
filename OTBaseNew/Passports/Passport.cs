@@ -54,7 +54,7 @@ namespace OTBaseNew.Passports
             if (list.Count != 0)
             {
                 //Строка-запрос
-                query = string.Format("UPDATE Passports SET series='{0}', given_when='{1}', given_the_time='{2}',given_by='{3}',Fname='{5}',Lname='{6}' WHERE id={4}", series, MySqlWorker.DataBase.ConvertDateToMySqlString(given_when), MySqlWorker.DataBase.ConvertDateToMySqlString(given_the_time), given_by, id.ToString(),Fname,Lname);
+                query = string.Format("UPDATE Passports SET series='{0}', given_when='{1}', given_the_time='{2}',given_by='{3}',Fname='{5}',Lname='{6}' WHERE id={4}", series, MySqlWorker.DataBase.ConvertDateToMySqlString(given_when), MySqlWorker.DataBase.ConvertDateToMySqlString(given_the_time), given_by, id.ToString(), Fname, Lname);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
             }
@@ -138,6 +138,18 @@ namespace OTBaseNew.Passports
             }
         }
 
+        public bool CheckExist()
+        {
+            if (series == "" && given_when.Year == 1 && given_the_time.Year == 1 && given_by == "" && Fname == "" && Lname == "")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
     }
-    
+
 }
