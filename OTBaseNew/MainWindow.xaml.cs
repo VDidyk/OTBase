@@ -2148,7 +2148,161 @@ namespace OTBaseNew
             SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(request.GetStatus.forground));
             StatusInShowRequest.Foreground = brush;
             SerialNumberInShowRequest.Text = request.Serial_number;
+
+            LoadActions(request);
+
+
+
             newWindowThread.Abort();
+        }
+        void LoadActions(Requests.Request request)
+        {
+            ActionsPanelInShowRequest.Children.Clear();
+            foreach (var i in request.GetActions)
+            {
+                ActionsPanelInShowRequest.Children.Add(AddAction(i));
+            }
+        }
+        Border AddAction(Actions.Action action)
+        {
+            Border b = new Border();
+            b.Style = Resources["ActionBorder"] as Style;
+
+            Grid grid = new Grid();
+            b.Child = grid;
+            ColumnDefinition cd = new ColumnDefinition();
+            cd.Width = new GridLength(162, GridUnitType.Star);
+            grid.ColumnDefinitions.Add(cd);
+            cd = new ColumnDefinition();
+            cd.Width = new GridLength(1081, GridUnitType.Star);
+            grid.ColumnDefinitions.Add(cd);
+
+            Border b1 = new Border();
+            b1.SetValue(Grid.ColumnProperty, 0);
+            grid.Children.Add(b1);
+            b1.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FC9C9C"));
+            b1.BorderThickness = new Thickness(0, 0, 1, 0);
+            b1.Margin = new Thickness(10);
+
+            Image im = new Image();
+            #region картинки
+            if (action.Note.Contains("Додано туристів"))
+            {
+                im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\tourist.png"));
+            }
+            else
+            {
+                if (action.Note.Contains("кошти") || action.Note.Contains("сума") || action.Note.Contains("ціна") || action.Note.Contains("гроші") || action.Note.Contains("Гроші") || action.Note.Contains("Ціна") || action.Note.Contains("Сума") || action.Note.Contains("Кошти"))
+                {
+                    im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\money.png"));
+                }
+                else
+                {
+                    if (action.Note.Contains("візу") || action.Note.Contains("віза") || action.Note.Contains("Віза"))
+                    {
+                        im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\visa.png"));
+                    }
+                    else
+                    {
+                        if (action.Note.Contains("Статус") || action.Note.Contains("статус"))
+                        {
+                            im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\progress.png"));
+                        }
+                        else
+                        {
+                            if (action.Note.Contains("Напрямок") || action.Note.Contains("напрямок"))
+                            {
+                                im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\arrows.png"));
+                            }
+                            else
+                            {
+                                if (action.Note.Contains("Напрямок") || action.Note.Contains("напрямок"))
+                                {
+                                    im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\arrows.png"));
+                                }
+                                else
+                                {
+                                    if (action.Note.Contains("оператор") || action.Note.Contains("Оператор"))
+                                    {
+                                        im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\operator.png"));
+                                    }
+                                    else
+                                    {
+                                        if (action.Note.Contains("готель") || action.Note.Contains("Готель"))
+                                        {
+                                            im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\hotel.png"));
+                                        }
+                                        else
+                                        {
+                                            if (action.Note.Contains("менеджер") || action.Note.Contains("Менеджер"))
+                                            {
+                                                im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\user.png"));
+                                            }
+                                            else
+                                            {
+                                                if (action.Note.Contains("номер") || action.Note.Contains("Номер"))
+                                                {
+                                                    im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\number.png"));
+                                                }
+                                                else
+                                                {
+                                                    if (action.Note.Contains("Документи") || action.Note.Contains("документи") || action.Note.Contains("документ") || action.Note.Contains("Документ"))
+                                                    {
+                                                        im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\documents.png"));
+                                                    }
+                                                    else
+                                                    {
+                                                        im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\note.png"));
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+            b1.Child = im;
+            im.Height = 100;
+
+
+
+            StackPanel sp = new StackPanel();
+            grid.Children.Add(sp);
+            sp.SetValue(Grid.ColumnProperty, 1);
+            sp.Margin = new Thickness(0, 0, 0, 48);
+
+            WrapPanel wp = new WrapPanel();
+            sp.Children.Add(wp);
+
+            TextBlock tb = new TextBlock();
+            wp.Children.Add(tb);
+            tb.Style = Resources["TextBlockStyle"] as Style;
+            tb.FontSize = 30;
+            tb.Text = Users.User.FindById(action.User_id).FName + " " + Users.User.FindById(action.User_id).LName;
+
+            tb = new TextBlock();
+            wp.Children.Add(tb);
+            tb.Style = Resources["TextBlockStyle"] as Style;
+            tb.FontSize = 30;
+            tb.Text = action.Created.ToShortDateString();
+            tb.Margin = new Thickness(20, 0, 0, 10);
+            tb.Foreground = Brushes.Gray;
+
+
+            wp = new WrapPanel();
+            sp.Children.Add(wp);
+
+            tb = new TextBlock();
+            wp.Children.Add(tb);
+            tb.Style = Resources["TextBlockStyle"] as Style;
+            tb.FontSize = 30;
+            tb.Text = action.Note;
+
+            return b;
         }
         void CheckPassports(Requests.Request request)
         {
@@ -2402,7 +2556,39 @@ namespace OTBaseNew
                 LoadShowRequests();
             }
         }
+        private void AddActionInShowRequest_Click(object sender, RoutedEventArgs e)
+        {
+            Actions.AddActionWindow aa = new Actions.AddActionWindow(requestforshow);
+            aa.Owner = this;
+            aa.ShowDialog();
+            LoadShowRequest(requestforshow);
+        }
+        private void SerialNumberChangeBorderInShowRequest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Requests.ChangeSerialNumberWindow cs = new Requests.ChangeSerialNumberWindow(requestforshow);
+            cs.Owner = this;
+            cs.ShowDialog();
+            AddNewAction(requestforshow, "Серійний номер змінено на " + requestforshow.Serial_number);
+            LoadShowRequest(requestforshow);
 
+        }
+
+        void AddNewAction(Requests.Request req, string text)
+        {
+            Actions.Action a = new Actions.Action();
+            a.Request_id = req.Id;
+            a.Note = text;
+            a.User_id = MainWindow.Logined.Id;
+            a.Save();
+        }
+        private void StatusChangeBorderInShowRequest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Statuses.StatusChangeWindow cs = new Statuses.StatusChangeWindow(requestforshow);
+            cs.Owner = this;
+            cs.ShowDialog();
+            AddNewAction(requestforshow, "Статус змінено на " + requestforshow.GetStatus.Name);
+            LoadShowRequest(requestforshow);
+        }
         Border CreateRequestBorder(Requests.Request requset)
         {
             Border border = new Border();
@@ -2564,5 +2750,11 @@ namespace OTBaseNew
             }
         }
         #endregion
+
+       
+
+
+
+
     }
 }

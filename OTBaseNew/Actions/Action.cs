@@ -25,6 +25,7 @@ namespace OTBaseNew.Actions
         /// ID пользователя
         /// </summary>
         public int User_id { set; get; }
+        public string Note { set; get; }
         public Action()
         {
             Created = DateTime.Now;
@@ -41,7 +42,7 @@ namespace OTBaseNew.Actions
             if (list.Count != 0)
             {
                 //Строка-запрос
-                query = string.Format("UPDATE Actions SET name='{0}',request_id='{1}' User_id='{2}' WHERE id={3}", Name, Request_id.ToString(), User_id.ToString(), Id);
+                query = string.Format("UPDATE Actions SET name='{0}',request_id='{1}' User_id='{2}', Note={3} WHERE id={4}", Name, Request_id.ToString(), User_id.ToString(),Note, Id);
                 //Создает запрос и возвращает результат
                 db.MakeRequest(query);
             }
@@ -49,7 +50,7 @@ namespace OTBaseNew.Actions
             else
             {
                 //Строка-запрос
-                query = string.Format("INSERT INTO `Actions`(`name`, `created`,`request_id`,`User_id`) VALUES ('{0}','{1}','{2}','{3}'); SELECT * FROM `Actions` order by id desc;LIMIT 0 , 1;", Name, MySqlWorker.DataBase.ConvertDateToMySqlString(Created), Request_id.ToString(), User_id.ToString());
+                query = string.Format("INSERT INTO `Actions`(`name`, `created`,`request_id`,`User_id`,`Note`) VALUES ('{0}','{1}','{2}','{3}','{4}'); SELECT * FROM `Actions` order by id desc LIMIT 0 , 1;", Name, MySqlWorker.DataBase.ConvertDateToMySqlString(Created), Request_id.ToString(), User_id.ToString(),Note);
                 //Создает запрос и возвращает результат
                 list = db.MakeRequest(query);
                 //Присвоить id

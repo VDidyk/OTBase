@@ -100,7 +100,7 @@ namespace OTBaseNew.Requests
             if (list.Count != 0)
             {
                 //Строка-запрос
-                query = string.Format("UPDATE Request SET Get_passport='{0}',Visa_is_important='{1}',Get_visa='{2}',Price_of_tour='{3}',Price_of_client='{4}',Paid_sum='{5}',Where_to_fly='{6}',From_where_to_fly='{7}',Date_to_go='{8}',Date_to_arrive='{9}',Hotel='{10}',Created='{11}',Operator_id='{12}',Created_user_id='{13}',Look='{14}',Status_id='{15}',Serial_number='{16}',working_user_id='{17}',notice={18} WHERE id={19}",
+                query = string.Format("UPDATE Request SET Get_passport='{0}',Visa_is_important='{1}',Get_visa='{2}',Price_of_tour='{3}',Price_of_client='{4}',Paid_sum='{5}',Where_to_fly='{6}',From_where_to_fly='{7}',Date_to_go='{8}',Date_to_arrive='{9}',Hotel='{10}',Created='{11}',Operator_id='{12}',Created_user_id='{13}',Look='{14}',Status_id='{15}',Serial_number='{16}',working_user_id='{17}',notice='{18}' WHERE id={19}",
                     MySqlWorker.DataBase.ConvertBoolToInt(Get_passport), MySqlWorker.DataBase.ConvertBoolToInt(Visa_is_important), MySqlWorker.DataBase.ConvertBoolToInt(Get_visa), Price_of_tour.ToString(), Price_of_client.ToString(), Paid_sum.ToString(), Where_to_fly, From_where_to_fly, MySqlWorker.DataBase.ConvertDateToMySqlString(Date_to_go), MySqlWorker.DataBase.ConvertDateToMySqlString(Date_to_arrive),
                     Hotel, MySqlWorker.DataBase.ConvertDateToMySqlString(Created),
                     Operator_id.ToString(), Created_user_id.ToString(), MySqlWorker.DataBase.ConvertBoolToInt(Look), Status_id.ToString(), Serial_number, working_user_id, notice,Id);
@@ -319,7 +319,7 @@ namespace OTBaseNew.Requests
             get
             {
                 List<Requests.Request> requests = new List<Requests.Request>();
-                string query = string.Format("SELECT * FROM `Action` WHERE Requst_id={0}", Id);
+                string query = string.Format("SELECT * FROM `Actions` WHERE Request_id={0}", Id);
                 //База данных
                 MySqlWorker.DataBase db = SQL.SqlConnect.db;
                 var list = db.MakeRequest<Actions.Action>(query);

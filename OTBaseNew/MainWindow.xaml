@@ -1180,13 +1180,13 @@
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Змінити менеджера"/>
                                                     </StackPanel>
                                                 </Border>
-                                                <Border  Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditMainInfoInShowClientGrid_MouseLeftButtonDown">
+                                                <Border Name="StatusChangeBorderInShowRequest" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="StatusChangeBorderInShowRequest_MouseLeftButtonDown">
                                                     <StackPanel>
                                                         <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\progress.png"  Height="240" Margin="10 10 10 10"/>
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Змінити статус"/>
                                                     </StackPanel>
                                                 </Border>
-                                                <Border  Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditMainInfoInShowClientGrid_MouseLeftButtonDown">
+                                                <Border Name="SerialNumberChangeBorderInShowRequest" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="SerialNumberChangeBorderInShowRequest_MouseLeftButtonDown">
                                                     <StackPanel>
                                                         <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\number.png"  Height="240" Margin="10 10 10 10"/>
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Змінити номер заявки"/>
@@ -1212,7 +1212,7 @@
                                     <Grid>
                                         <Border>
                                             <ScrollViewer>
-                                                <StackPanel>
+                                                <StackPanel Name="ActionsPanelInShowRequest">
                                                     <Border Style="{DynamicResource ActionBorder}">
                                                         <Grid>
                                                             <Grid.ColumnDefinitions>
@@ -1315,7 +1315,7 @@
                                     </Grid>
                                     <Grid Grid.Column="1">
                                         <StackPanel>
-                                            <Button Style="{DynamicResource ButtonStyle}" Content="+ Додати подію"/>
+                                            <Button Name="AddActionInShowRequest" Style="{DynamicResource ButtonStyle}" Content="+ Додати подію" Click="AddActionInShowRequest_Click"/>
                                         </StackPanel>
                                     </Grid>
                                 </Grid>

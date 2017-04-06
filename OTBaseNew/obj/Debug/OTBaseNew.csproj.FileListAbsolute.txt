@@ -52,3 +52,9 @@ D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\Loading.g.cs
 D:\OTBase\OTBase\OTBaseNew\bin\Debug\WpfAnimatedGif.dll
 D:\OTBase\OTBase\OTBaseNew\bin\Debug\WpfAnimatedGif.xml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew.csprojResolveAssemblyReference.cache
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Actions\AddActionWindow.baml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Actions\AddActionWindow.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\ChangeSerialNumberWindow.baml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\ChangeSerialNumberWindow.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Statuses\StatusChangeWindow.baml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Statuses\StatusChangeWindow.g.cs

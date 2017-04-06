@@ -105,5 +105,14 @@ namespace OTBaseNew.Statuses
                 return null;
             }
         }
+
+        public static List<Status> GetAllStatuses()
+        {
+            string query = string.Format("SELECT * FROM `Statuses`");
+            //База данных
+            MySqlWorker.DataBase db = SQL.SqlConnect.db;
+            var list = db.MakeRequest<Status>(query);
+            return list;
+        }
     }
 }
