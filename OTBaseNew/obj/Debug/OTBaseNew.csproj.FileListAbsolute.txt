@@ -58,3 +58,13 @@ D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\ChangeSerialNumberWindow.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\ChangeSerialNumberWindow.g.cs
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Statuses\StatusChangeWindow.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Statuses\StatusChangeWindow.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\ChangeHotelWindow.baml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\ChangeHotelWindow.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Operators\ChangeOperatorWindow.baml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Users\ChangeUserWindow.baml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Operators\ChangeOperatorWindow.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Users\ChangeUserWindow.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\DurationChangeWindow.baml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\DurationChangeWindow.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\ChangeVisaWindow.baml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\ChangeVisaWindow.g.cs

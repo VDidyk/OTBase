@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\OTBase\OTBase\OTBaseNew\App.xaml
-17-1070455304
+22-135879807
 
-4134032114
+46-294398402
 1792019460
-Actions\AddActionWindow.xaml;Clients\ShortClientShow.xaml;MainDictionary.xaml;MainWindow.xaml;Operators\EditOperatorWindow.xaml;Other\AddList.xaml;Other\Alarm.xaml;Other\Loading.xaml;Other\YesOrNo.xaml;Requests\ChangeSerialNumberWindow.xaml;ScrollBar.xaml;Statuses\StatusChangeWindow.xaml;Users\AutorizationWindow.xaml;Users\DeleteUser.xaml;Users\ChangePosition.xaml;Users\ChangeUserName.xaml;Users\ChangeUserPassword.xaml;
+Actions\AddActionWindow.xaml;Clients\ShortClientShow.xaml;MainDictionary.xaml;MainWindow.xaml;Operators\ChangeOperatorWindow.xaml;Operators\EditOperatorWindow.xaml;Other\AddList.xaml;Other\Alarm.xaml;Other\Loading.xaml;Other\YesOrNo.xaml;Requests\ChangeHotelWindow.xaml;Requests\ChangeSerialNumberWindow.xaml;Requests\ChangeVisaWindow.xaml;Requests\DurationChangeWindow.xaml;ScrollBar.xaml;Statuses\StatusChangeWindow.xaml;Users\AutorizationWindow.xaml;Users\ChangeUserWindow.xaml;Users\DeleteUser.xaml;Users\ChangePosition.xaml;Users\ChangeUserName.xaml;Users\ChangeUserPassword.xaml;
 
 False
 

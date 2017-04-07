@@ -78,6 +78,9 @@
     <Compile Include="Documents\Document.cs" />
     <Compile Include="Emails\Email.cs" />
     <Compile Include="Addresses\Address.cs" />
+    <Compile Include="Operators\ChangeOperatorWindow.xaml.cs">
+      <DependentUpon>ChangeOperatorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Operators\EditOperatorWindow.xaml.cs">
       <DependentUpon>EditOperatorWindow.xaml</DependentUpon>
     </Compile>
@@ -99,8 +102,17 @@
     <Compile Include="Phones\Phone.cs" />
     <Compile Include="Positions\Position.cs" />
     <Compile Include="Regions\Region.cs" />
+    <Compile Include="Requests\ChangeHotelWindow.xaml.cs">
+      <DependentUpon>ChangeHotelWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Requests\ChangeSerialNumberWindow.xaml.cs">
       <DependentUpon>ChangeSerialNumberWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Requests\ChangeVisaWindow.xaml.cs">
+      <DependentUpon>ChangeVisaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Requests\DurationChangeWindow.xaml.cs">
+      <DependentUpon>DurationChangeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Requests\Request.cs" />
     <Compile Include="Resourses\Resourse.cs" />
@@ -111,6 +123,9 @@
     </Compile>
     <Compile Include="Users\AutorizationWindow.xaml.cs">
       <DependentUpon>AutorizationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Users\ChangeUserWindow.xaml.cs">
+      <DependentUpon>ChangeUserWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Users\DeleteUser.xaml.cs">
       <DependentUpon>DeleteUser.xaml</DependentUpon>
@@ -149,6 +164,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Operators\ChangeOperatorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Operators\EditOperatorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -169,7 +188,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Requests\ChangeHotelWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Requests\ChangeSerialNumberWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Requests\ChangeVisaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Requests\DurationChangeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -182,6 +213,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Users\AutorizationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Users\ChangeUserWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

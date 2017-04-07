@@ -1138,25 +1138,25 @@
                                                 </Grid>
                                             </Border>
                                             <WrapPanel HorizontalAlignment="Center">
-                                                <Border  Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditMainInfoInShowClientGrid_MouseLeftButtonDown">
+                                                <Border Name="DurationChangeBorderInShowRequest" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="DurationChange_MouseLeftButtonDown">
                                                     <StackPanel>
                                                         <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\arrows.png"  Height="240" Margin="10 10 10 10"/>
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Змінити напрям"/>
                                                     </StackPanel>
                                                 </Border>
-                                                <Border  Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditMainInfoInShowClientGrid_MouseLeftButtonDown">
+                                                <Border Name="OperatorChangeBorderInShowRequest"  Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="OperatorChangeBorderInShowRequest_MouseLeftButtonDown">
                                                     <StackPanel>
                                                         <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\operator.png"  Height="240" Margin="10 10 10 10"/>
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Змінити оператора"/>
                                                     </StackPanel>
                                                 </Border>
-                                                <Border  Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditMainInfoInShowClientGrid_MouseLeftButtonDown">
+                                                <Border Name="HotelChangeBorderInShowRequest" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="HotelChangeBorderInShowRequest_MouseLeftButtonDown">
                                                     <StackPanel>
                                                         <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\hotel.png"  Height="240" Margin="10 10 10 10"/>
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Змінити готель"/>
                                                     </StackPanel>
                                                 </Border>
-                                                <Border  Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditMainInfoInShowClientGrid_MouseLeftButtonDown">
+                                                <Border Name="VisaChangeBorderInShowRequest" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="VisaChangeBorderInShowRequest_MouseLeftButtonDown">
                                                     <StackPanel>
                                                         <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\visa.png"  Height="240" Margin="10 10 10 10"/>
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Віза"/>
@@ -1174,7 +1174,7 @@
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Робота фінансами"/>
                                                     </StackPanel>
                                                 </Border>
-                                                <Border  Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditMainInfoInShowClientGrid_MouseLeftButtonDown">
+                                                <Border  Name="UserChangeBorderInShowRequest" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="UserChangeBorderInShowRequest_MouseLeftButtonDown">
                                                     <StackPanel>
                                                         <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\user.png"  Height="240" Margin="10 10 10 10"/>
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Змінити менеджера"/>

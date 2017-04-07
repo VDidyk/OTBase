@@ -1,0 +1,18 @@
+﻿<Window x:Class="OTBaseNew.Users.ChangeUserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ChangeUserWindow" Height="119" Width="467.9" WindowStyle="None" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" BorderThickness="1" BorderBrush="LightCoral">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..//MainDictionary.xaml" />
+                <ResourceDictionary Source="..//ScrollBar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Label Style="{DynamicResource LabelStyle}" VerticalAlignment="Top" Content="Змінити менеджера" HorizontalContentAlignment="Center"/>
+        <ComboBox Name="text" Style="{DynamicResource ComboBoxStyle}" VerticalAlignment="Top" Margin="10 40 10 0"/>
+        <Button Style="{DynamicResource ButtonStyle}" VerticalAlignment="Top"  Margin="10 80 10 0" Content="Зберегти" Click="Button_Click"/>
+    </Grid>
+</Window>

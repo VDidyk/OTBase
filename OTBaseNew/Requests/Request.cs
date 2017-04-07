@@ -319,7 +319,7 @@ namespace OTBaseNew.Requests
             get
             {
                 List<Requests.Request> requests = new List<Requests.Request>();
-                string query = string.Format("SELECT * FROM `Actions` WHERE Request_id={0}", Id);
+                string query = string.Format("SELECT * FROM `Actions` WHERE Request_id={0} order by id desc", Id);
                 //База данных
                 MySqlWorker.DataBase db = SQL.SqlConnect.db;
                 var list = db.MakeRequest<Actions.Action>(query);

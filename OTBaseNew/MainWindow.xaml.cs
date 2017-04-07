@@ -2589,6 +2589,49 @@ namespace OTBaseNew
             AddNewAction(requestforshow, "Статус змінено на " + requestforshow.GetStatus.Name);
             LoadShowRequest(requestforshow);
         }
+        private void HotelChangeBorderInShowRequest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Requests.ChangeHotelWindow cs = new Requests.ChangeHotelWindow(requestforshow);
+            cs.Owner = this;
+            cs.ShowDialog();
+            AddNewAction(requestforshow, "Готель змінено на " + requestforshow.Hotel);
+            LoadShowRequest(requestforshow);
+        }
+        private void OperatorChangeBorderInShowRequest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Operators.ChangeOperatorWindow cs = new Operators.ChangeOperatorWindow(requestforshow);
+            cs.Owner = this;
+            cs.ShowDialog();
+            AddNewAction(requestforshow, "Готель змінено на " + requestforshow.Hotel);
+            LoadShowRequest(requestforshow);
+        }
+
+        private void UserChangeBorderInShowRequest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Users.ChangeUserWindow cs = new Users.ChangeUserWindow(requestforshow);
+            cs.Owner = this;
+            cs.ShowDialog();
+            AddNewAction(requestforshow, "Менеджер змінений на " + requestforshow.GetWorking_user.FName + " " + requestforshow.GetWorking_user.LName);
+            LoadShowRequest(requestforshow);
+        }
+
+        private void DurationChange_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Requests.DurationChangeWindow cs = new Requests.DurationChangeWindow(requestforshow);
+            cs.Owner = this;
+            cs.ShowDialog();
+            AddNewAction(requestforshow, "Напрямок змінено.");
+            LoadShowRequest(requestforshow);
+        }
+
+        private void VisaChangeBorderInShowRequest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Requests.ChangeVisaWindow cs = new Requests.ChangeVisaWindow(requestforshow);
+            cs.Owner = this;
+            cs.ShowDialog();
+            AddNewAction(requestforshow, "Інформація про візу змінена!");
+            LoadShowRequest(requestforshow);
+        }
         Border CreateRequestBorder(Requests.Request requset)
         {
             Border border = new Border();
@@ -2752,6 +2795,10 @@ namespace OTBaseNew
         #endregion
 
        
+
+
+
+
 
 
 
