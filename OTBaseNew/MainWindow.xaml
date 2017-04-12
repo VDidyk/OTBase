@@ -875,7 +875,7 @@
 
                         </ScrollViewer>
                     </Grid>
-                    <Grid Name="RequestWork" Visibility="Visible">
+                    <Grid Name="RequestWork" Visibility="Hidden">
                         <TabControl >
                             <TabItem Style="{DynamicResource TabItemStyle}" FontSize="25" Header="Виїзд" >
                                 <Grid Background="White">
@@ -1162,13 +1162,13 @@
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Віза"/>
                                                     </StackPanel>
                                                 </Border>
-                                                <Border  Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditMainInfoInShowClientGrid_MouseLeftButtonDown">
+                                                <Border Name="ClientsChangeBorderInShowRequest" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="ClientsChangeBorderInShowRequest_MouseLeftButtonDown">
                                                     <StackPanel>
                                                         <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\tourist.png"  Height="240" Margin="10 10 10 10"/>
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Робота з туристами"/>
                                                     </StackPanel>
                                                 </Border>
-                                                <Border  Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="EditMainInfoInShowClientGrid_MouseLeftButtonDown">
+                                                <Border Name="FinancesChangeBorderInShowRequest" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="FinancesChangeBorderInShowRequest_MouseLeftButtonDown">
                                                     <StackPanel>
                                                         <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\money1.png"  Height="240" Margin="10 10 10 10"/>
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Робота фінансами"/>

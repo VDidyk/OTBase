@@ -32,6 +32,14 @@ namespace OTBaseNew.Requests
             req.Serial_number = text.Text;
             req.Save();
             MainWindow.Message("Серійний номер змінено!");
+            MainWindow.AddNewAction(req, "Серійний номер змінено на " + req.Serial_number);
+            DialogResult = true;
+            this.Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
             this.Close();
         }
     }

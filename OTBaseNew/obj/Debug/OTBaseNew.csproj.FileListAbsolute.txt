@@ -51,7 +51,6 @@ D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\Loading.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Other\Loading.g.cs
 D:\OTBase\OTBase\OTBaseNew\bin\Debug\WpfAnimatedGif.dll
 D:\OTBase\OTBase\OTBaseNew\bin\Debug\WpfAnimatedGif.xml
-D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew.csprojResolveAssemblyReference.cache
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Actions\AddActionWindow.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Actions\AddActionWindow.g.cs
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\ChangeSerialNumberWindow.baml
@@ -68,3 +67,6 @@ D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\DurationChangeWindow.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\DurationChangeWindow.g.cs
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\ChangeVisaWindow.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\ChangeVisaWindow.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew.csprojResolveAssemblyReference.cache
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\ChangeFinancesWindow.baml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\ChangeFinancesWindow.g.cs

@@ -37,6 +37,7 @@ namespace OTBaseNew.Users
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            DialogResult = true;
             if (text.SelectedIndex != -1)
             {
                 User st = User.GetAllUsers[text.SelectedIndex];
@@ -44,6 +45,13 @@ namespace OTBaseNew.Users
                 req.Save();
                 MainWindow.Message("Менеджер змінений!");
             }
+            MainWindow.AddNewAction(req, "Менеджер змінений на " + req.GetWorking_user.FName + " " + req.GetWorking_user.LName);
+            this.Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
             this.Close();
         }
     }

@@ -41,6 +41,14 @@ namespace OTBaseNew.Statuses
             req.GetStatus = st;
             req.Save();
             MainWindow.Message("Статус змінено!");
+            MainWindow.AddNewAction(req, "Статус змінено на " + req.GetStatus.Name);
+            DialogResult = true;
+            this.Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
             this.Close();
         }
     }

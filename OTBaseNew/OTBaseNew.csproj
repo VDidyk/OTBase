@@ -102,6 +102,9 @@
     <Compile Include="Phones\Phone.cs" />
     <Compile Include="Positions\Position.cs" />
     <Compile Include="Regions\Region.cs" />
+    <Compile Include="Requests\ChangeFinancesWindow.xaml.cs">
+      <DependentUpon>ChangeFinancesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Requests\ChangeHotelWindow.xaml.cs">
       <DependentUpon>ChangeHotelWindow.xaml</DependentUpon>
     </Compile>
@@ -185,6 +188,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Other\YesOrNo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Requests\ChangeFinancesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -43,7 +43,13 @@ namespace OTBaseNew.Operators
                 req.GetOperator = st;
                 req.Save();
                 MainWindow.Message("Оператор змінений!");
+                MainWindow.AddNewAction(req, "Готель змінено на " + req.Hotel);
             }
+            this.Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
             this.Close();
         }
     }

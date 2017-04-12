@@ -1,7 +1,7 @@
 ﻿<Window x:Class="OTBaseNew.Requests.ChangeSerialNumberWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ChangeSerialNumberWindow" Height="119" Width="467.9" WindowStyle="None" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" BorderThickness="1" BorderBrush="LightCoral">
+        Title="ChangeSerialNumberWindow" Height="146" Width="467.9" WindowStyle="None" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" BorderThickness="1" BorderBrush="LightCoral">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -14,5 +14,6 @@
         <Label Style="{DynamicResource LabelStyle}" VerticalAlignment="Top" Content="Серійний номер" HorizontalContentAlignment="Center"/>
         <TextBox Name="text" Style="{DynamicResource TexBoxStyle}" VerticalAlignment="Top" Margin="10 40 10 0"/>
         <Button Style="{DynamicResource ButtonStyle}" VerticalAlignment="Top"  Margin="10 80 10 0" Content="Зберегти" Click="Button_Click"/>
+        <Button Style="{DynamicResource ButtonStyle}" VerticalAlignment="Top"  Margin="10 110 10 0" Content="Закрити" Click="Button_Click_1"/>
     </Grid>
 </Window>

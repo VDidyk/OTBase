@@ -1,7 +1,7 @@
 ﻿<Window x:Class="OTBaseNew.Requests.ChangeVisaWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ChangeVisaWindow" Height="176" Width="467.9" WindowStyle="None" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" BorderThickness="1" BorderBrush="LightCoral">
+        Title="ChangeVisaWindow" Height="209" Width="467.9" WindowStyle="None" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" BorderThickness="1" BorderBrush="LightCoral">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,5 +15,6 @@
         <CheckBox Name="important" Style="{DynamicResource CheckboxStyle}" Content="Віза важлива" Checked="important_Checked" Click="important_Click"/>
         <CheckBox Name="Get" Style="{DynamicResource CheckboxStyle}" Content="Віза отримана"/>
         <Button Style="{DynamicResource ButtonStyle}" VerticalAlignment="Top"  Margin="10 10 10 0" Content="Зберегти" Click="Button_Click"/>
+        <Button Style="{DynamicResource ButtonStyle}" VerticalAlignment="Top"  Margin="10 10 10 0" Content="Закрити" Click="Button_Click_1"/>
     </StackPanel>
 </Window>

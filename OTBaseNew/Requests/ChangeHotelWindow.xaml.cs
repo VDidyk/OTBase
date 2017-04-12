@@ -34,7 +34,15 @@ namespace OTBaseNew.Requests
                 req.Hotel = text.Text;
                 req.Save();
                 MainWindow.Message("Готель номер змінено!");
+                MainWindow.AddNewAction(req, "Готель змінено на " + req.Hotel);
             }
+            DialogResult = true;
+            this.Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
             this.Close();
         }
     }

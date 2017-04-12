@@ -57,7 +57,8 @@ namespace OTBaseNew.Requests
             }
             req.Save();
             MainWindow.Message("Інформація про візу змінена!");
-
+            MainWindow.AddNewAction(req, "Інформація про візу змінена!");
+            DialogResult = true;
             this.Close();
         }
 
@@ -78,6 +79,12 @@ namespace OTBaseNew.Requests
                 Get.IsChecked = false;
                 Get.IsEnabled = false;
             }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+            this.Close();
         }
     }
 }

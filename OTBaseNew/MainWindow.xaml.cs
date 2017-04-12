@@ -46,16 +46,12 @@ namespace OTBaseNew
                 timer.Tick += new EventHandler(dispatcherTimer_Tick);
                 timer.Interval = new TimeSpan(0, 0, 10);
                 timer.Start();
-
+                grids.Add(ClientsGrid);
 
                 //MainWindow.Message(string.Format("Привіт, {0}", Logined.FName));
                 NameLable.Content = Logined.FName;
                 LoadImages();
-                grids.Add(ClientsGrid);
-                LoadAddRequest();
             }
-
-            LoadShowRequest(Requests.Request.FindById(2));
         }
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
@@ -1232,7 +1228,7 @@ namespace OTBaseNew
         }
         private void EditMainInfoInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            LoadEditMainInfoShowClient(ClientToShow);
+           LoadEditMainInfoShowClient(ClientToShow);
         }
         private void EditPassportInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -2021,7 +2017,6 @@ namespace OTBaseNew
         Border userinrequestadd;
         List<Clients.Client> selectedclientsincreaterequest = new List<Clients.Client>();
         Requests.Request requestforshow = null;
-        public delegate void Show();
         void LoadShowRequests()
         {
             System.Threading.Thread newWindowThread = Load();
@@ -2192,7 +2187,7 @@ namespace OTBaseNew
             }
             else
             {
-                if (action.Note.Contains("кошти") || action.Note.Contains("сума") || action.Note.Contains("ціна") || action.Note.Contains("гроші") || action.Note.Contains("Гроші") || action.Note.Contains("Ціна") || action.Note.Contains("Сума") || action.Note.Contains("Кошти"))
+                if (action.Note.Contains("кошти") || action.Note.Contains("сума") || action.Note.Contains("фінанси") || action.Note.Contains("Фінанси") || action.Note.Contains("ціна") || action.Note.Contains("гроші") || action.Note.Contains("Гроші") || action.Note.Contains("Ціна") || action.Note.Contains("Сума") || action.Note.Contains("Кошти"))
                 {
                     im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\money.png"));
                 }
@@ -2288,7 +2283,7 @@ namespace OTBaseNew
             wp.Children.Add(tb);
             tb.Style = Resources["TextBlockStyle"] as Style;
             tb.FontSize = 30;
-            tb.Text = action.Created.ToShortDateString();
+            tb.Text = action.Created.ToShortDateString()+" "+action.Created.ToLongTimeString();
             tb.Margin = new Thickness(20, 0, 0, 10);
             tb.Foreground = Brushes.Gray;
 
@@ -2567,13 +2562,12 @@ namespace OTBaseNew
         {
             Requests.ChangeSerialNumberWindow cs = new Requests.ChangeSerialNumberWindow(requestforshow);
             cs.Owner = this;
-            cs.ShowDialog();
-            AddNewAction(requestforshow, "Серійний номер змінено на " + requestforshow.Serial_number);
-            LoadShowRequest(requestforshow);
-
+            if (cs.ShowDialog() == true)
+            {
+                LoadShowRequest(requestforshow);
+            }
         }
-
-        void AddNewAction(Requests.Request req, string text)
+        public static void  AddNewAction(Requests.Request req, string text)
         {
             Actions.Action a = new Actions.Action();
             a.Request_id = req.Id;
@@ -2585,62 +2579,86 @@ namespace OTBaseNew
         {
             Statuses.StatusChangeWindow cs = new Statuses.StatusChangeWindow(requestforshow);
             cs.Owner = this;
-            cs.ShowDialog();
-            AddNewAction(requestforshow, "Статус змінено на " + requestforshow.GetStatus.Name);
-            LoadShowRequest(requestforshow);
+            if (cs.ShowDialog() == true)
+            {
+                LoadShowRequest(requestforshow);
+            }
         }
         private void HotelChangeBorderInShowRequest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Requests.ChangeHotelWindow cs = new Requests.ChangeHotelWindow(requestforshow);
             cs.Owner = this;
-            cs.ShowDialog();
-            AddNewAction(requestforshow, "Готель змінено на " + requestforshow.Hotel);
-            LoadShowRequest(requestforshow);
+            if (cs.ShowDialog() == true)
+            {
+                LoadShowRequest(requestforshow);
+            }
         }
         private void OperatorChangeBorderInShowRequest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Operators.ChangeOperatorWindow cs = new Operators.ChangeOperatorWindow(requestforshow);
             cs.Owner = this;
-            cs.ShowDialog();
-            AddNewAction(requestforshow, "Готель змінено на " + requestforshow.Hotel);
-            LoadShowRequest(requestforshow);
+            if (cs.ShowDialog() == true)
+            {
+                LoadShowRequest(requestforshow);
+            }
         }
-
         private void UserChangeBorderInShowRequest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Users.ChangeUserWindow cs = new Users.ChangeUserWindow(requestforshow);
             cs.Owner = this;
-            cs.ShowDialog();
-            AddNewAction(requestforshow, "Менеджер змінений на " + requestforshow.GetWorking_user.FName + " " + requestforshow.GetWorking_user.LName);
-            LoadShowRequest(requestforshow);
+            if (cs.ShowDialog() == true)
+            {
+                LoadShowRequest(requestforshow);
+            }
         }
-
         private void DurationChange_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Requests.DurationChangeWindow cs = new Requests.DurationChangeWindow(requestforshow);
             cs.Owner = this;
-            cs.ShowDialog();
-            AddNewAction(requestforshow, "Напрямок змінено.");
-            LoadShowRequest(requestforshow);
+            if (cs.ShowDialog() == true)
+            {
+                LoadShowRequest(requestforshow);
+            }
         }
-
         private void VisaChangeBorderInShowRequest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Requests.ChangeVisaWindow cs = new Requests.ChangeVisaWindow(requestforshow);
             cs.Owner = this;
-            cs.ShowDialog();
-            AddNewAction(requestforshow, "Інформація про візу змінена!");
-            LoadShowRequest(requestforshow);
+            if (cs.ShowDialog() == true)
+            {
+                LoadShowRequest(requestforshow);
+            }
+        }
+        private void FinancesChangeBorderInShowRequest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Requests.ChangeFinancesWindow cs = new Requests.ChangeFinancesWindow(requestforshow);
+            cs.Owner = this;
+            if (cs.ShowDialog() == true)
+            {
+                LoadShowRequest(requestforshow);
+            }
+        }
+        private void ClientsChangeBorderInShowRequest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            
         }
         Border CreateRequestBorder(Requests.Request requset)
         {
             Border border = new Border();
+            border.MouseLeftButtonDown += requestborder_MouseLeftButtonDown;
             border.Style = Resources["RequestBorderStyle"] as Style;
             SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(requset.GetStatus.background));
             border.Background = brush;
             StackPanel sp = new StackPanel();
             sp.Height = 110;
             border.Child = sp;
+
+            Label idlab = new Label();
+            idlab.Height = 0;
+            idlab.Width = 0;
+            idlab.Visibility = System.Windows.Visibility.Hidden;
+            idlab.Content = requset.Id.ToString();
+            sp.Children.Add(idlab);
 
             Grid grid = new Grid();
             sp.Children.Add(grid);
@@ -2707,6 +2725,18 @@ namespace OTBaseNew
             lab.Foreground = brush;
             grid.Children.Add(lab);
             return border;
+
+        }
+
+        void requestborder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Border b = sender as Border;
+            StackPanel sp = b.Child as StackPanel;
+            Label lb = sp.Children[0] as Label;
+            int id = Convert.ToInt32(lb.Content);
+            Requests.Request req = Requests.Request.FindById(id);
+            TurnGridNext(RequestWork);
+            LoadShowRequest(req);
 
         }
         #endregion
@@ -2795,13 +2825,6 @@ namespace OTBaseNew
         #endregion
 
        
-
-
-
-
-
-
-
 
     }
 }

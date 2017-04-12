@@ -1,7 +1,7 @@
 ﻿<Window x:Class="OTBaseNew.Requests.DurationChangeWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="DurationChangeWindow" Height="176" Width="467.9" WindowStyle="None" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" BorderThickness="1" BorderBrush="LightCoral">
+        Title="DurationChangeWindow" Height="205" Width="467.9" WindowStyle="None" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" BorderThickness="1" BorderBrush="LightCoral">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -26,5 +26,6 @@
             <TextBox x:Name="whenetoback" Style="{DynamicResource TexBoxStyle}" Width="180" VerticalAlignment="Top" Margin="10 10 10 0"/>
         </WrapPanel>
         <Button Style="{DynamicResource ButtonStyle}" VerticalAlignment="Top"  Margin="10 10 10 0" Content="Зберегти" Click="Button_Click"/>
+        <Button Style="{DynamicResource ButtonStyle}" VerticalAlignment="Top"  Margin="10 10 10 0" Content="Закрити" Click="Button_Click_1"/>
     </StackPanel>
 </Window>
