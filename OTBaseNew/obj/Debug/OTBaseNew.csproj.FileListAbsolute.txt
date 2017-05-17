@@ -67,6 +67,8 @@ D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\DurationChangeWindow.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\DurationChangeWindow.g.cs
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\ChangeVisaWindow.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\ChangeVisaWindow.g.cs
-D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew.csprojResolveAssemblyReference.cache
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\ChangeFinancesWindow.baml
 D:\OTBase\OTBase\OTBaseNew\obj\Debug\Requests\ChangeFinancesWindow.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Clients\ChooseClients.baml
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\Clients\ChooseClients.g.cs
+D:\OTBase\OTBase\OTBaseNew\obj\Debug\OTBaseNew.csprojResolveAssemblyReference.cache

@@ -1228,7 +1228,7 @@ namespace OTBaseNew
         }
         private void EditMainInfoInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-           LoadEditMainInfoShowClient(ClientToShow);
+            LoadEditMainInfoShowClient(ClientToShow);
         }
         private void EditPassportInShowClientGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -2124,6 +2124,8 @@ namespace OTBaseNew
 
             CheckPassports(request);
 
+            ClientsPanelInShowRequest.Children.Clear();
+
             foreach (var i in request.GetClients)
             {
                 ClientsPanelInShowRequest.Children.Add(CreateClientBorder(i));
@@ -2153,10 +2155,12 @@ namespace OTBaseNew
         void LoadActions(Requests.Request request)
         {
             ActionsPanelInShowRequest.Children.Clear();
-            foreach (var i in request.GetActions)
+            var tmp = request.GetActions;
+            foreach (var i in tmp)
             {
                 ActionsPanelInShowRequest.Children.Add(AddAction(i));
             }
+            int a=5;
         }
         Border AddAction(Actions.Action action)
         {
@@ -2181,7 +2185,7 @@ namespace OTBaseNew
 
             Image im = new Image();
             #region картинки
-            if (action.Note.Contains("Додано туристів"))
+            if (action.Note.Contains("Додано туристів") || action.Note.Contains("туристи") || action.Note.Contains("Туристи"))
             {
                 im.Source = new BitmapImage(new Uri(MainWindow.Exepath + @"\Data\Images\Other\tourist.png"));
             }
@@ -2283,7 +2287,7 @@ namespace OTBaseNew
             wp.Children.Add(tb);
             tb.Style = Resources["TextBlockStyle"] as Style;
             tb.FontSize = 30;
-            tb.Text = action.Created.ToShortDateString()+" "+action.Created.ToLongTimeString();
+            tb.Text = action.Created.ToShortDateString() + " " + action.Created.ToLongTimeString();
             tb.Margin = new Thickness(20, 0, 0, 10);
             tb.Foreground = Brushes.Gray;
 
@@ -2567,7 +2571,7 @@ namespace OTBaseNew
                 LoadShowRequest(requestforshow);
             }
         }
-        public static void  AddNewAction(Requests.Request req, string text)
+        public static void AddNewAction(Requests.Request req, string text)
         {
             Actions.Action a = new Actions.Action();
             a.Request_id = req.Id;
@@ -2638,9 +2642,9 @@ namespace OTBaseNew
                 LoadShowRequest(requestforshow);
             }
         }
-        private void ClientsChangeBorderInShowRequest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ClientsChangeBorderInShowRequest_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
         {
-            
+            LoadChooseClient(requestforshow);
         }
         Border CreateRequestBorder(Requests.Request requset)
         {
@@ -2739,6 +2743,185 @@ namespace OTBaseNew
             LoadShowRequest(req);
 
         }
+
+        void LoadChooseClient(Requests.Request request)
+        {
+            TurnGridNext(ChooseClients);
+            ChoesenClientsPanel.Children.Clear();
+            foreach (var i in request.GetClients)
+            {
+                Border b = CreateClientBorder(i);
+                b.MouseLeftButtonDown -= LookClient;
+                StackPanel sp = b.Child as StackPanel;
+                Button but = sp.Children[1] as Button;
+                but.Visibility = System.Windows.Visibility.Visible;
+                but.Height = 20;
+                but.Style = Resources["ButtonStyle"] as Style;
+                but.Click += DeleteClientFromRequest;
+                ChoesenClientsPanel.Children.Add(b);
+
+            }
+        }
+
+        private void DeleteClientFromRequest(object sender, RoutedEventArgs e)
+        {
+            Button b = (Button)sender;
+            StackPanel sp = b.Parent as StackPanel;
+            Border border = sp.Parent as Border;
+            ChoesenClientsPanel.Children.Remove(border);
+        }
+
+        private void AddClientToRequest(object sender, RoutedEventArgs e)
+        {
+            Border b = (Border)sender;
+            StackPanel sp = b.Child as StackPanel;
+
+            Label l = sp.Children[0] as Label;
+            int id = Convert.ToInt32(l.Content);
+            bool exist = false;
+
+
+            foreach (var j in ChoesenClientsPanel.Children)
+            {
+                Border b1 = j as Border;
+                StackPanel sp1 = b1.Child as StackPanel;
+                Label l1 = sp1.Children[0] as Label;
+                int id1 = Convert.ToInt32(l1.Content);
+                if(id1==id)
+                {
+                    exist = true;
+                    break;
+                }
+            }
+            if (!exist)
+            {
+                b = CreateClientBorder(Clients.Client.FindById(id));
+                sp = b.Child as StackPanel;
+                Button but = sp.Children[1] as Button;
+                but.Visibility = System.Windows.Visibility.Visible;
+                but.Height = 20;
+                but.Style = Resources["ButtonStyle"] as Style;
+                but.Click += DeleteClientFromRequest;
+                ChoesenClientsPanel.Children.Add(b);
+            }
+
+
+           
+        }
+
+        private void Search_Click(object sender, RoutedEventArgs e)
+        {
+            if (SearchTextBoxInChooseClientsGrid.Text != "")
+            {
+                System.Threading.Thread newWindowThread = Load();
+                var tmp = Clients.Client.FindByWord(SearchTextBoxInChooseClientsGrid.Text);
+
+                if (tmp.Count > 0)
+                {
+                    SearchLableInChooseClientsGrid.Visibility = System.Windows.Visibility.Hidden;
+                    SearchPanelInChooseClientsGrid.Children.Clear();
+                    foreach (var i in tmp)
+                    {
+                        bool exist = false;
+                        foreach (var j in ChoesenClientsPanel.Children)
+                        {
+                            Border b = j as Border;
+                            StackPanel sp = b.Child as StackPanel;
+                            Label l = sp.Children[0] as Label;
+                            if (i.Id == Convert.ToInt32(l.Content))
+                            {
+                                exist = true;
+                                break;
+                            }
+                        }
+                        if (!exist)
+                        {
+                            Border b = CreateClientBorder(i);
+                            b.MouseLeftButtonDown -= LookClient;
+                            b.MouseDown += AddClientToRequest;
+                            SearchPanelInChooseClientsGrid.Children.Add(b);
+                        }
+                    }
+                    SearchPanelInChooseClientsGridScroll.Visibility = System.Windows.Visibility.Visible;
+                    if (SearchPanelInChooseClientsGrid.Children.Count == 0)
+                    {
+                        SearchLableInChooseClientsGrid.Visibility = System.Windows.Visibility.Visible;
+                        SearchPanelInChooseClientsGridScroll.Visibility = System.Windows.Visibility.Hidden;
+                        SearchLableInChooseClientsGrid.Content = "Немає результату";
+                    }
+                }
+                else
+                {
+                    SearchLableInChooseClientsGrid.Visibility = System.Windows.Visibility.Visible;
+                    SearchPanelInChooseClientsGridScroll.Visibility = System.Windows.Visibility.Hidden;
+                    SearchLableInChooseClientsGrid.Content = "Немає результату";
+                }
+                newWindowThread.Abort();
+            }
+        }
+        private void CloseChooseClientsGrid_Click(object sender, RoutedEventArgs e)
+        {
+            TurnGridBack();
+        }
+
+        private void SaveChooseClientsGrid_Click(object sender, RoutedEventArgs e)
+        {
+            System.Threading.Thread newWindowThread = Load();
+            if (ChoesenClientsPanel.Children.Count == 0)
+            {
+                requestforshow.Clients_Ides.Clear();
+                requestforshow.Save();
+            }
+            else
+            {
+                for (int i = 0; i < requestforshow.GetClients.Count; i++)
+                {
+                    bool exist = false;
+                    foreach (var j in ChoesenClientsPanel.Children)
+                    {
+                        Border b = j as Border;
+                        StackPanel sp = b.Child as StackPanel;
+                        Label l = sp.Children[0] as Label;
+                        int id = Convert.ToInt32(l.Content);
+                        if (requestforshow.GetClients[i].Id == id)
+                        {
+                            exist = true;
+                            break;
+                        }
+                    }
+                    if (!exist)
+                    {
+                        requestforshow.Clients_Ides.RemoveAt(i);
+                    }
+                }
+                foreach (var j in ChoesenClientsPanel.Children)
+                {
+                    Border b = j as Border;
+                    StackPanel sp = b.Child as StackPanel;
+                    Label l = sp.Children[0] as Label;
+                    int id = Convert.ToInt32(l.Content);
+                    bool exist = false;
+                    for (int i = 0; i < requestforshow.GetClients.Count; i++)
+                    {
+                        if (id == requestforshow.GetClients[i].Id)
+                        {
+                            exist = true;
+                            break;
+                        }
+                    }
+                    if (!exist)
+                    {
+                        requestforshow.Clients_Ides.Add(id);
+                    }
+                }
+
+                requestforshow.Save();
+                TurnGridBack();
+                newWindowThread.Abort();
+                MainWindow.AddNewAction(requestforshow, "Туристи змінені.");
+                LoadShowRequest(requestforshow);
+            }
+        }
         #endregion
         //-----------------
         #region Навигация
@@ -2824,7 +3007,13 @@ namespace OTBaseNew
         }
         #endregion
 
-       
+
+
+
+
+
+
+
 
     }
 }

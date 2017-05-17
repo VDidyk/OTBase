@@ -70,6 +70,9 @@
       <DependentUpon>AddActionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Cities\City.cs" />
+    <Compile Include="Clients\ChooseClients.xaml.cs">
+      <DependentUpon>ChooseClients.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Clients\Client.cs" />
     <Compile Include="Clients\ShortClientShow.xaml.cs">
       <DependentUpon>ShortClientShow.xaml</DependentUpon>
@@ -146,6 +149,10 @@
     <Page Include="Actions\AddActionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Clients\ChooseClients.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Clients\ShortClientShow.xaml">
       <SubType>Designer</SubType>

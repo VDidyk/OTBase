@@ -1162,7 +1162,7 @@
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Віза"/>
                                                     </StackPanel>
                                                 </Border>
-                                                <Border Name="ClientsChangeBorderInShowRequest" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="ClientsChangeBorderInShowRequest_MouseLeftButtonDown">
+                                                <Border Name="ClientsChangeBorderInShowRequest" Height="300" Width="300" Margin="10" Style="{DynamicResource ClientBorderStyle}" MouseLeftButtonDown="ClientsChangeBorderInShowRequest_MouseLeftButtonDown_1" >
                                                     <StackPanel>
                                                         <Image Source="D:\OTBase\OTBase\OTBaseNew\bin\Debug\Data\Images\Other\tourist.png"  Height="240" Margin="10 10 10 10"/>
                                                         <Label Style="{DynamicResource LabelStyle}" HorizontalContentAlignment="Center" Content="Робота з туристами"/>
@@ -1321,6 +1321,53 @@
                                 </Grid>
                             </TabItem>
                         </TabControl>
+                    </Grid>
+                    <Grid Name="ChooseClients" Visibility="Hidden">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="15*"/>
+                            <RowDefinition Height="131*"/>
+                            <RowDefinition Height="120*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="715*"/>
+                                <ColumnDefinition Width="30*"/>
+                                <ColumnDefinition Width="30*"/>
+                                <ColumnDefinition Width="30*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Name="SearchTextBoxInChooseClientsGrid" Style="{DynamicResource TexBoxStyle}" />
+                            <Button Name="Search" Grid.Column="1" Style="{DynamicResource ButtonStyle}" Content="🔍" FontSize="30" Background="#FF7264B4" Click="Search_Click"/>
+                            <Button Name="CloseChooseClientsGrid" Grid.Column="2" Style="{DynamicResource ButtonStyle}" Content="X" FontSize="30" Click="CloseChooseClientsGrid_Click"/>
+                            <Button Name="SaveChooseClientsGrid" Grid.Column="3" Style="{DynamicResource ButtonStyle}" Content="💾" FontSize="30"  Background="#FF64C74F" Click="SaveChooseClientsGrid_Click"/>
+                        </Grid>
+                        <Border Grid.Row="1">
+                            <Grid>
+                                <ScrollViewer Name="SearchPanelInChooseClientsGridScroll" Visibility="Hidden">
+                                    <WrapPanel Name="SearchPanelInChooseClientsGrid">
+
+                                    </WrapPanel>
+                                </ScrollViewer>
+                                <Label Name="SearchLableInChooseClientsGrid" Content="-Пошук-" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="80" Foreground="LightGray"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="2" BorderThickness="0 1 0 0" BorderBrush="#FC9C9C">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="27*"/>
+                                    <RowDefinition Height="122*"/>
+                                </Grid.RowDefinitions>
+
+
+                                <Label Background="#FC9C9C" Content="Обрані клієнти" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                <ScrollViewer Grid.Row="1">
+                                    <WrapPanel Name="ChoesenClientsPanel">
+
+                                    </WrapPanel>
+                                </ScrollViewer>
+
+
+                            </Grid>
+                        </Border>
                     </Grid>
                     <!--Конец заявкам-->
                     <!--Пользователи-->

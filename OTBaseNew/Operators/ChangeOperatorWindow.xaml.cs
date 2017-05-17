@@ -28,6 +28,7 @@ namespace OTBaseNew.Operators
             for (int i = 0; i < tmp.Count;i++ )
             {
                 text.Items.Add(tmp[i].Name);
+                if(req.GetOperator!=null)
                 if (req.GetOperator.Id == tmp[i].Id)
                 {
                     text.SelectedIndex = i;
@@ -37,13 +38,15 @@ namespace OTBaseNew.Operators
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            
             if (text.SelectedIndex != -1)
             {
                 Operator st = Operator.FindByName(text.SelectedItem.ToString());
                 req.GetOperator = st;
                 req.Save();
+                MainWindow.AddNewAction(req, "Оператор змінений на: " + st.Name);
                 MainWindow.Message("Оператор змінений!");
-                MainWindow.AddNewAction(req, "Готель змінено на " + req.Hotel);
+                DialogResult = true;
             }
             this.Close();
         }
